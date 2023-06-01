@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "Flywheel boosting rewards are not dynamically calculated; changing (or removing) booster from the Flywheel changes (or completely removes) all user un-accrued bonuses up to that point",
+  "issueId": 10,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/10"
+}
