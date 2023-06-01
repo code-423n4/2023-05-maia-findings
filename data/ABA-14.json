@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "Rewards that are not claimed in `FlywheelCoreStrategy` before a gauge has its booster weight reduced to 0, are stuck",
+  "issueId": 14,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/14"
+}
