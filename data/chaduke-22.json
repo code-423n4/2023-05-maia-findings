@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "A user cannot delegate his votes back a delegatee once the votes have been used.",
+  "issueId": 22,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/22"
+}
