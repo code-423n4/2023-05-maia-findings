@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "A delegatee can frontrun delegate() to prevent the delegator from re-delegating votes to a new delegatee.",
+  "issueId": 23,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/23"
+}
