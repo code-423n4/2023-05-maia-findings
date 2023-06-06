@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ltyu",
+  "risk": "2",
+  "title": "Increasing pool weight incorrectly distributes leftover bandwidth",
+  "issueId": 24,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/24"
+}
