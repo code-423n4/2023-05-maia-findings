@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "3",
+  "title": "FlywheelGaugeRewards.queueRewardsForCyclePaginated() might lead to misaccouting of rewards due to guage add/delete or weight increment/decrement during pagination.",
+  "issueId": 34,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/34"
+}
