@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "debo",
+  "risk": "2",
+  "title": "Multiple calls are executed in the same transaction in BribesFactory.sol within the function called createBribeFlywheel",
+  "issueId": 35,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/35"
+}
