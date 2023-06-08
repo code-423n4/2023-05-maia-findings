@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "mrvincere",
+  "risk": "3",
+  "title": "Use require or if to compare values. Otherwise comparison will be ignored.",
+  "issueId": 38,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/38"
+}
