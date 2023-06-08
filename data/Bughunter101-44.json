@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Bughunter101",
+  "risk": "2",
+  "title": "`TalosStrategyVanilla._compoundFees()` setting `amount0Min` and `amount1Min` is zero",
+  "issueId": 44,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/44"
+}
