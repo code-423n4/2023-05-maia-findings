@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Bughunter101",
+  "risk": "3",
+  "title": "`GovernorBravoDelegateMaia.execute()` does not check `proposal.proposer`, a preemptive attack may occur when the owner wants to cancel",
+  "issueId": 41,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/41"
+}
