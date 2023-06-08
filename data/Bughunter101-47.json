@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Bughunter101",
+  "risk": "2",
+  "title": "There is a loss of funds in `UlyssesRouter.swap()` ",
+  "issueId": 47,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/47"
+}
