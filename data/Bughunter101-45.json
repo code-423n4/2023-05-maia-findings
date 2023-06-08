@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Bughunter101",
+  "risk": "2",
+  "title": "`TalosStrategyVanilla._earnFees()` has a division underflow problem",
+  "issueId": 45,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/45"
+}
