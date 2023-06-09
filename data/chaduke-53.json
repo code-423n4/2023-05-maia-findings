@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "TalosBaseStrategy.deposit() lacks slippage control for the users, as a result, a user might loss funds due to price change at Uniswap V3 pools.",
+  "issueId": 53,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/53"
+}
