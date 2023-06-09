@@ -10,7 +10,7 @@ Recommendation
 - Consider updating the code to match the documentation, or vice-versa.
 
 ## [Q-2] Rebalancing fee does not match documentation
-According to the [documentation]According to the [documentation](https://v2-docs.maiadao.io/protocols/Ulysses/overview/unified-liquidity/fees#protocol-fees), the condition for the first rebalancing fee (0), is `b - t <= sigma_1B`. However, this does not match what is in the [code](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L733). 
+According to the [documentation](https://v2-docs.maiadao.io/protocols/Ulysses/overview/unified-liquidity/fees#protocol-fees), the condition for the first rebalancing fee (0), is `b - t <= sigma_1B`. However, this does not match what is in the [code](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L733). 
 
 After discussed with the Sponsor, the documentation is incorrect.
 
