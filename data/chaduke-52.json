@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "3",
+  "title": "A user can steal all liquidity earnings from other users by calling TalosBaseStrategy.redeem().",
+  "issueId": 52,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/52"
+}
