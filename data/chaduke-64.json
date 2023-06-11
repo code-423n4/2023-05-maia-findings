@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "3",
+  "title": "A user can steal rewards for a strategy from other users by temporaily boosting his gauge weight for the strategy. ",
+  "issueId": 64,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/64"
+}
