@@ -1,9 +1,66 @@
-#L-01
+## #L-01
+**Title**
+Usage of equality comparison instead of assignment Code With No Effects in PartnerManagerFactory file
+**Link to affected code**
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/factories/PartnerManagerFactory.sol#L57-L73
+**Type**
+Invalid Validation
+**Vulnerability details**
+## Impact
+The lines of affected code are using the equality operator instead of the assignment operator.
+
+e.g. line 61
+```solidity
+        partnerIds[newPartnerManager] == id;
+```
+e.g line 70
+```solidity
+        vaultIds[newVault] == id;
+```
+
+## Proof of Concept
+```solidity
+    /// @inheritdoc IPartnerManagerFactory
+    function addPartner(PartnerManager newPartnerManager) external onlyOwner {
+        uint256 id = partners.length;
+        partners.push(newPartnerManager);
+        partnerIds[newPartnerManager] == id;
+
+
+        emit AddedPartner(newPartnerManager, id);
+    }
+
+
+    /// @inheritdoc IPartnerManagerFactory
+    function addVault(IBaseVault newVault) external onlyOwner {
+        uint256 id = vaults.length;
+        vaults.push(newVault);
+        vaultIds[newVault] == id;
+
+
+        emit AddedVault(newVault, id);
+    }
+```
+
+## Tools Used
+VS Code + Mythx
+## Recommended Mitigation Steps
+Change the following from "==" to "=":
+e.g. line 61
+```solidity
+        partnerIds[newPartnerManager] = id;
+```
+e.g line 70
+```solidity
+        vaultIds[newVault] = id;
+```
+## #L-02
+**Title**
 SWC-103 Floating Pragma
-Description
+**Description**
 Contracts should be deployed with the same compiler version and flags that they have been tested with thoroughly. Locking the pragma helps to ensure that contracts do not accidentally get deployed using, for example, an outdated compiler version that might introduce bugs that affect the contract system negatively.
 
-Remediation
+**Remediation**
 Lock the pragma version and also consider known bugs (https://github.com/ethereum/solidity/releases) for the compiler version that is chosen.
 
 Pragma statements can be allowed to float when a contract is intended for consumption by other developers, as in the case with contracts in a library or EthPM package. Otherwise, the developer would need to manually update the pragma in order to compile locally.
