@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "3",
+  "title": "sqrtPriceLimitX96 is wrongly calculated when performing swap in `strategy.rebalance()`",
+  "issueId": 77,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/77"
+}
