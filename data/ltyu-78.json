@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ltyu",
+  "risk": "3",
+  "title": "Adding liquidity can be front-runned",
+  "issueId": 78,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/78"
+}
