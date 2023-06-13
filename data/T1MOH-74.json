@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "3",
+  "title": "Rerange and rebalance are not implemented in Talos",
+  "issueId": 74,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/74"
+}
