@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "3",
+  "title": "Silent overflow caused by left-shifting and downcasting leads to compute a smaller value of the `boostedSecondsInsideX128` which will lead to compute a smaller `totalRewardUnclaimed` when unstaking an LP NFT from UniswapV3Staker",
+  "issueId": 86,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/86"
+}
