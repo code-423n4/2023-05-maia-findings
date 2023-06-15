@@ -1,5 +1,34 @@
+# GAS OPTIMIZATIONS
 
+##
 
+## [G-] Struct can be packed with fewer slots 
+
+## [G-] State variables should be cached in stack variables rather than re-reading them from storage
+
+## [G-] State variables can be packed into fewer storage slots
+
+## [G-] Multiple accesses of a mapping/array should use a local variable cache
+
+## [G-] Save gas by checking against default WETH address
+
+[G-] Avoid emitting constants
+A log topic (declared with indexed) has a gas cost of Glogtopic (375 gas)
+
+[G-] Combine constants into single 
+
+## [G-] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
+
+## [G-] Avoid emit state variable when stack variable available 
+
+## [G-] Unnecessary memory operations with an immutable variable
+
+## [G-] Superfluous event fields
+
+For event we don't want declare the variable to BLOCK.NUMBER AND BLOCK.TIMESTAP. 
+block.timestamp and block.number are added to event information by default so adding them manually wastes gas
+
+## [G-] Avoid contract existence check using low level calls 
 
 
 
