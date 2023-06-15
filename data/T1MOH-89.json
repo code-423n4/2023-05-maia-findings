@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "User with lose his reward in BoostAggregator if `pendingRewards <= 10000`",
+  "issueId": 89,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/89"
+}
