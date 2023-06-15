@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "dontonka",
+  "risk": "2",
+  "title": "Re-entrancy attack with unknown potential impact",
+  "issueId": 92,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/92"
+}
