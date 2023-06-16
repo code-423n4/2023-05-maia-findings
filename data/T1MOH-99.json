@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "IUlyssesERC4626.sol does not match EIP4626 standard because it misses withdraw functionality",
+  "issueId": 99,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/99"
+}
