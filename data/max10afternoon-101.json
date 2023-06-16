@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "max10afternoon",
+  "risk": "2",
+  "title": "Talos: Lack of increase/decrease Allowance on ERC20, will enable to use both new and old allowance, when a user tries to update it",
+  "issueId": 101,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/101"
+}
