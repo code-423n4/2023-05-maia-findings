@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "DAO rewards disabling mechanism in `BaseV2Minter` leaves DAO shares still allocated and excessive mints (causes minor inflation) in some cases",
+  "issueId": 103,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/103"
+}
