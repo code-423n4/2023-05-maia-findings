@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "2",
+  "title": "Core functions as burn(), transfer() & transferFrom() of the ERC20MultiVotes contract can fall into a DoS if the list of _delegates grows enough to cause an Out-Of-Gas exception when iterating over it for freeing votes before a token burn/transfer",
+  "issueId": 100,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/100"
+}
