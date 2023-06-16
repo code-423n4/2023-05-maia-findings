@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "UlyssesPool.sol does not match EIP4626 because of preview functions",
+  "issueId": 98,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/98"
+}
