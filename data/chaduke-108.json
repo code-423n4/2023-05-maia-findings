@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "chaduke",
+  "risk": "3",
+  "title": "RewardMath() uses the max function instead of the min function to calculate  ``totalSecondsUnclaimed``, as a result, a user might receive more rewards then he deserves during unstaking.",
+  "issueId": 108,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/108"
+}
