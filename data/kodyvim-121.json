@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kodyvim",
+  "risk": "2",
+  "title": "`removeBribeFlywheel` does not remove assets from `MultiRewardsDepot`",
+  "issueId": 121,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/121"
+}
