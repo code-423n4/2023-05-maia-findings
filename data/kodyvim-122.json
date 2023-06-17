@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kodyvim",
+  "risk": "2",
+  "title": "Case of prior votes equal to proposalThreshold is missed",
+  "issueId": 122,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/122"
+}
