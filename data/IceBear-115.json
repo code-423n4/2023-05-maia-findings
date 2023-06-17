@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IceBear",
+  "risk": "2",
+  "title": "FIRST ERC4626 DEPOSIT CAN BE EXPLOITED ON SHARE CALCULATION",
+  "issueId": 115,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/115"
+}
