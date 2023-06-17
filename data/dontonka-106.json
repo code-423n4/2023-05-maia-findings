@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "dontonka",
+  "risk": "3",
+  "title": "Wrong operator used in PartnerManagerFactory",
+  "issueId": 106,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/106"
+}
