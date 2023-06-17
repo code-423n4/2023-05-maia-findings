@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "dontonka",
+  "risk": "2",
+  "title": "BaseV2GaugeManager risk of unexpected admin/owner renounce",
+  "issueId": 107,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/107"
+}
