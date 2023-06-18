@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "erebus",
+  "risk": "2",
+  "title": "No checks for expiration dates in the past",
+  "issueId": 135,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/135"
+}
