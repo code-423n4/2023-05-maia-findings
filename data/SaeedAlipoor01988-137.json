@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "Transaction in ERC4626MultiToken.sol.sendAssets function revert if the asset does not support 0 value transfer",
+  "issueId": 137,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/137"
+}
