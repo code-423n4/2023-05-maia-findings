@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "Removing a gauge from `bHermesGauges` during a cycle cancels out all rewards up to that point; Gauges should be chain removed at start of new period only, after rewards collection",
+  "issueId": 143,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/143"
+}
