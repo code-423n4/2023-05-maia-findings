@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "erebus",
+  "risk": "3",
+  "title": "Execute function always reverts if the target contract incurs in an OOG situation",
+  "issueId": 133,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/133"
+}
