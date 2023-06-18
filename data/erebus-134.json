@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "erebus",
+  "risk": "3",
+  "title": "Risk of reentrancy in governance protocol",
+  "issueId": 134,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/134"
+}
