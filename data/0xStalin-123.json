@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "2",
+  "title": "Incorrectly updating the total user boost in the ERC20Boost contract",
+  "issueId": 123,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/123"
+}
