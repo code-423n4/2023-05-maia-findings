@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "Precision loss in the ERC4626MultiToken.sol.redeem function can lead to loss of funds",
+  "issueId": 128,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/128"
+}
