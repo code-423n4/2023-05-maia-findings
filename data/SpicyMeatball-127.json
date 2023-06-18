@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SpicyMeatball",
+  "risk": "2",
+  "title": "Usage of `transfer` instead of `safeTransfer`  for ERC20 tokens in strategy contracts",
+  "issueId": 127,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/127"
+}
