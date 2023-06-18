@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Rickard",
+  "risk": "2",
+  "title": "Potential Reentrancy Vulnerability in `clearTokens()` function",
+  "issueId": 130,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/130"
+}
