@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "max10afternoon",
+  "risk": "2",
+  "title": "Talos: Calling rebalance and rerange will prevent the owner from collecting their fees (either partially or completely) ",
+  "issueId": 138,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/138"
+}
