@@ -229,6 +229,51 @@ FILE: 2023-05-maia/src/hermes/minters/BaseV2Minter.sol
 
 ```
 
+### ``ERC20hTokenRoot.sol``: localChainId,rootPortAddress  state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``
+
+The ``uint96`` type is a 96-bit unsigned integer, which is more than enough for the ``vast majority of chain IDs``. Also other contracts only using ``uint24`` for chainId .  it is perfectly safe to change the ``uint256 public localChainId;`` declaration to ``uint96 public localChainId;``. This will save some gas, and it will make the contract more efficient.
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/token/ERC20hTokenRoot.sol#L16C33-L28
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/token/ERC20hTokenRoot.sol
+
+15:  /// @inheritdoc IERC20hTokenRoot
+- 16:    uint256 public localChainId;
++ 16:    uint96 public localChainId;
+17:
+18:    /// @inheritdoc IERC20hTokenRoot
+19:    address public rootPortAddress;
+20:
+21:    /// @inheritdoc IERC20hTokenRoot
+22:    address public localBranchPortAddress;
+23:
+24:    /// @inheritdoc IERC20hTokenRoot
+25:    address public factoryAddress;
+26:
+27:    /// @inheritdoc IERC20hTokenRoot
+28:    mapping(uint256 => uint256) public getTokenBalance;
+
+```
+
+### ``ERC20hTokenRootFactory.sol``: coreRootRouterAddress,hTokensLenght state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``
+
+``hTokensLenght`` uint96 is more than enough to ``htokens`` length. Because all new tokens pushed to ``hTokens`` array.The array exceeds 1024 elements EVM reverts. So maximum ``hTokensLenght`` may be 1024 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ERC20hTokenRootFactory.sol#L22-L26
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/factories/ERC20hTokenRootFactory.sol
+
+22:    address public coreRootRouterAddress;
++ 26:    uint96 public hTokensLenght;
+23:
+24:    ERC20hTokenRoot[] public hTokens;
+25:
+- 26:    uint256 public hTokensLenght;
+
+```
+
 
 ## [G-] State variables should be cached in stack variables rather than re-reading them from storage
 
