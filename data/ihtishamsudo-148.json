@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ihtishamsudo",
+  "risk": "3",
+  "title": "FlywheelCore.claimRewards(address) USES ARBITRARY FROM IN transferFrom",
+  "issueId": 148,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/148"
+}
