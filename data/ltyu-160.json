@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ltyu",
+  "risk": "2",
+  "title": "Reverting on the root chain can drain AnyCall execution budget",
+  "issueId": 160,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/160"
+}
