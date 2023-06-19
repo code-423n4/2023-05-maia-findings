@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "Time constants related to block.number in Governance are wrong",
+  "issueId": 149,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/149"
+}
