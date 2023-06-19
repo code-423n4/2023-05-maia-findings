@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IceBear",
+  "risk": "2",
+  "title": "When totalSupply is low getQuorumVotesAmount() can return zero",
+  "issueId": 154,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/154"
+}
