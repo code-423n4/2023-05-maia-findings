@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "TalosBaseStrategy.sol calling NonfungiblePositionManager.increaseLiquidity with no slippage protection",
+  "issueId": 157,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/157"
+}
