@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SpicyMeatball",
+  "risk": "3",
+  "title": "Error in fees accounting can lead to a denial of service in strategy contracts",
+  "issueId": 158,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/158"
+}
