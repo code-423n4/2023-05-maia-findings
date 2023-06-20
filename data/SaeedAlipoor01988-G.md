@@ -6,3 +6,6 @@ You can directly transact with the UNI V3 pool contract , with this , the additi
 
 For ref :
 https://github.com/code-423n4/2021-12-mellow-findings/issues/133
+
+## Links
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/base/TalosBaseStrategy.sol#L16
