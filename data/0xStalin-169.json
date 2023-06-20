@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "3",
+  "title": "Incorrectly reading the offset from the received data parameter to get the depositNonce in the BranchBridgeAgent::anyFallback() function",
+  "issueId": 169,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/169"
+}
