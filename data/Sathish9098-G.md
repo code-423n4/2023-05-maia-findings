@@ -274,6 +274,24 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/factories/ERC20hTokenRootFac
 
 ```
 
+### ``vMaia.sol``: currentMonth,unstakePeriodEnd state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``
+
+``currentMonth`` only stores month values ``(0-12)`` and ``unstakePeriodEnd`` this stores ``timestamp``. For ``currentMonth,unstakePeriodEnd`` uint128 is more than enough. So we can save ``1 SLOT`` and ``2000 GAS``
+
+``uint128`` alone stores more than ``10000`` years timestamp 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/vMaia.sol#L34-L35
+
+```diff
+FILE: 2023-05-maia/src/maia/vMaia.sol
+
+- 34: uint256 private currentMonth;
+- 35:    uint256 private unstakePeriodEnd;
++ 34: uint128 private currentMonth;
++ 35:    uint128 private unstakePeriodEnd;
+
+```
+
 ## [G-] State variables should be cached in stack variables rather than re-reading them from storage
 
 
@@ -376,6 +394,24 @@ A log topic (declared with indexed) has a gas cost of Glogtopic (375 gas)
 [G-] Combine constants into single 
 
 ## [G-] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
+
+require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a }
+
+Saves: `` 100-130 GAS ``
+
+### ``bHermes.sol``: The ``subtractions`` should be ``unchecked ``. `` /// @dev Never overflows since balandeOf >= userClaimed`` As per comment the values not going to overflow 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/bHermes.sol#L98-L101
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/hermes/bHermes.sol
+
+98:   /// @dev Never overflows since balandeOf >= userClaimed.
+99:        claimWeight(balance - userClaimedWeight[msg.sender]);
+100:        claimBoost(balance - userClaimedBoost[msg.sender]);
+101:        claimGovernance(balance - userClaimedGovernance[msg.sender]);
+
+```
 
 
 
