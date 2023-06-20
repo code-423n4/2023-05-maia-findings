@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "3",
+  "title": "Normalizing decimals to 18 decimals returns the amount scaled up by a magnitude different than 18 when the original tokenDecimals are not 18 decimals",
+  "issueId": 170,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/170"
+}
