@@ -274,7 +274,6 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/factories/ERC20hTokenRootFac
 
 ```
 
-
 ## [G-] State variables should be cached in stack variables rather than re-reading them from storage
 
 
@@ -285,7 +284,56 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/factories/ERC20hTokenRootFac
 
 Checks that involve constants should come before checks that involve state variables, function calls, and calculations. By doing these checks first, the function is able to revert before wasting a Gcoldsload (2100 gas) in a function that may ultimately revert in the unhappy case.
 
-### Cheaper to check the ``_bridgeAgentFactory,_coreRootRouter`` function parameters before checkcing  ``_setup``  state variable. ``Saves around 60-75 gas ``. 
+### Cheaper to check the function parameters,constants before checking ``govToken.getPriorVotes(msg.sender, sub256(block.number, 1))`` external calls. Saves  ``2100 gas`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L112-L124
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+111: // Reject proposals before initiating as Governor
+112:        require(initialProposalId != 0, "GovernorBravo::propose: Governor Bravo not active");
++ 123:        require(targets.length != 0, "GovernorBravo::propose: must provide actions");
++ 124:        require(targets.length <= proposalMaxOperations, "GovernorBravo::propose: too many actions");
+113:        // Allow addresses above proposal threshold and whitelisted addresses to propose
++ 119:        require(
++ 120:            targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length,
++ 121:            "GovernorBravo::propose: proposal function information arity mismatch"
++ 122:        );
+114:        require(
+115:            govToken.getPriorVotes(msg.sender, sub256(block.number, 1)) > getProposalThresholdAmount()
+116:                || isWhitelisted(msg.sender),
+117:            "GovernorBravo::propose: proposer votes below proposal threshold"
+118:        );
+- 119:        require(
+- 120:            targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length,
+- 121:            "GovernorBravo::propose: proposal function information arity mismatch"
+- 122:        );
+- 123:        require(targets.length != 0, "GovernorBravo::propose: must provide actions");
+- 124:        require(targets.length <= proposalMaxOperations, "GovernorBravo::propose: too many actions");
+
+```
+
+### Cheaper to check the function parameters, constants before checking ``factory.owner()`` external calls. Saves  ``2100 gas`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L324-L327
+
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+323: function setProtocolFee(uint256 _protocolFee) external nonReentrant {
+- 324:        if (msg.sender != factory.owner()) revert Unauthorized();
+325:
+326:        // Revert if the protocol fee is larger than 1%
+327:        if (_protocolFee > MAX_PROTOCOL_FEE) revert InvalidFee();
++ 324:        if (msg.sender != factory.owner()) revert Unauthorized();
+328:
+329:        protocolFee = _protocolFee;
+330:    }
+
+```
+### Cheaper to check the ``_bridgeAgentFactory,_coreRootRouter`` function parameters before checking  ``_setup``  state variable. ``Saves around 60-75 gas ``. 
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootPort.sol#L129-L131
 
@@ -304,9 +352,21 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 
 
 
-
-
 ## [G-] Multiple accesses of a mapping/array should use a local variable cache
+
+Caching a mapping’s value in a local storage or calldata variable when the value is accessed multiple times saves ~42 gas per access due to not having to perform the same offset calculation every time.
+Help the Optimizer by saving a storage variable’s reference instead of repeatedly fetching it
+
+To help the optimizer,declare a storage type variable and use it instead of repeatedly fetching the reference in a map or an array.
+
+As an example, instead of repeatedly calling someMap[someIndex], save its reference like this: SomeStruct storage someStruct = someMap[someIndex] and use it
+
+###
+
+
+
+
+
 
 ## [G-] Save gas by checking against default WETH address
 
@@ -317,7 +377,72 @@ A log topic (declared with indexed) has a gas cost of Glogtopic (375 gas)
 
 ## [G-] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
 
-## [G-] Avoid emit state variable when stack variable available 
+
+
+## [G-] Avoid emit state variable when stack variable available
+
+The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
+
+### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L164-L167
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+164: emit ProposalCreated(
+- 165: newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
++ 165: newProposalID, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
+166:        );
+- 167:      return newProposal.id;
++ 167:      return newProposalID;
+
+```
+
+### ``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``, ``5 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L406
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+404: votingDelay = newVotingDelay;
+405:
+- 406:    emit VotingDelaySet(oldVotingDelay, votingDelay);
++ 406:    emit VotingDelaySet(oldVotingDelay, newVotingDelay);
+
+
+420: votingPeriod = newVotingPeriod;
+421:
+- 422: emit VotingPeriodSet(oldVotingPeriod, votingPeriod);
++ 422: emit VotingPeriodSet(oldVotingPeriod, newVotingPeriod);
+
+437:  proposalThreshold = newProposalThreshold;
+438:
+- 439:  emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
++ 439:  emit ProposalThresholdSet(oldProposalThreshold, newProposalThreshold);
+
+464: whitelistGuardian = account;
+465:
+- 466: emit WhitelistGuardianSet(oldGuardian, whitelistGuardian);
++ 466: emit WhitelistGuardianSet(oldGuardian, account);
+
+```
+### ``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L48-L50
+
+```diff
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
+
+48:  implementation = implementation_;
+49:
+- 50:    emit NewImplementation(oldImplementation, implementation);
++ 50:    emit NewImplementation(oldImplementation, implementation_);
+
+```
+
+
 
 ## [G-] Unnecessary memory operations with an immutable variable
 
@@ -326,7 +451,73 @@ A log topic (declared with indexed) has a gas cost of Glogtopic (375 gas)
 For event we don't want declare the variable to BLOCK.NUMBER AND BLOCK.TIMESTAP. 
 block.timestamp and block.number are added to event information by default so adding them manually wastes gas
 
+
 ## [G-] Avoid contract existence check using low level calls 
+
+##
+
+## [G-] Cache the state variables outside the loop
+
+Caching ``state variables`` outside the loop can be a good way to ``optimize`` your Solidity code. This is because it can prevent the ``contract`` from having to ``load the state variables from storage multiple times``. 
+
+### ``UlyssesPool.sol``: Cache the ``totalWeights`` outside the loop. ``Instances 5`` Saves ``500 GAS`` per ``iteration``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L175-L179
+
+```diff
+FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
++    uint256 totalWeights_= totalWeights;
+130: for (uint256 i = 1; i < bandwidthStateList.length; i++) {
+- 131:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
+- 131:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
+
+
+173: uint256 oldRebalancingFee;
+174:
++    uint256 totalWeights_= totalWeights;
+175: for (uint256 i = 1; i < index; i++) {
+- 176:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
++ 176:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
+177:
+178:            oldRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
+179:        }
+
+
+209: uint256 newRebalancingFee;
+210:
++    uint256 totalWeights_= totalWeights;
+211:        for (uint256 i = 1; i <= index; i++) {
+- 212:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
++ 212:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
+213:
+214:            newRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
+        }
+
+
+230: uint256 oldRebalancingFee;
+231:
++    uint256 totalWeights_= totalWeights;
+232:        for (uint256 i = 1; i < bandwidthStateList.length; i++) {
+- 233:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
+233:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
+234:
+235:            oldRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
+236:        }
+
+
+
+294: uint256 newRebalancingFee;
+295:
++    uint256 totalWeights_= totalWeights;
+296:        for (uint256 i = 1; i < bandwidthStateList.length; i++) {
+- 297:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
+- 297:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
+298:
+299:            newRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
+300        }
+
+```
 
 
 
