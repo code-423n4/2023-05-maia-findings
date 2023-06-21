@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "Governance relies on current totalSupply of bHermes when calculate `proposalThresholdAmount` and `quorumVotesAmount`",
+  "issueId": 179,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/179"
+}
