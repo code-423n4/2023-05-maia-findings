@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Stormreckson",
+  "risk": "2",
+  "title": "Lack of token staking verification in unstaking process in `uniswapv3staker`",
+  "issueId": 194,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/194"
+}
