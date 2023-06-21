@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "`UniswapV3Staker::restakeToken` pass the wrong boolean to _unstakeToken causing it to always revert",
+  "issueId": 190,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/190"
+}
