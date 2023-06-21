@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzebra83",
+  "risk": "3",
+  "title": "RetrieveDeposit will  never Trigger the Fallback function",
+  "issueId": 183,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/183"
+}
