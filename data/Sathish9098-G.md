@@ -548,9 +548,11 @@ block.timestamp and block.number are added to event information by default so ad
 
 ## [G-] Avoid contract existence check using low level calls 
 
+## [G-] Cache external calls outside of loop to avoid re-calling function on each iteration
+
 ##
 
-## [G-] Cache the state variables outside the loop
+## [G-] Cache state variables outside of loop to avoid reading/writing storage on every iteration
 
 Caching ``state variables`` outside the loop can be a good way to ``optimize`` your Solidity code. This is because it can prevent the ``contract`` from having to ``load the state variables from storage multiple times``. 
 
