@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "ERC4626PartnerManager.sol mints extra `partnerGovernance` tokens to itself, resulting in over supply of governance token",
+  "issueId": 191,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/191"
+}
