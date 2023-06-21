@@ -302,7 +302,7 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 
 Checks that involve constants should come before checks that involve state variables, function calls, and calculations. By doing these checks first, the function is able to revert before wasting a Gcoldsload (2100 gas) in a function that may ultimately revert in the unhappy case.
 
-### Cheaper to check the function parameters,constants before checking ``govToken.getPriorVotes(msg.sender, sub256(block.number, 1))`` external calls. Saves  ``2100 gas`` 
+### ``GovernorBravoDelegateMaia.sol``: Cheaper to check the function parameters,constants before checking ``govToken.getPriorVotes(msg.sender, sub256(block.number, 1))`` external calls. Saves  ``2100 gas`` 
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L112-L124
 
@@ -332,7 +332,7 @@ FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
 
 ```
 
-### Cheaper to check the function parameters, constants before checking ``factory.owner()`` external calls. Saves  ``2100 gas`` 
+### ``UlyssesPool.sol``: Cheaper to check the function parameters, constants before checking ``factory.owner()`` external calls. Saves  ``2100 gas`` 
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L324-L327
 
@@ -351,7 +351,7 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 330:    }
 
 ```
-### Cheaper to check the ``_bridgeAgentFactory,_coreRootRouter`` function parameters before checking  ``_setup``  state variable. ``Saves around 60-75 gas ``. 
+### ``RootPort.sol``: Cheaper to check the ``_bridgeAgentFactory,_coreRootRouter`` function parameters before checking  ``_setup``  state variable. ``Saves around 60-75 gas ``. 
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootPort.sol#L129-L131
 
@@ -366,7 +366,40 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 132:
 133:        isBridgeAgentFactory[_bridgeAgentFactory] = true;
 
+
+- 145: require(_setup, "Setup ended.");
+- 146:        require(isBridgeAgent[_coreRootBridgeAgent], "Core Bridge Agent doesn't exist.");
+147:        require(_coreRootBridgeAgent != address(0), "Core Root Bridge Agent cannot be 0 address.");
+148:        require(_coreLocalBranchBridgeAgent != address(0), "Core Local Branch Bridge Agent cannot be 0 address.");
+149:        require(_localBranchPortAddress != address(0), "Local Branch Port Address cannot be 0 address.");
++ 145: require(_setup, "Setup ended.");
++ 146:        require(isBridgeAgent[_coreRootBridgeAgent], "Core Bridge Agent doesn't exist.");
+
 ```
+
+##
+
+## [G-] State variables should be cached in stack variables rather than re-reading them from storage
+
+The instances below point to the second+ access of a state variable within a function. Caching of a state variable replaces each ``Gwarmaccess (100 gas)`` with a much cheaper stack read. Other less obvious fixes/optimizations include having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
+
+### 
+
+
+##
+
+## [G-] Use memory instead of calldata inside the function if the values not changed 
+
+##
+
+## [G-] To save gas, Should avoid overriding state variables with the same value
+
+When you override a state variable, the Solidity compiler has to recompute the entire expression that defines the state variable. This can be expensive, especially if the expression is complex. The gas cost to override a state variable depends on the type of the state variable and the value being overridden.
+
+In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
+
+
+
 
 
 
@@ -379,7 +412,32 @@ To help the optimizer,declare a storage type variable and use it instead of repe
 
 As an example, instead of repeatedly calling someMap[someIndex], save its reference like this: SomeStruct storage someStruct = someMap[someIndex] and use it
 
-###
+### ``MultiRewardsDepot.sol``:  _assets[rewardsContract] mapping should be cached : Saves ``100 GAS``, ``1 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/depots/MultiRewardsDepot.sol#L60-L62
+
+```diff
+FILE: 2023-05-maia/src/rewards/depots/MultiRewardsDepot.sol
+
++ address rewardsContract_=_assets[rewardsContract];
+- 60: emit AssetRemoved(rewardsContract, _assets[rewardsContract]);
++ 60: emit AssetRemoved(rewardsContract, rewardsContract_);
+61:
+- 62: delete _isAsset[_assets[rewardsContract]];
++ 62: delete _isAsset[rewardsContract_];
+```
+
+### ``MultiRewardsDepot.sol``:  _assets[rewardsContract] mapping should be cached : Saves ``100 GAS``, ``1 SLOD``
+
+```diff
+FILE: 2023-05-maia/src/maia/factories/PartnerManagerFactory.sol
+
++ uint256 _partnerManager = partners[partnerIds[partnerManager]];
+- 81: if (partners[partnerIds[partnerManager]] != partnerManager) revert InvalidPartnerManager();
++ 81: if (_partnerManager  != partnerManager) revert InvalidPartnerManager();
+- 82:  delete partners[partnerIds[partnerManager]];
++ 82:  delete partners[_partnerManager];
+```
 
 
 
@@ -413,7 +471,7 @@ FILE: Breadcrumbs2023-05-maia/src/hermes/bHermes.sol
 
 ```
 
-
+##
 
 ## [G-] Avoid emit state variable when stack variable available
 
