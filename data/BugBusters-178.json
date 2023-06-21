@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BugBusters",
+  "risk": "3",
+  "title": "Signature malleability in `delegateBySig` function of `ERC20MultiVotes.sol`",
+  "issueId": 178,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/178"
+}
