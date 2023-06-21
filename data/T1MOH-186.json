@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "T1MOH",
+  "risk": "2",
+  "title": "\"clearing\" doesn't work in \"claim functions\" of PartnerUtilityManager.sol",
+  "issueId": 186,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/186"
+}
