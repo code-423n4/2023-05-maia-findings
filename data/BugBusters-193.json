@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BugBusters",
+  "risk": "3",
+  "title": "Precision loss in `_getGaugeCycleEnd()` function of `ERC20Guages.sol`",
+  "issueId": 193,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/193"
+}
