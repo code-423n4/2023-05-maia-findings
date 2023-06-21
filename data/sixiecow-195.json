@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "sixiecow",
+  "risk": "2",
+  "title": "unchecked return causes fake events to be emitted",
+  "issueId": 195,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/195"
+}
