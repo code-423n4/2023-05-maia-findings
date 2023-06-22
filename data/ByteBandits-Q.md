@@ -54,3 +54,6 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 L-16 Missing zero address check for "_coreRootBridgeAgent" in "initialize" function in ArbitrumBranchBridgeAgentFactory.sol
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ArbitrumBranchBridgeAgentFactory.sol#L55
 Compare with the "initialize" function in BranchBridgeAgentFactory.sol which does this check: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/BranchBridgeAgentFactory.sol#L84
+
+L-17 Unused "requiresPort" modifier in ERC20hTokenBranchFactory.sol
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ERC20hTokenBranchFactory.sol#L81
