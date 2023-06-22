@@ -45,3 +45,12 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IBranchBridgeAgent.sol#L101
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IBranchBridgeAgent.sol#L104
 
+L-14 Typo in Natspec of IVirtualAccount.sol (should be "performed calls" instead of "perfomed call)
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IVirtualAccount.sol#L15
+
+L-15 @notice in Natspec of "createBridgeAgent" function of ArbitrumBranchBridgeAgentFactory is incorrect (should be: "Creates a new bridge agent for root chain." and maybe "root bridge agent" instead of just "bridge agent" as 2 lines below "root bridge agent" is used)
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ArbitrumBranchBridgeAgentFactory.sol#L75
+
+L-16 Missing zero address check for "_coreRootBridgeAgent" in "initialize" function in ArbitrumBranchBridgeAgentFactory.sol
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ArbitrumBranchBridgeAgentFactory.sol#L55
+Compare with the "initialize" function in BranchBridgeAgentFactory.sol which does this check: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/BranchBridgeAgentFactory.sol#L84
