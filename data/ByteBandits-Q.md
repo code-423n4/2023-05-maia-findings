@@ -57,3 +57,6 @@ Compare with the "initialize" function in BranchBridgeAgentFactory.sol which doe
 
 L-17 Unused "requiresPort" modifier in ERC20hTokenBranchFactory.sol
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ERC20hTokenBranchFactory.sol#L81
+
+L-18 Typo of writing "length" as "lenght" in multiple contracts
+https://github.com/search?q=repo%3Acode-423n4%2F2023-05-maia%20lenght&type=code
