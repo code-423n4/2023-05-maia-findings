@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "Malicious early attacker can manipulate the underlyingAsset to take unfair share of future user's deposits",
+  "issueId": 204,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/204"
+}
