@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "Removing a BribeFlywheel from a Gauge does not remove the reward asset from the rewards depo, making it impossible to add a new Flywheel with the same reward token",
+  "issueId": 214,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/214"
+}
