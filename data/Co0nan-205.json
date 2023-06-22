@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "Change in bHermesRate can affect the check modifiers calculation causing all major claim functions of PartnerUtilityManager to revert.",
+  "issueId": 205,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/205"
+}
