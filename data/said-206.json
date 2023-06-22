@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "3",
+  "title": "Malicious user can front-run Gauges's `addBribeFlywheel` to steal bribe rewards",
+  "issueId": 206,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/206"
+}
