@@ -19,6 +19,9 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 * L-05 Interface functions do not exist on the Optimizer contract
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/interfaces/IOptimizerFactory.sol#L16-L21
 
+* L-06 block.number will not be a reliable source of timing on Optimism
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/VirtualAccount.sol#L46
+
 
 
 
