@@ -22,3 +22,15 @@ And the emitted `snapshot` should be updated accordingly:
 emit Snapshot(cache.amount0, cache.amount1, cache.tickLower, cache.tickUpper, cache.liquidity);
 
 This ensures that all the relevant values from the cache struct are included in the emitted `Snapshot` event.
+
+7-(https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/libraries/PoolVariables.sol#L185-L196)
+
+ Incorrect Return Type and Error Placement in amountsDirection() Function.
+
+The amountsDirection() function in the codebase currently exhibits two issues:
+
+Issue 1: Missing Return Type
+In the existing code, the amountsDirection() function does not specify a return type. As a result, the function's behavior and intended output may be ambiguous, leading to potential confusion for developers and users. By adding a return type, we can ensure better clarity and understanding of the function's purpose.
+
+Issue 2: Incorrect Placement of Error Call
+Additionally, the amountsDirection() function seems to have an erroneous error call in the wrong place, leading to incorrect behavior. It is essential to place error calls at appropriate positions to handle exceptions and ensure accurate program execution. Reviewing and rectifying the placement of the error call can help prevent unexpected results and improve code reliability.
