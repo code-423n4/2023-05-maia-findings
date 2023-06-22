@@ -26,6 +26,14 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IERC20hTokenBranch.sol#L22C4-L28
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IERC20hTokenRoot.sol#L47-L55
 
+* L-08 Misleading naming of requiresCoreRouter() modifier in ERC20hTokenRootFactory.sol as modifier checks for more than just the core router
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/factories/ERC20hTokenRootFactory.sol#L75
+
+* L-09 Mixed usage of uint24 and uint256 for chain ids. See examples below:
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IRootBridgeAgent.sol#L378 (uint24)
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/interfaces/IERC20hTokenRoot.sol#L47 (uint256)
+
+
 
 
 
