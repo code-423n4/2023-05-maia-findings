@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Stormreckson",
+  "risk": "3",
+  "title": "Enforcing Allowance Check in transferFrom Function",
+  "issueId": 211,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/211"
+}
