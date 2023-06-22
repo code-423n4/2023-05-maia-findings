@@ -291,6 +291,87 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 + 35:    uint128 private unstakePeriodEnd;
 
 ```
+
+##
+
+## [G-] Avoid emit state variable when stack variable available
+
+The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
+
+### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L164-L167
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+164: emit ProposalCreated(
+- 165: newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
++ 165: newProposalID, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
+166:        );
+- 167:      return newProposal.id;
++ 167:      return newProposalID;
+
+```
+
+### ``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``, ``5 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L406
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+404: votingDelay = newVotingDelay;
+405:
+- 406:    emit VotingDelaySet(oldVotingDelay, votingDelay);
++ 406:    emit VotingDelaySet(oldVotingDelay, newVotingDelay);
+
+
+420: votingPeriod = newVotingPeriod;
+421:
+- 422: emit VotingPeriodSet(oldVotingPeriod, votingPeriod);
++ 422: emit VotingPeriodSet(oldVotingPeriod, newVotingPeriod);
+
+437:  proposalThreshold = newProposalThreshold;
+438:
+- 439:  emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
++ 439:  emit ProposalThresholdSet(oldProposalThreshold, newProposalThreshold);
+
+464: whitelistGuardian = account;
+465:
+- 466: emit WhitelistGuardianSet(oldGuardian, whitelistGuardian);
++ 466: emit WhitelistGuardianSet(oldGuardian, account);
+
+```
+### ``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L48-L50
+
+```diff
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
+
+48:  implementation = implementation_;
+49:
+- 50:    emit NewImplementation(oldImplementation, implementation);
++ 50:    emit NewImplementation(oldImplementation, implementation_);
+
+```
+
+###  ``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``
+
+
+```diff
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+155:   tokenId = _tokenId;
+156:
+157:        _mint(receiver, shares);
+158:        if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
+159:
+- 160:`        emit Initialize(tokenId, msg.sender, receiver, amount0, amount1, shares);
++ 160:`        emit Initialize(_tokenId, msg.sender, receiver, amount0, amount1, shares);
+```
+
 ##
 
 ## [G-] State variables should be cached in stack variables rather than re-reading them from storage
@@ -310,6 +391,47 @@ FILE: 2023-05-maia/src/hermes/minters/BaseV2Minter.sol
 
 ```
 
+### ``ERC20Boost.sol``: ``gaugeState.userGaugeBoost `` should be cached with local ``uint256`` stack variable : Saves ``400 GAS``,``4 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Boost.sol#L177-L185
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/erc-20/ERC20Boost.sol
+
++ uint256 userGaugeBoost_=gaugeState.userGaugeBoost;
+- 177: if (boost >= gaugeState.userGaugeBoost) {
++ 177: if (boost >= userGaugeBoost_) {
+178:            _userGauges[msg.sender].remove(gauge);
+179:            delete getUserGaugeBoost[msg.sender][gauge];
+180:
+181:            emit Detach(msg.sender, gauge);
+182:        } else {
+183:            gaugeState.userGaugeBoost -= boost.toUint128();
+184:
+- 185:            emit DecrementUserGaugeBoost(msg.sender, gauge, gaugeState.userGaugeBoost);
++ 185:            emit DecrementUserGaugeBoost(msg.sender, gauge, userGaugeBoost_);
+186:        }
+
+
+
+
+210:           GaugeState storage gaugeState = getUserGaugeBoost[msg.sender][gauge];
+211:
++ uint256 userGaugeBoost_=gaugeState.userGaugeBoost;
+- 212: if (_deprecatedGauges.contains(gauge) || boost >= gaugeState.userGaugeBoost) {
++ 212: if (_deprecatedGauges.contains(gauge) || boost >= userGaugeBoost_) {
+213:                require(_userGauges[msg.sender].remove(gauge)); // Remove from set. Should never fail.
+214:                delete getUserGaugeBoost[msg.sender][gauge];
+215:
+216:                emit Detach(msg.sender, gauge);
+217:            } else {
+218:                gaugeState.userGaugeBoost -= boost.toUint128();
+219:
+- 220:                emit DecrementUserGaugeBoost(msg.sender, gauge, gaugeState.userGaugeBoost);
++ 220:                emit DecrementUserGaugeBoost(msg.sender, gauge, userGaugeBoost_);
+221:            }
+
+```
 
 ##
 
@@ -394,31 +516,8 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 
 ```
 
-##
-
-## [G-] State variables should be cached in stack variables rather than re-reading them from storage
-
-The instances below point to the second+ access of a state variable within a function. Caching of a state variable replaces each ``Gwarmaccess (100 gas)`` with a much cheaper stack read. Other less obvious fixes/optimizations include having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
-
-### 
-
 
 ##
-
-## [G-] Use memory instead of calldata inside the function if the values not changed 
-
-##
-
-## [G-] To save gas, Should avoid overriding state variables with the same value
-
-When you override a state variable, the Solidity compiler has to recompute the entire expression that defines the state variable. This can be expensive, especially if the expression is complex. The gas cost to override a state variable depends on the type of the state variable and the value being overridden.
-
-In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
-
-
-
-
-
 
 ## [G-] Multiple accesses of a mapping/array should use a local variable cache
 
@@ -488,85 +587,6 @@ FILE: Breadcrumbs2023-05-maia/src/hermes/bHermes.sol
 
 ```
 
-##
-
-## [G-] Avoid emit state variable when stack variable available
-
-The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
-
-### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L164-L167
-
-```diff
-FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
-
-164: emit ProposalCreated(
-- 165: newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
-+ 165: newProposalID, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
-166:        );
-- 167:      return newProposal.id;
-+ 167:      return newProposalID;
-
-```
-
-### ``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``, ``5 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L406
-
-```diff
-FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
-
-404: votingDelay = newVotingDelay;
-405:
-- 406:    emit VotingDelaySet(oldVotingDelay, votingDelay);
-+ 406:    emit VotingDelaySet(oldVotingDelay, newVotingDelay);
-
-
-420: votingPeriod = newVotingPeriod;
-421:
-- 422: emit VotingPeriodSet(oldVotingPeriod, votingPeriod);
-+ 422: emit VotingPeriodSet(oldVotingPeriod, newVotingPeriod);
-
-437:  proposalThreshold = newProposalThreshold;
-438:
-- 439:  emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
-+ 439:  emit ProposalThresholdSet(oldProposalThreshold, newProposalThreshold);
-
-464: whitelistGuardian = account;
-465:
-- 466: emit WhitelistGuardianSet(oldGuardian, whitelistGuardian);
-+ 466: emit WhitelistGuardianSet(oldGuardian, account);
-
-```
-### ``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L48-L50
-
-```diff
-FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
-
-48:  implementation = implementation_;
-49:
-- 50:    emit NewImplementation(oldImplementation, implementation);
-+ 50:    emit NewImplementation(oldImplementation, implementation_);
-
-```
-
-###  ``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``
-
-
-```diff
-FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
-
-155:   tokenId = _tokenId;
-156:
-157:        _mint(receiver, shares);
-158:        if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
-159:
-- 160:`        emit Initialize(tokenId, msg.sender, receiver, amount0, amount1, shares);
-+ 160:`        emit Initialize(_tokenId, msg.sender, receiver, amount0, amount1, shares);
-```
 
 
 
@@ -646,8 +666,44 @@ FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 300        }
 
 ```
+[G-13]	Use calldata instead of memory for function parameters	22
+
+[G-12]	Using storage instead of memory for structs/arrays saves gas	8
+
+[G-13] External function calls should be avoided inside the loops 
+
+[G-10]	State variables only set in the constructor should be declared immutable	18
+
+## [G-] Use memory instead of calldata inside the loops if the values not changed 
+
+##
+
+## [G-] To save gas, Should avoid overriding state variables with the same value
+
+When you override a state variable, the Solidity compiler has to recompute the entire expression that defines the state variable. This can be expensive, especially if the expression is complex. The gas cost to override a state variable depends on the type of the state variable and the value being overridden.
+
+In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
+
+[G‑06] Avoid contract existence checks by using low level calls
+
+Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
+
+[G-] Using private rather than public for constants, saves gas
+
+If needed, the values can be read from the verified contract source code, or if there are multiple values there can be a single getter function that returns a [tuple of the values](https://github.com/code-423n4/2022-08-frax/blob/90f55a9ce4e25bceed3a74290b854341d8de6afa/src/contracts/FraxlendPair.sol#L156-L178) of all currently-public constants. Saves 3406-3606 gas in deployment gas due to the compiler not having to create non-payable getter functions for deployment calldata, not having to store the bytes of the value outside of where it’s used, and not adding another entry to the method ID table
+
+[G-13] Use constants instead of type(uintx).max
+
+type(uint120).max or type(uint112).max, etc. it uses more gas in the distribution process and also for each transaction than constant usage.
+
+[G-27] Upgrade Solidity’s optimizer
+
+Make sure Solidity’s optimizer is enabled. It reduces gas costs. If you want to gas optimize for contract deployment (costs less to deploy a contract) then set the Solidity optimizer at a low number. If you want to optimize for run-time gas costs (when functions are called on a contract) then set the optimizer to a high number.
+
+Set the optimization value higher than 800 in your hardhat.config.ts file.
 
 
+[G-07] Caching global variables is more expensive than using the actual variable (use msg.sender instead of caching it)
 
 
 
