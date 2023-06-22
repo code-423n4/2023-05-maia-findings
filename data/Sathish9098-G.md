@@ -291,10 +291,27 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 + 35:    uint128 private unstakePeriodEnd;
 
 ```
+##
 
 ## [G-] State variables should be cached in stack variables rather than re-reading them from storage
 
+The instances below point to the second+ access of a state variable within a function. Caching of a state variable replaces each ``Gwarmaccess (100 gas)`` with a much cheaper stack read. Other less obvious fixes/optimizations include having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
 
+### ``BaseV2Minter.sol``: ``dao `` should be cached with local ``address`` stack variable : Saves ``100 GAS``,``1 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L145
+
+```diff
+FILE: 2023-05-maia/src/hermes/minters/BaseV2Minter.sol
+
++ address _dao=dao ;
+- 145: if (dao != address(0)) underlying.safeTransfer(dao, share);
++ 145: if (_dao != address(0)) underlying.safeTransfer(_dao, share);
+
+```
+
+
+##
 
 ## [G-]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
 
@@ -534,6 +551,21 @@ FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
 - 50:    emit NewImplementation(oldImplementation, implementation);
 + 50:    emit NewImplementation(oldImplementation, implementation_);
 
+```
+
+###  ``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``
+
+
+```diff
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+155:   tokenId = _tokenId;
+156:
+157:        _mint(receiver, shares);
+158:        if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
+159:
+- 160:`        emit Initialize(tokenId, msg.sender, receiver, amount0, amount1, shares);
++ 160:`        emit Initialize(_tokenId, msg.sender, receiver, amount0, amount1, shares);
 ```
 
 
