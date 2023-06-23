@@ -433,6 +433,33 @@ FILE: Breadcrumbs2023-05-maia/src/erc-20/ERC20Boost.sol
 
 ```
 
+### ``RootBridgeAgent.sol``: ``settlement.hTokens[i] ``,``settlement.toChain`` should be cached with local ``address`` and ``uint24`` stack variable : Saves ``200 GAS``,``2 SLOD`` per iterations 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L591-L612
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
+
+596:for (uint256 i = 0; i < settlement.hTokens.length;) {
+597:            //Check if asset
++        address hTokens_ = settlement.hTokens[i] ;
++        uint24  toChain_= settlement.toChain;
+- 598:            if (settlement.hTokens[i] != address(0)) { //@audit settlement.hTokens[i] first SLOD
++ 598:            if (hTokens_ != address(0)) {
+599:                //Move hTokens from Branch to Root + Mint Sufficient hTokens to match new port deposit
+600:                IPort(localPortAddress).bridgeToRoot(
+601:                    msg.sender,
+- 602:                    IPort(localPortAddress).getGlobalTokenFromLocal(settlement.hTokens[i], settlement.toChain), //@audit settlement.hTokens[i] second SLOD , //@audit settlement.toChain first SLOD
++ 602:                    IPort(localPortAddress).getGlobalTokenFromLocal(hTokens_ , toChain_),
+603:                    settlement.amounts[i],
+604:                    settlement.deposits[i],
+- 605:                    settlement.toChain  //@audit settlement.toChain second SLOD
++ 605:                    toChain_
+606:                );
+607:            }
+
+```
+
 ##
 
 ## [G-]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
@@ -555,6 +582,152 @@ FILE: 2023-05-maia/src/maia/factories/PartnerManagerFactory.sol
 + 82:  delete partners[_partnerManager];
 ```
 
+### ``BranchBridgeAgent.sol``:  ``uint8(getDeposit[_depositNonce].hTokens.length)``,``getDeposit[_depositNonce].tokens[0]``,``getDeposit[_depositNonce].hTokens[0]``,``getDeposit[_depositNonce].amounts[0]``,``getDeposit[_depositNonce].deposits[0]``,``getDeposit[nonce].hTokens``,``getDeposit[nonce].tokens``, ``getDeposit[nonce].amounts``, ``getDeposit[nonce].deposits``,``getDeposit[_depositNonce].depositedGas``  mappings should be cached : Saves ``1500 GAS``, ``15 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol#L332
+
+
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
+
++ uint8 _hTokensLength = uint8(getDeposit[_depositNonce].hTokens.length);
+
+- 332: if (uint8(getDeposit[_depositNonce].hTokens.length) == 1) { //@audit 1 SLOD
++ 332: if (_hTokensLength  == 1) {
+
+- 365: } else if (uint8(getDeposit[_depositNonce].hTokens.length) > 1) { //@audit 2 SLOD
++ 365: } else if (_hTokensLength > 1) {
+
+372: msg.sender,
+- 373: uint8(getDeposit[_depositNonce].hTokens.length), //@audit 3 SLOD
++ 373: _hTokensLength,
+374: nonce,
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol#L332-L364
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
+
+if (uint8(getDeposit[_depositNonce].hTokens.length) == 1) {
++     address tokens_= getDeposit[_depositNonce].tokens[0];
++     address hTokens_=getDeposit[_depositNonce].hTokens[0];
++     uint256 amounts_=getDeposit[_depositNonce].amounts[0];
++    uint256  deposits_= getDeposit[_depositNonce].deposits[0];
+            if (_isSigned) {
+                packedData = abi.encodePacked( //@audit GAS is this possible to cache getDeposit[_depositNonce]
+                    bytes1(0x05),
+                    msg.sender,
+                    _depositNonce,
+-                    getDeposit[_depositNonce].hTokens[0], //@audit 1 SLOD
++                    hTokens_,
+-                     getDeposit[_depositNonce].tokens[0], //@audit 1 SLOD
++                     tokens_,
+-                    getDeposit[_depositNonce].amounts[0], //@audit 1 SLOD
++                    amounts_,
+                    _normalizeDecimals(
+                        
+-                 getDeposit[_depositNonce].deposits[0],ERC20(getDeposit[_depositNonce].tokens[0]).decimals()  //@audit 2 SLOD
++                 deposits_,ERC20(tokens_).decimals()
+                    ),
+                    _toChain,
+                    _params,
+                    msg.value.toUint128(),
+                    _remoteExecutionGas
+                );
+            } else {
+                packedData = abi.encodePacked(
+                    bytes1(0x02),
+                    _depositNonce,
+-                     getDeposit[_depositNonce].hTokens[0], //@audit 2 SLOD
++                      hTokens_,
+-                     getDeposit[_depositNonce].tokens[0], //@audit 3 SLOD
++                     tokens_,
+-                    getDeposit[_depositNonce].amounts[0],   //@audit 2 SLOD
++                    amounts_,
+                    _normalizeDecimals(
+                        
+-            getDeposit[_depositNonce].deposits[0],ERC20(getDeposit[_depositNonce].tokens[0]).decimals() //@audit 4 SLOD
++            deposits_,ERC20(tokens_).decimals()
+
+```
+
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
+
+ } else if (uint8(getDeposit[_depositNonce].hTokens.length) > 1) {
+            //Nonce
+         uint32 nonce = _depositNonce; 
+
++    address[]  hTokens_=getDeposit[nonce].hTokens; 
++    address[]  tokens_=getDeposit[nonce].tokens;
++    uint256[]  amounts_=getDeposit[nonce].amounts; 
++    uint256[]  deposits_=getDeposit[nonce].deposits; 
+
+            if (_isSigned) {
+                packedData = abi.encodePacked(
+                    bytes1(0x06),
+                    msg.sender,
+                    uint8(getDeposit[_depositNonce].hTokens.length),
+                    nonce,
+-                    getDeposit[nonce].hTokens, //@audit 1 SLOD
++                    hTokens_,
+-                    getDeposit[nonce].tokens, //@audit 1 SLOD
++                    tokens_,
+-                    getDeposit[nonce].amounts, //@audit 1 SLOD
++                    amounts_,
+-                    _normalizeDecimalsMultiple(getDeposit[nonce].deposits, getDeposit[nonce].tokens), //@audit 2 SLOD
++                    _normalizeDecimalsMultiple(deposits_, tokens_),
+                    _toChain,
+                    _params,
+                    msg.value.toUint128(),
+                    _remoteExecutionGas
+                );
+            } else {
+                packedData = abi.encodePacked(
+                    bytes1(0x03),
+                    uint8(getDeposit[nonce].hTokens.length),
+                    _depositNonce,
+-                    getDeposit[nonce].hTokens,  //@audit 2 SLOD
++                    hTokens_,
+-                    getDeposit[nonce].tokens,   //@audit 3 SLOD
++                    tokens_,
+-                    getDeposit[nonce].amounts,  //@audit 2 SLOD
++                    amounts_,
+-                     _normalizeDecimalsMultiple(getDeposit[nonce].deposits, getDeposit[nonce].tokens), //@audit 4 SLOD
++                     _normalizeDecimalsMultiple(deposits_, tokens_),
+                    _toChain,
+                    _params,
+                    msg.value.toUint128(),
+                    _remoteExecutionGas
+                );
+            }
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol#L1068-L1075
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
+
++   uint256 depositedGas_= getDeposit[_depositNonce].depositedGas ;
+- 1069: if (minExecCost > getDeposit[_depositNonce].depositedGas) {
++ 1069: if (minExecCost > gdepositedGas_) {
+1070:            _forceRevert();
+1071:            return;
+1072:        }
+1073:
+1074:        //Update user deposit reverts if not enough gas => user must boost deposit with gas
+- 1075:        getDeposit[_depositNonce].depositedGas -= minExecCost.toUint128();
++ 1075:        getDeposit[_depositNonce].depositedGas = depositedGas_ - minExecCost.toUint128();
+```
+
+
+
+
 
 
 
@@ -597,8 +770,6 @@ FILE: Breadcrumbs2023-05-maia/src/hermes/bHermes.sol
 For event we don't want declare the variable to BLOCK.NUMBER AND BLOCK.TIMESTAP. 
 block.timestamp and block.number are added to event information by default so adding them manually wastes gas
 
-
-## [G-] Avoid contract existence check using low level calls 
 
 ## [G-] Cache external calls outside of loop to avoid re-calling function on each iteration
 
@@ -676,6 +847,7 @@ FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 
 ## [G-] Use memory instead of calldata inside the loops if the values not changed 
 
+
 ##
 
 ## [G-] To save gas, Should avoid overriding state variables with the same value
@@ -684,17 +856,101 @@ When you override a state variable, the Solidity compiler has to recompute the e
 
 In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
 
-[G‑06] Avoid contract existence checks by using low level calls
 
-Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
 
-[G-] Using private rather than public for constants, saves gas
+##
 
-If needed, the values can be read from the verified contract source code, or if there are multiple values there can be a single getter function that returns a [tuple of the values](https://github.com/code-423n4/2022-08-frax/blob/90f55a9ce4e25bceed3a74290b854341d8de6afa/src/contracts/FraxlendPair.sol#L156-L178) of all currently-public constants. Saves 3406-3606 gas in deployment gas due to the compiler not having to create non-payable getter functions for deployment calldata, not having to store the bytes of the value outside of where it’s used, and not adding another entry to the method ID table
+## [G-13] Use constants instead of type(uintx).max
 
-[G-13] Use constants instead of type(uintx).max
+Using constants instead of type(uint256).max can save gas. This is because the compiler can embed constants directly into the bytecode of your contract, which saves on gas costs.
 
-type(uint120).max or type(uint112).max, etc. it uses more gas in the distribution process and also for each transaction than constant usage.
+``type(uint256).max `` this code will use 3 gas to get the maximum value of a uint256.
+
+But constant will use 0 gas to get the maximum value of a uint256.
+
+### ``BranchBridgeAgent.sol``: Use ``constants`` instead of ``type(uintx).max ``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L70C8-L70C45
+
+```solidity
+FILE: 2023-05-maia/src/uni-v3-staker/UniswapV3Staker.sol
+
+70: if (liquidity == type(uint96).max) {
+
+385: amount0Max: type(uint128).max,
+
+386: amount1Max: type(uint128).max
+
+456: if (liquidity >= type(uint96).max) stake.liquidityIfOverflow = 0;
+
+506: if (liquidity >= type(uint96).max) {
+
+509: liquidityNoOverflow: type(uint96).max,
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/rewards/FlywheelGaugeRewards.sol#L133C12-L133C67
+
+```solidity
+FILE: 2023-05-maia/src/rewards/rewards/FlywheelGaugeRewards.sol
+
+133: require(newRewards <= type(uint112).max); // safe cast
+
+187: require(nextRewards <= type(uint112).max); // safe cast
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/tokens/ERC4626PartnerManager.sol#L200-L203
+
+```solidity
+FILE: 2023-05-maia/src/maia/tokens/ERC4626PartnerManager.sol
+
+200:  address(gaugeWeight).safeApprove(newPartnerVault, type(uint256).max);
+
+201:  address(gaugeBoost).safeApprove(newPartnerVault, type(uint256).max);
+
+202:  address(governance).safeApprove(newPartnerVault, type(uint256).max);
+
+203:  address(partnerGovernance).safeApprove(newPartnerVault, type(uint256).max);
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626MultiToken.sol#L143
+
+```solidity
+FILE: Breadcrumbs2023-05-maia/src/erc-4626/ERC4626MultiToken.sol
+
+143: if (allowed != type(uint256).max) allowance[owner][msg.sender] = allowed - shares;
+
+165: if (allowed != type(uint256).max) allowance[owner][msg.sender] = allowed - shares;
+
+200: shares = type(uint256).max;
+
+270:  return type(uint256).max;
+
+275:  return type(uint256).max;
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/base/TalosBaseStrategy.sol#L130
+
+```solidity
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+130: address(_token0).safeApprove(address(_nonfungiblePositionManager), type(uint256).max);
+
+131: address(_token1).safeApprove(address(_nonfungiblePositionManager), type(uint256).max);
+
+249: if (allowed != type(uint256).max) allowance[_owner][msg.sender] = allowed - shares;
+
+285: amount0Max: type(uint128).max,
+
+286: amount1Max: type(uint128).max
+
+367: amount0Max: type(uint128).max,
+
+368: amount1Max: type(uint128).max
+
+```
 
 [G-27] Upgrade Solidity’s optimizer
 
@@ -702,8 +958,97 @@ Make sure Solidity’s optimizer is enabled. It reduces gas costs. If you want t
 
 Set the optimization value higher than 800 in your hardhat.config.ts file.
 
+```
+FILE: hardhat.config.js
 
-[G-07] Caching global variables is more expensive than using the actual variable (use msg.sender instead of caching it)
+ overrides: {
+      'src/talos/TalosStrategyVanilla.sol': {
+        version: '0.8.18',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+      'src/talos/TalosStrategyStaked.sol': {
+        version: '0.8.18',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+      'src/ulysses-omnichain/RootBridgeAgent.sol': {
+        version: '0.8.18',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+      'src/ulysses-omnichain/BranchBridgeAgent.sol': {
+        version: '0.8.18',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+      'src/ulysses-omnichain/BranchBridgeAgentFactory.sol': {
+        version: '0.8.18',
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+          metadata: {
+            bytecodeHash: 'none',
+          },
+        },
+      },
+    },
+  },
+
+```
+
+Use assembly to perform efficient back-to-back calls
+
+If a similar external call is performed back-to-back, we can use assembly to reuse any function signatures and function parameters that stay the same. In addition, we can also reuse the same memory space for each function call (scratch space + free memory pointer + zero slot), which can potentially allow us to avoid memory expansion costs.
+
+File: contracts/Pool/PoolRegistry.sol
+239:        comptrollerProxy.setCloseFactor(closeFactor);
+240:        comptrollerProxy.setLiquidationIncentive(liquidationIncentive);
+241:        comptrollerProxy.setMinLiquidatableCollateral(minLiquidatableCollateral);
+242:        comptrollerProxy.setPriceOracle(PriceOracle(priceOracle));
+243:
+244:        // Start transferring ownership to msg.sender
+245:        comptrollerProxy.transferOwnership(msg.sender);
+
+
+
+
+
 
 
 
