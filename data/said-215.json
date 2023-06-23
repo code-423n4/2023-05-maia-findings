@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "`UniswapV3Gauge` put wrong address as strategy parameter inside `BaseV2Gauge` constructor",
+  "issueId": 215,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/215"
+}
