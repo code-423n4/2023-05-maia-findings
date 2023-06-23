@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "3",
+  "title": "`bHermesRate` change inside `ERC4626PartnerManager` prone to sandwich attack.",
+  "issueId": 240,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/240"
+}
