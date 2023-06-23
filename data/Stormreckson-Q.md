@@ -34,3 +34,12 @@ In the existing code, the amountsDirection() function does not specify a return 
 
 Issue 2: Incorrect Placement of Error Call
 Additionally, the amountsDirection() function seems to have an erroneous error call in the wrong place, leading to incorrect behavior. It is essential to place error calls at appropriate positions to handle exceptions and ensure accurate program execution. Reviewing and rectifying the placement of the error call can help prevent unexpected results and improve code reliability.
+
+8- https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/tokens/ERC4626PartnerManager.sol#L215-L231)
+
+Missing Event in `IncreaseConversionRate` Function
+The conversion rate function in the smart contract is missing an event statement, which reduces transparency and makes 
+it challenging for external entities to track rate changes
+the `increaseConversionRate` function should emit the `ConversionRateIncreased` event with the appropriate old and new rates as parameters. 
+
+emit ConversionRateIncreased(oldRate, newRate);
