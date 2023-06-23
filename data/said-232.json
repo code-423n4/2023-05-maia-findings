@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "`BaseV2GaugeFactory's `addBribeToGauge` could not working properly due to wrong call order",
+  "issueId": 232,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/232"
+}
