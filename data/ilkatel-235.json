@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ilkatel",
+  "risk": "3",
+  "title": "Calling a malicious proposal by changing the bytecode of the deployed contract.",
+  "issueId": 235,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/235"
+}
