@@ -22,3 +22,6 @@ In few parts of the [code](https://github.com/code-423n4/2023-05-maia/blob/54a45
  
 ## [Q-4] Unreachable code
 In line [375](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/CoreRootRouter.sol#L375) of CoreRootRouter.sol, the last return statement never gets called. This is because of the `else` statement. Consider removing this or refactoring the `else` statement.
+
+## [Q-5] ERC4626MultiToken constructor does not check for duplicates assets
+In [constructor](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626MultiToken.sol#L50-L62) of ERC4626MultiToken.sol, new assets are added upon construction, but are not checked for duplicates. Similar to the [child contract](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesToken.sol#L45), `UlyssesToken.addAsset()`, consider adding duplicate checks for more consistency.
