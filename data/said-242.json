@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "Current `bHermesRate` implementation inside `ERC4626PartnerManager` not allow smooth vMaia exchange rate to bhermes tokens",
+  "issueId": 242,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/242"
+}
