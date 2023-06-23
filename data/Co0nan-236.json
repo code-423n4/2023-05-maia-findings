@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "`updateAssetBalances` could be revert due to a paused ERC20 asset which put `UlyessesToken::setWeights` into DoS state.",
+  "issueId": 236,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/236"
+}
