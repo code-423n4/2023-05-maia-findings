@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "`beforeWithdraw` inside vMaia only checking day and month, could cause unexpected delay unstake period",
+  "issueId": 237,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/237"
+}
