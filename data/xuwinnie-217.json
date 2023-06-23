@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "Malicious user can exploit function \"restakeToken\" to dos other users' withdrawals",
+  "issueId": 217,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/217"
+}
