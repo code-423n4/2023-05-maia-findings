@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BLOS",
+  "risk": "3",
+  "title": "In function \"removeAsset\", assetId should be assetIndex + 1",
+  "issueId": 224,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/224"
+}
