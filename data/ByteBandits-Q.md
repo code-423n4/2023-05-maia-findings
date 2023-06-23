@@ -60,3 +60,6 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 
 L-18 Typo of writing "length" as "lenght" in multiple contracts
 https://github.com/search?q=repo%3Acode-423n4%2F2023-05-maia%20lenght&type=code
+
+L-19 Asymmetry in implementation of "bridgeOut" and "bridgeOutMultiple" in BranchPort.sol
+Both functions do the same just "bridgeOutMultiple" does it for multiple local addresses. The functions process the 2 if statements in their function body in a different order. This e.g. makes it harder to compare the functions for correctness.
