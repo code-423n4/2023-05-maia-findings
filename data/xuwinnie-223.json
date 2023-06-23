@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "assetId of lastAsset is incorrectly updated in function removeAsset",
+  "issueId": 223,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/223"
+}
