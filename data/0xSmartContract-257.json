@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xSmartContract",
+  "risk": "3",
+  "title": "Modifier of `claimPartnerGovernance()` does not check balance of msg.sender",
+  "issueId": 257,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/257"
+}
