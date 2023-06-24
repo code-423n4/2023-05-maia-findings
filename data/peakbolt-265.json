@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "Missing `_replenishGas()` in `RootBridgeAgent._payFallbackGas()` causing users to lose paid gas and not able to redeem failed settlement",
+  "issueId": 265,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/265"
+}
