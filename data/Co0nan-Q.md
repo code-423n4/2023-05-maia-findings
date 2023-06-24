@@ -8,7 +8,7 @@ if (newDelegatee != address(0)) { //@audit QA if address 0 the user will be alre
         }
 ```
 
-- L2. `_setWhitelistAccountExpiration` doesn't check if the expiration set is not in the future, causing the account to be automaticely expired when `isWhitelisted` invoked.
+- L2. `_setWhitelistAccountExpiration` doesn't check if the expiration set is in the future ( > block.timestamp), causing the account to be automaticely expired when `isWhitelisted` invoked.
 https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L447C5-L455C6
 
 ```
@@ -79,7 +79,7 @@ function addPartner(PartnerManager newPartnerManager) external onlyOwner {
 - NC1. claimReward function will send the entire reward if the amountRequested is Zero.
 https://github.com/code-423n4/2023-05-maia/blob/main/src/uni-v3-staker/UniswapV3Staker.sol#L262C4-L275C1
 
-The function doesn't check if amountRequested > 0, hence the function will reset the rewards to 0 and send the full reward.
+The function doesn't check if amountRequested > 0, hence the function will reset the rewards to 0 and send the full reward in case the amountRequested = 0
 
 ```
 function claimReward(address to, uint256 amountRequested) external returns (uint256 reward) {
