@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "8olidity",
+  "risk": "2",
+  "title": "Lack of slippage protection",
+  "issueId": 248,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/248"
+}
