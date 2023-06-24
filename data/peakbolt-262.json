@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "2",
+  "title": "DoS of RootBridgeAgent due to missing negation of return values for UniswapV3Pool.swap()",
+  "issueId": 262,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/262"
+}
