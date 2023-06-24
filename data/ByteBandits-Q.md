@@ -63,3 +63,6 @@ https://github.com/search?q=repo%3Acode-423n4%2F2023-05-maia%20lenght&type=code
 
 L-19 Asymmetry in implementation of "bridgeOut" and "bridgeOutMultiple" in BranchPort.sol
 Both functions do the same just "bridgeOutMultiple" does it for multiple local addresses. The functions process the 2 if statements in their function body in a different order. This e.g. makes it harder to compare the functions for correctness.
+
+L-20 Risk of accidentally toggling on toggled off items in BranchPort.sol
+There are sets of 2 functions in that contract where one function adds an item and another function toggles the item state. As add function does not check whether the item was already added, it could accidentally be added and toggled on again. A side effect of this is that the arrays that track the history of added items will also hold duplicate items. The following combinations of functions were identified: addStrategyToken + toggleStrategyToken, addPortStrategy + togglePortStrategy, addBridgeAgentFactory + toggleBridgeAgentFactory, addBridgeAgent + toggleBridgeAgent
