@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "`unstakeToken` in UniswapV3Staker can't be called by other user even past the end time",
+  "issueId": 254,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/254"
+}
