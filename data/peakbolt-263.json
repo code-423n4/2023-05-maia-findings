@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "Lack of wrapping of paid gas in `retrySettlement()` and `retrieveDeposit()` will cause loss of users' bridging deposit",
+  "issueId": 263,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/263"
+}
