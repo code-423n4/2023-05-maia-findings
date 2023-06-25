@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "`UniswapV3Staker::onERC721Received` attributes received token to incorrect incentive",
+  "issueId": 284,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/284"
+}
