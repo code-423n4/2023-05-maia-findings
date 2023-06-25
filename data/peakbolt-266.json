@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "Lack of return value handing in `ArbitrumBranchBridgeAgent._performCall()` could cause users' deposit to be locked in contract",
+  "issueId": 266,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/266"
+}
