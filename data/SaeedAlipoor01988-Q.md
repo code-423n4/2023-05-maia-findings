@@ -18,6 +18,7 @@ In the PoolVariables.sol#L246, Use SafeCast to increase the accuracy of the calc
 ## Links
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/libraries/PoolVariables.sol#L246
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L485
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/libraries/IncentiveTime.sol#L9
 
 ## Title
 Signatures vulnerable attacks
