@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xTheC0der",
+  "risk": "2",
+  "title": "`UlyssesToken.setWeights(...)` can cause user loss of assets on vault deposits/withdrawals",
+  "issueId": 281,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/281"
+}
