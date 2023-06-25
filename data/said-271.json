@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "3",
+  "title": "`TalosBaseStrategy` initializer not use `checkDeviation`, vunerable to sandwich attack.",
+  "issueId": 271,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/271"
+}
