@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "Deposit function is at risk of a MEV attack due to no slippage protection and setting block.timestamp as deadline ",
+  "issueId": 283,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/283"
+}
