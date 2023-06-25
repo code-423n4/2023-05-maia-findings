@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "rerange and rebalance happened inside Talos Strategy not considering collected protocol fees",
+  "issueId": 272,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/272"
+}
