@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lukejohn",
+  "risk": "2",
+  "title": "ERC4626PartnerManager.maxDeposit() returns maximum number of shares instead of maximum amount of assets to deposit.",
+  "issueId": 269,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/269"
+}
