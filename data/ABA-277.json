@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "Removing a `UniswapV3Gauge` via `UniswapV3GaugeFactory` does not actually remove it from the `UniswapV3Staker`; Gauge still gains rewards, can be staked to (even though deprecated) plus old stakers game the rewards of new stakers",
+  "issueId": 277,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/277"
+}
