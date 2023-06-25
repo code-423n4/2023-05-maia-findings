@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "User can mint infinite amount of root hToken by bridging a mismatched pair of local and underlying token",
+  "issueId": 273,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/273"
+}
