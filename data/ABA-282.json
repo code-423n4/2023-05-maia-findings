@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "`UniswapV3Staker::createIncentive` allows creating of incentives only in the future; deviates from normal `UniswapV3Staker` expected behavior",
+  "issueId": 282,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/282"
+}
