@@ -17,3 +17,12 @@ In the PoolVariables.sol#L246, Use SafeCast to increase the accuracy of the calc
 
 ## Links
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/libraries/PoolVariables.sol#L246
+
+## Title
+Signatures vulnerable attacks
+
+## Details and Impact
+ecrecover() accepts as valid, two versions of signatures, meaning an attacker can use the same signature twice. Consider adding checks for signature malleability, or using OpenZeppelin's ECDSA library to perform the extra checks necessary in order to prevent this attack.
+
+## Links
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L43
