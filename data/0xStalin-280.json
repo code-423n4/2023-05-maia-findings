@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "2",
+  "title": "Incorrectly computing the number of shares to receive when depositing tokens in a MultiToken Vault (ERC4626 Contract)",
+  "issueId": 280,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/280"
+}
