@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "2",
+  "title": "User will permanently lose their assets if they retryDeposit(Settlement) when they should redeemDeposit(Settlement)",
+  "issueId": 301,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/301"
+}
