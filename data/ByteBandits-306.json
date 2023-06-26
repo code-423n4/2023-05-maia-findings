@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "If the Underlying token is the same as the WrappedNativeToken, then user funds will be silently drained ",
+  "issueId": 306,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/306"
+}
