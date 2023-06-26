@@ -79,6 +79,41 @@ Solidity Visual Developer / Slither
 Avoid relying on ```block.timestamp```
 ##### Reference 
 [block.timestamp](https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp)
+## [L-06] ```BaseV2GaugeManager.changeAdmin``` lacks a zero-check
+The lack of a zero address check in the changeAdmin function allows an attacker to set the admin address to the zero address, resulting in unauthorized access and control over the contract.
+Vulnerable Code 
+``` solidity
+function changeAdmin(address newAdmin) external onlyAdmin {
+        admin = newAdmin;
+
+        emit ChangedAdmin(newAdmin);
+    }
+```
+##### Vulnerable Code Link
+[BaseV2GaugeManager.sol#L146](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/gauges/factories/BaseV2GaugeManager.sol#L146)
+##### Tools Used 
+Remix/Slither
+##### Reference 
+[Missing Zero Address Check](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation)
+## [L-07] The ```initialize``` Function Is Missing An Event Emission After Assigning The Value To ```bridgeAgentExecutorAddress```.
+Missing Emmiting an event makes it difficult to track changes in the contract's state or important updates related to the ```bridgeAgentExecutorAddress``` off-chain
+Vulnerable Code 
+``` solidity
+function initialize(address _localBridgeAgentAddress) external onlyOwner {
+        require(_localBridgeAgentAddress != address(0), "Bridge Agent address cannot be 0");
+        localBridgeAgentAddress = _localBridgeAgentAddress;
+        bridgeAgentExecutorAddress = IBridgeAgent(localBridgeAgentAddress).bridgeAgentExecutorAddress();
+        renounceOwnership();
+    }
+```
+##### Vulnerable Code Link 
+[BaseBranchRouter.sol#L37](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BaseBranchRouter.sol#L37-L42)
+##### Tools Used 
+VS Code/ Slither 
+##### Recommended Mitigation Steps
+Emit an event for critical parameter changes.
+##### Reference
+[Missing Event Access](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control)
 ## [N-01] ```ERC20Boost._burn``` is never used and should be removed
 Vulnerable Code 
 ``` solidity
@@ -99,3 +134,6 @@ Slither
 Remove unused functions.
 ##### Reference 
 [Dead Code](https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code)
+## [N-02] ```ERC4626.sol``` Is Missing Inheritance From ```IERC4626DepositOnly```
+##### Recommended Mitigation Steps 
+ERC4626 should inherit from IERC4626DepositOnly
