@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kutugu",
+  "risk": "3",
+  "title": "_gasSwapIn and _gasSwapOut using the wrong price",
+  "issueId": 294,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/294"
+}
