@@ -25,3 +25,9 @@ In line [375](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999
 
 ## [Q-5] ERC4626MultiToken constructor does not check for duplicates assets
 In [constructor](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626MultiToken.sol#L50-L62) of ERC4626MultiToken.sol, new assets are added upon construction, but are not checked for duplicates. Similar to the [child contract](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesToken.sol#L45), `UlyssesToken.addAsset()`, consider adding duplicate checks for more consistency.
+
+## [G-1] unnecessary SLOAD in bridgeToRoot()
+In `bridgeToRoot()` of [RootPort.sol](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootPort.sol#L280), `_hToken` is checked to see if it `isGlobalAddress`. This is unnecessary because `mint()` does this already. Consider removing this to reduce SLOAD.
+
+## [G-2] Unnecessary check in bridgeIn()
+In `bridgeIn()` of [RootBridgeAgent.sol](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L397), `globalAddress` is checked for `address(0)`. This is unncessary because `checkParams()` already does this. Consider removing this to reduce MLOAD and contract size.
