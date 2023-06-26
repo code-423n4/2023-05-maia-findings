@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kodyvim",
+  "risk": "2",
+  "title": "`depositGasAnycallConfig` wrongly withdraws from WrappedNativeToken",
+  "issueId": 305,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/305"
+}
