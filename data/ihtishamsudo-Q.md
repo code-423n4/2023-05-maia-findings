@@ -64,3 +64,18 @@ Slither
 All the paths in a modifier must execute _ or revert.
 ##### Reference 
 [Incorrect Modifier](https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier)
+## [L-05] Dangerous Usage Of ```block.timestamp```
+```block.timestamp``` can be manipulated by miners. Suppose Bob's contract relies on ```block.timestamp``` for its randomness. Eve is a miner and manipulates ```block.timestamp``` to exploit Bob's contract.
+Vulnerable Code 
+``` solidity
+            if (cycle - block.timestamp <= incrementFreezeWindow) revert IncrementFreezeError();
+```
+##### Vulnerable Code Link
+[ERC20Guages.sol#L205](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L205)
+[FlywheelAcummulatedRewards.sol#L46](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/rewards/FlywheelAcummulatedRewards.sol#L46)
+##### Tools Used 
+Solidity Visual Developer / Slither 
+##### Recommended Mitigation Steps
+Avoid relying on ```block.timestamp```
+##### Reference 
+[block.timestamp](https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp)
