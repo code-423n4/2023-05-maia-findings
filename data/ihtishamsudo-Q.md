@@ -79,3 +79,23 @@ Solidity Visual Developer / Slither
 Avoid relying on ```block.timestamp```
 ##### Reference 
 [block.timestamp](https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp)
+## [N-01] ```ERC20Boost._burn``` is never used and should be removed
+Vulnerable Code 
+``` solidity
+function _burn(address from, uint256 amount) internal override notAttached(from, amount) {
+        super._burn(from, amount);
+    }
+```
+Vulnerable Code Link
+[ERC20Boost.sol#L302](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Boost.sol#L302)
+[ERC20Gauges.sol#L379](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L379)
+[ERC20Gauges.sol#L485](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L485)
+[ERC20Gauges.sol#L383](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L383)
+[ERC20MultiVotes.sol#L258](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L258)
+[ERC20MultiVotes.sol#L260](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L260)
+##### Tools Used
+Slither
+##### Recommended Mitigation Steps
+Remove unused functions.
+##### Reference 
+[Dead Code](https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code)
