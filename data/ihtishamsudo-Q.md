@@ -114,6 +114,23 @@ VS Code/ Slither
 Emit an event for critical parameter changes.
 ##### Reference
 [Missing Event Access](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control)
+## [L-07] ```RootBridgeAgent._gasSwapIn.amount0``` Is A Local Variable Never Initialized
+Vulnerable Code 
+``` solidity
+returns (int256 amount0, int256 amount1
+```
+##### Vulnerable Code Link
+[RootBridgeAgent.sol#L690](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L690)
+[RootBridgeAgent.sol#L980](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L980)
+[RootBridgeAgent.sol#L1036](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L1036)
+[RootBridgeAgent.sol#L871](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L871)
+[RootBridgeAgent.sol#L953](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L953)
+##### Tools Used 
+Solidity Visual Developer/Slither
+##### Recommended Mitigation Steps 
+Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.
+##### Reference 
+[Uninitialized Local Variable](https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables)
 ## [N-01] ```ERC20Boost._burn``` is never used and should be removed
 Vulnerable Code 
 ``` solidity
