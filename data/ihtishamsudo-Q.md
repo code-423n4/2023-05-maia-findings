@@ -47,3 +47,20 @@ Slither
 Rename the local variables that shadow another component.
 ##### Reference
 [Local Variable Shadowing](https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing)
+## [L-04] ```UtilityManager.checkWeight``` does not always execute _; or revertModifier
+If a modifier does not execute _ or revert, the execution of the function will return the default value, which can be misleading for the caller.
+Vulnerable Code 
+``` solidity
+    modifier checkWeight(uint256 amount) virtual;
+```
+##### Vulnerable Code Link
+[UtitlityManager.sol#L141](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/UtilityManager.sol#L141)
+[UtitlityManager.sol#L145](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/UtilityManager.sol#L145)
+[UtitlityManager.sol#L147](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/UtilityManager.sol#L147)
+[RewardsDepot.sol](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/depots/RewardsDepot.sol#L24)
+##### Tools Used 
+Slither
+##### Recommended Mitigation Step 
+All the paths in a modifier must execute _ or revert.
+##### Reference 
+[Incorrect Modifier](https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier)
