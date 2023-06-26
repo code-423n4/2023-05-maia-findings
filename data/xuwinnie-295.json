@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "\"retrySettlement\" could be reentered by poisonous underlying token when clearing tokens",
+  "issueId": 295,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/295"
+}
