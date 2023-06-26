@@ -16,6 +16,8 @@ If ```WEEK``` Value Is Somehow Greater Than ```block.timestamp```, Then The Valu
 
 ##### Tool Used 
 Manual / Slither
+##### Recommended Mitigation Step
+Consider ordering multiplication before division.
 ##### Reference
 [Division Before Multiplication](https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply)
 
@@ -25,11 +27,23 @@ Vulnerable Code
 ``` solidty
 _userGauges[msg.sender].remove(gauge);
 ```
-## Vulnerable Code Link 
+##### Vulnerable Code Link 
 [ERCBoost.sol#L178](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Boost.sol#L178)
 [BaseV2Guage.sol#L115](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/gauges/BaseV2Gauge.sol#L115)
 [FlyWheelGuageRewards.sol#L76](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/rewards/FlywheelGaugeRewards.sol#L76)
-## Tools Used 
+##### Tools Used 
 Slither
-## Reference 
+##### Recommended Mitigation Step
+Ensure that all the return values of the function calls are used.
+##### Reference 
 [Unused Return](https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return)
+## [L-03] ```IUniswapV3Staker.tokenIdRewards``` Shadows ```IUniswapV3Staker.rewards```
+##### Vulnerable Code Link
+[IUniswapV3Staker.sol#L156](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/interfaces/IUniswapV3Staker.sol#L156)
+[IUniswapV3Staker.sol#L162](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/interfaces/IUniswapV3Staker.sol#L162)
+##### Tools Used
+Slither
+##### Recommended Mitigation Step
+Rename the local variables that shadow another component.
+##### Reference
+[Local Variable Shadowing](https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing)
