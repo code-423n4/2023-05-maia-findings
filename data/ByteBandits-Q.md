@@ -66,3 +66,7 @@ Both functions do the same just "bridgeOutMultiple" does it for multiple local a
 
 L-20 Risk of accidentally toggling on toggled off items in BranchPort.sol
 There are sets of 2 functions in that contract where one function adds an item and another function toggles the item state. As add function does not check whether the item was already added, it could accidentally be added and toggled on again. A side effect of this is that the arrays that track the history of added items will also hold duplicate items. The following combinations of functions were identified: addStrategyToken + toggleStrategyToken, addPortStrategy + togglePortStrategy, addBridgeAgentFactory + toggleBridgeAgentFactory, addBridgeAgent + toggleBridgeAgent. Example of toggling on again by adding: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L291
+
+L-21 NapSpec of increaseConversionRate() function in IERC4626PartnerManager.sol is wrong
+In https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/interfaces/IERC4626PartnerManager.sol#L64 it talks about "address(partnerVault)" but in the implementation in uses "address(this)".
+
