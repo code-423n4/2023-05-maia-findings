@@ -70,3 +70,6 @@ There are sets of 2 functions in that contract where one function adds an item a
 L-21 NapSpec of increaseConversionRate() function in IERC4626PartnerManager.sol is wrong
 In https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/interfaces/IERC4626PartnerManager.sol#L64 it talks about "address(partnerVault)" but in the implementation in uses "address(this)".
 
+L-22 Same NatSpec and implementation for "maxDeposit" and "maxMint" functions in ERC4626PartnerManager
+https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626PartnerManager.sol#L159-L160
+https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626PartnerManager.sol#L159-L160
