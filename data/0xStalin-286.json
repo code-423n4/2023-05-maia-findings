@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xStalin",
+  "risk": "3",
+  "title": "Computation to calculate the required number of shares to withdraw assets from an UlyssesVault is wrong, which causes that users can withdraw more assets than what they really should be allowed to.",
+  "issueId": 286,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/286"
+}
