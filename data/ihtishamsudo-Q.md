@@ -137,3 +137,28 @@ Remove unused functions.
 ## [N-02] ```ERC4626.sol``` Is Missing Inheritance From ```IERC4626DepositOnly```
 ##### Recommended Mitigation Steps 
 ERC4626 should inherit from IERC4626DepositOnly
+## [N-03] Avoid Using Low Level Calls 
+Function ```call``` in ```VirtualAccount.sol``` Is Using Low Level Call. The use of low-level calls is error-prone. Low-level calls do not check for code existence or call success.
+Vulnerable Code
+``` solidity
+ function call(Call[] calldata calls)
+        external
+        requiresApprovedCaller
+        returns (uint256 blockNumber, bytes[] memory returnData)
+    {
+        ..........
+        for (uint256 i = 0; i < calls.length; i++) {
+            .........
+            (bool success, bytes memory data) = calls[i].target.call(calls[i].callData);
+            .........
+            }
+    }
+```
+##### Vulnerable Code Link
+[VirtualAccount.sol#L49](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/VirtualAccount.sol#L49)
+##### Tools Used 
+Slither
+##### Recommended Mitigation Steps 
+Avoid low-level calls. Check the call success. If the call is meant for a contract, check for code existence.
+##### Reference 
+[Low Level Calls](https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls)
