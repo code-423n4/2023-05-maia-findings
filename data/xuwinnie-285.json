@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "Malicious user can set any contract as local hToken for an underlying since there is no access control for \"_addLocalToken\"",
+  "issueId": 285,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/285"
+}
