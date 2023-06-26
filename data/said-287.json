@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "said",
+  "risk": "2",
+  "title": "`unstakeAndWithdraw` inside `BoostAggregator` could lose pendingRewards in certain case",
+  "issueId": 287,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/287"
+}
