@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "`depositGasAnycallConfig` will fail due to unnecessary `wrappedNativeToken.withdraw`",
+  "issueId": 298,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/298"
+}
