@@ -2,7 +2,7 @@
 Solidity's integer division truncates. Thus, performing division before multiplication can lead to precision loss.
 
 Vulnerable Code 
-``` solidty
+``` solidity
 uint256 _newEpoch = (block.timestamp / WEEK) * WEEK;
 ```
 If ```WEEK``` Value Is Somehow Greater Than ```block.timestamp```, Then The Value of ```uint256 _newEpoch``` Will Be Zero.
@@ -18,3 +18,18 @@ If ```WEEK``` Value Is Somehow Greater Than ```block.timestamp```, Then The Valu
 Manual / Slither
 ##### Reference
 [Division Before Multiplication](https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply)
+
+## [L-02] ```ERC20Boost.decrementGaugeBoost``` ignores return value by ```_userGauges[msg.sender].remove(gauge)``` 
+The return value of an external call is not stored in a local or state variable. It fails to handle the return value when attempting to remove the gauge associated with the user, which could potentially allow an attacker to bypass gauge removal and manipulate the contract state.
+Vulnerable Code
+``` solidty
+_userGauges[msg.sender].remove(gauge);
+```
+## Vulnerable Code Link 
+[ERCBoost.sol#L178](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Boost.sol#L178)
+[BaseV2Guage.sol#L115](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/gauges/BaseV2Gauge.sol#L115)
+[FlyWheelGuageRewards.sol#L76](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/rewards/FlywheelGaugeRewards.sol#L76)
+## Tools Used 
+Slither
+## Reference 
+[Unused Return](https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return)
