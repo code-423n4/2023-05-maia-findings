@@ -114,7 +114,7 @@ VS Code/ Slither
 Emit an event for critical parameter changes.
 ##### Reference
 [Missing Event Access](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control)
-## [L-07] ```RootBridgeAgent._gasSwapIn.amount0``` Is A Local Variable Never Initialized
+## [L-08] ```RootBridgeAgent._gasSwapIn.amount0``` Is A Local Variable Never Initialized
 Vulnerable Code 
 ``` solidity
 returns (int256 amount0, int256 amount1
@@ -131,6 +131,22 @@ Solidity Visual Developer/Slither
 Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.
 ##### Reference 
 [Uninitialized Local Variable](https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables)
+## [L-09] ```outputParams_scope_2``` Is A Storage Variable Never Initialized
+An uninitialized storage variable will act as a reference to the first state variable, and can override a critical variable.
+Vulnerable Code
+``` solidity
+(Call[] memory calls, OutputMultipleParams memory outputParams, uint24 toChain)
+```
+##### Vulnerable Code Link
+[MulticallRootRouter.sol#L457](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/MulticallRootRouter.sol#L457)
+[MulticallRootRouter.sol#L305](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/MulticallRootRouter.sol#L305)
+[MulticallRootRouter.sol#L381](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/MulticallRootRouter.sol#L381)
+##### Tools Used
+Slither/VS Code
+##### Recommended Mitigations Steps
+Initialize all storage variables. 
+##### Reference
+[Uninitialized Storage variables](https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-storage-variables)
 ## [N-01] ```ERC20Boost._burn``` is never used and should be removed
 Vulnerable Code 
 ``` solidity
