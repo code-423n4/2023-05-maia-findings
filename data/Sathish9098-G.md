@@ -460,6 +460,51 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
 
 ```
 
+### ``RootBridgeAgent.sol``: ``userFeeInfo.gasToBridgeOut `` should be cached with local uint128 stack variable : Saves ``200 GAS``,``2 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L746-L759
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
+
+746: uint256 _initialGas = initialGas;
++ uint128 _gasToBridgeOut = userFeeInfo.gasToBridgeOut ;
+747:
+748:        if (_toChain == localChainId) {
+749:            //Transfer gasToBridgeOut Local Branch Bridge Agent if remote initiated call.
+750:            if (_initialGas > 0) {
+- 751:                address(wrappedNativeToken).safeTransfer(getBranchBridgeAgent[localChainId], userFeeInfo.gasToBridgeOut);
++ 751:                address(wrappedNativeToken).safeTransfer(getBranchBridgeAgent[localChainId],_gasToBridgeOut );
+752:            }
+753:
+- 754:            return uint128(userFeeInfo.gasToBridgeOut);
++ 754:            return uint128(_gasToBridgeOut);
+755:        }
+756:
+757:        if (_initialGas > 0) {
+- 758:            if (userFeeInfo.gasToBridgeOut <= MIN_FALLBACK_RESERVE * tx.gasprice) revert InsufficientGasForFees();
++ 758:            if (_gasToBridgeOut <= MIN_FALLBACK_RESERVE * tx.gasprice) revert InsufficientGasForFees();
+- 759:            (amountOut, gasToken) = _gasSwapOut(userFeeInfo.gasToBridgeOut, _toChain);
++ 759:            (amountOut, gasToken) = _gasSwapOut(_gasToBridgeOut, _toChain);
+
+```
+
+### ``UlyssesPool.sol``: `` newTotalWeights `` should be used instead of ``totalWeights``   : Saves ``11 GAS``,``2 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L241-L243
+
+```diff
+FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+241:  totalWeights = newTotalWeights;
+242:
+- 243:        if (totalWeights > MAX_TOTAL_WEIGHT || oldTotalWeights == newTotalWeights) {
++ 243:        if (newTotalWeights> MAX_TOTAL_WEIGHT || oldTotalWeights == newTotalWeights) {
+```
+
+
+
+
 ##
 
 ## [G-]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
@@ -542,7 +587,6 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 + 146:        require(isBridgeAgent[_coreRootBridgeAgent], "Core Bridge Agent doesn't exist.");
 
 ```
-
 
 ##
 
@@ -725,20 +769,72 @@ FILE: 2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
 + 1075:        getDeposit[_depositNonce].depositedGas = depositedGas_ - minExecCost.toUint128();
 ```
 
+### ``RootBridgeAgent.sol``:  ``getSettlement[_settlementNonce].gasToBridgeOut`` mapping should be cached : Saves ``100 GAS``, ``1 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L839-L845
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
+
+838: //Check if sufficient balance
++ uint128 _gasToBridgeOut = getSettlement[_settlementNonce].gasToBridgeOut ;
+- 839:        if (minExecCost > getSettlement[_settlementNonce].gasToBridgeOut) {
++ 839:        if (minExecCost > _gasToBridgeOut) {
+840:            _forceRevert();
+841:            return;
+842:        }
+843:
+844:        //Update user deposit reverts if not enough gas
+- 845:        getSettlement[_settlementNonce].gasToBridgeOut -= minExecCost.toUint128();
++ 845:        getSettlement[_settlementNonce].gasToBridgeOut =_gasToBridgeOut - minExecCost.toUint128();
+846:    }
 
 
+```
+
+##
+
+## [G-] Store external call values in immutable variables to improve performance and reduce gas costs 
+
+You can save a Gcoldsload (2100 gas) in the address provider, plus the 100 gas overhead of the external call, for every _replenishGas(), by creating an immutable CONFIG variable which will store the ``IAnycallProxy(localAnyCallAddress).config()`` address. ``localAnyCallAddress`` is immutable variable so not changed any where in the contract. When ever we call ``IAnycallProxy(localAnyCallAddress).config()`` always return the same address. So its ``waste of external call `` instead we can store the ``IAnycallProxy(localAnyCallAddress).config()`` address with ``CONFIG`` immutable variable during constructor initialization time.
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L851
+
+```diff
+FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
+
++ address public immutable CONFIG;
+
+Inside the constructor
+
++ CONFIG = IAnycallProxy(localAnyCallAddress).config();
+
+- 851: IAnycallConfig(IAnycallProxy(localAnyCallAddress).config()).deposit{value: _executionGasSpent}(address(this));
++ 851: IAnycallConfig(CONFIG).deposit{value: _executionGasSpent}(address(this));
+
+- 1236: IAnycallConfig anycallConfig = IAnycallConfig(IAnycallProxy(localAnyCallAddress).config());
++ 1236: IAnycallConfig anycallConfig = IAnycallConfig(CONFIG);
+```
+###
 
 
+```diff
+FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 
++ address public immutable OWNER;
 
+Inside the constructor
 
++ OWNER= factory.owner()
 
-## [G-] Save gas by checking against default WETH address
+- 154: asset.safeTransfer(factory.owner(), claimed);
++ 154: asset.safeTransfer(OWNER, claimed);
+- 324: if (msg.sender != factory.owner()) revert Unauthorized();
++ 324: if (msg.sender != OWNER) revert Unauthorized();
 
-[G-] Avoid emitting constants
-A log topic (declared with indexed) has a gas cost of Glogtopic (375 gas)
+```
 
-[G-] Combine constants into single 
+##
 
 ## [G-] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
 
@@ -746,7 +842,7 @@ require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a }
 
 Saves: `` 100-130 GAS ``
 
-### ``bHermes.sol``: The ``subtractions`` should be ``unchecked ``. `` /// @dev Never overflows since balandeOf >= userClaimed`` As per comment the values not going to overflow 
+### ``bHermes.sol``: The ``subtractions`` should be ``unchecked ``. `` /// @dev Never overflows since balandeOf >= userClaimed`` As per comment the values not going to overflow : Saves ``390 GAS``
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/bHermes.sol#L98-L101
 
@@ -759,6 +855,42 @@ FILE: Breadcrumbs2023-05-maia/src/hermes/bHermes.sol
 101:        claimGovernance(balance - userClaimedGovernance[msg.sender]);
 
 ```
+
+### ``UlyssesPool.sol``: ``balance - assets`` should be ``unchecked`` since not possible to overflow because of this condition check ``if (balance > assets)`` : Saves ``130 GAS``
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+138: if (balance > assets) {
+- 139:  return balance - assets;
++ 139:  return unchecked{balance - assets};
+140: } else {
+
+```
+### ``UlyssesPool.sol``: `` newRebalancingFee - oldRebalancingFee`` should be ``unchecked`` since not possible to overflow because of this condition check ``if (oldRebalancingFee < newRebalancingFee)`` : Saves ``260 GAS``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L217-L219
+
+```diff
+FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+217:     if (oldRebalancingFee < newRebalancingFee) {
+- 218:            asset.safeTransferFrom(msg.sender, address(this), newRebalancingFee - oldRebalancingFee);
++ unchecked {
++        asset.safeTransferFrom(msg.sender, address(this), newRebalancingFee - oldRebalancingFee);
++    }
+219:     }
+
+302: if (oldRebalancingFee < newRebalancingFee) {
+- 303:            asset.safeTransferFrom(msg.sender, address(this), newRebalancingFee - oldRebalancingFee);
++ unchecked {
++        asset.safeTransferFrom(msg.sender, address(this), newRebalancingFee - oldRebalancingFee);
++    }
+304:        }
+
+```
+
+
 
 
 
@@ -779,64 +911,7 @@ block.timestamp and block.number are added to event information by default so ad
 
 Caching ``state variables`` outside the loop can be a good way to ``optimize`` your Solidity code. This is because it can prevent the ``contract`` from having to ``load the state variables from storage multiple times``. 
 
-### ``UlyssesPool.sol``: Cache the ``totalWeights`` outside the loop. ``Instances 5`` Saves ``500 GAS`` per ``iteration``
 
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L175-L179
-
-```diff
-FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
-
-+    uint256 totalWeights_= totalWeights;
-130: for (uint256 i = 1; i < bandwidthStateList.length; i++) {
-- 131:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
-- 131:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
-
-
-173: uint256 oldRebalancingFee;
-174:
-+    uint256 totalWeights_= totalWeights;
-175: for (uint256 i = 1; i < index; i++) {
-- 176:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
-+ 176:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
-177:
-178:            oldRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
-179:        }
-
-
-209: uint256 newRebalancingFee;
-210:
-+    uint256 totalWeights_= totalWeights;
-211:        for (uint256 i = 1; i <= index; i++) {
-- 212:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
-+ 212:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
-213:
-214:            newRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
-        }
-
-
-230: uint256 oldRebalancingFee;
-231:
-+    uint256 totalWeights_= totalWeights;
-232:        for (uint256 i = 1; i < bandwidthStateList.length; i++) {
-- 233:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
-233:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
-234:
-235:            oldRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
-236:        }
-
-
-
-294: uint256 newRebalancingFee;
-295:
-+    uint256 totalWeights_= totalWeights;
-296:        for (uint256 i = 1; i < bandwidthStateList.length; i++) {
-- 297:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights);
-- 297:            uint256 targetBandwidth = totalSupply.mulDiv(bandwidthStateList[i].weight, totalWeights_);
-298:
-299:            newRebalancingFee += _calculateRebalancingFee(bandwidthStateList[i].bandwidth, targetBandwidth, false);
-300        }
-
-```
 [G-13]	Use calldata instead of memory for function parameters	22
 
 [G-12]	Using storage instead of memory for structs/arrays saves gas	8
