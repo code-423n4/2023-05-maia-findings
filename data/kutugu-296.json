@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kutugu",
+  "risk": "2",
+  "title": "uint32 block.timestamp only lasts 100 years",
+  "issueId": 296,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/296"
+}
