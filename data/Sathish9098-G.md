@@ -294,83 +294,7 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 
 ##
 
-## [G-] Avoid emit state variable when stack variable available
 
-The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
-
-### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L164-L167
-
-```diff
-FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
-
-164: emit ProposalCreated(
-- 165: newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
-+ 165: newProposalID, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
-166:        );
-- 167:      return newProposal.id;
-+ 167:      return newProposalID;
-
-```
-
-### ``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``, ``5 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L406
-
-```diff
-FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
-
-404: votingDelay = newVotingDelay;
-405:
-- 406:    emit VotingDelaySet(oldVotingDelay, votingDelay);
-+ 406:    emit VotingDelaySet(oldVotingDelay, newVotingDelay);
-
-
-420: votingPeriod = newVotingPeriod;
-421:
-- 422: emit VotingPeriodSet(oldVotingPeriod, votingPeriod);
-+ 422: emit VotingPeriodSet(oldVotingPeriod, newVotingPeriod);
-
-437:  proposalThreshold = newProposalThreshold;
-438:
-- 439:  emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
-+ 439:  emit ProposalThresholdSet(oldProposalThreshold, newProposalThreshold);
-
-464: whitelistGuardian = account;
-465:
-- 466: emit WhitelistGuardianSet(oldGuardian, whitelistGuardian);
-+ 466: emit WhitelistGuardianSet(oldGuardian, account);
-
-```
-### ``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` 
-
-https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L48-L50
-
-```diff
-FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
-
-48:  implementation = implementation_;
-49:
-- 50:    emit NewImplementation(oldImplementation, implementation);
-+ 50:    emit NewImplementation(oldImplementation, implementation_);
-
-```
-
-###  ``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``
-
-
-```diff
-FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
-
-155:   tokenId = _tokenId;
-156:
-157:        _mint(receiver, shares);
-158:        if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
-159:
-- 160:`        emit Initialize(tokenId, msg.sender, receiver, amount0, amount1, shares);
-+ 160:`        emit Initialize(_tokenId, msg.sender, receiver, amount0, amount1, shares);
-```
 
 ##
 
@@ -489,7 +413,7 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
 
 ```
 
-### ``UlyssesPool.sol``: `` newTotalWeights `` should be used instead of ``totalWeights``   : Saves ``11 GAS``,``2 SLOD``
+### ``UlyssesPool.sol``: `` newTotalWeights `` should be used instead of ``totalWeights``   : Saves ``100 GAS``,``1 SLOD``
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L241-L243
 
@@ -502,8 +426,205 @@ FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 + 243:        if (newTotalWeights> MAX_TOTAL_WEIGHT || oldTotalWeights == newTotalWeights) {
 ```
 
+### ``GovernorBravoDelegateMaia.sol``: `` proposal.proposer `` should be cached with local ``address`` variable   : Saves ``200 GAS``,``2 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L234C9-L247C14
+
+```diff
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
++ address _proposer= proposal.proposer;
+- if (msg.sender != proposal.proposer && msg.sender != admin) {
++ if (msg.sender != _proposer && msg.sender != admin) {
+            // Whitelisted proposers can't be canceled for falling below proposal threshold
+            if (isWhitelisted(proposal.proposer)) {
+                require(
+-                     (govToken.getPriorVotes(proposal.proposer, sub256(block.number, 1)) < 
++                     (govToken.getPriorVotes(_proposer, sub256(block.number, 1)) < 
+                   getProposalThresholdAmount())
+                        && msg.sender == whitelistGuardian,
+                    "GovernorBravo::cancel: whitelisted proposer"
+                );
+            } else {
+                require(
+-                     (govToken.getPriorVotes(proposal.proposer, sub256(block.number, 1)) < 
++                     (govToken.getPriorVotes(_proposer, sub256(block.number, 1)) < getProposalThresholdAmount()),
+                    "GovernorBravo::cancel: proposer above threshold"
+                );
+            }
+
+```
+### ``GovernorBravoDelegateMaia.sol``: `` pendingAdmin `` should be cached with local ``address`` variable   : Saves ``400 GAS``,``4 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L508
+
+```diff
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
++ address oldPendingAdmin = pendingAdmin;
+507: require(
+- 508:            msg.sender == pendingAdmin && msg.sender != address(0), "GovernorBravo:_acceptAdmin: pending
++ 508:            msg.sender == oldPendingAdmin && msg.sender != address(0), "GovernorBravo:_acceptAdmin: pending  admin only"
+509:        );
+510:
+511:        // Save current values for inclusion in log
+512:        address oldAdmin = admin;
+- 513:        address oldPendingAdmin = pendingAdmin;
+514:
+515:        // Store admin with value pendingAdmin
+- 516:        admin = pendingAdmin;
++ 516:        admin = oldPendingAdmin ;
+517:
+518:        // Clear the pending value
+519:        pendingAdmin = address(0);
+520:
+- 521:        emit NewAdmin(oldAdmin, admin);
++ 521:        emit NewAdmin(oldAdmin, oldPendingAdmin );
+- 522:        emit NewPendingAdmin(oldPendingAdmin, pendingAdmin);
++ 522:        emit NewPendingAdmin(oldPendingAdmin, address(0));
+
+```
+### ``ERC20Boost.sol``: `` gaugeState.userGaugeBoost`` should be cached with local ``uint128`` variable   : Saves ``100 GAS``,``1 SLOD``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Boost.sol#L176-L185
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/erc-20/ERC20Boost.sol
+
+176: GaugeState storage gaugeState = getUserGaugeBoost[msg.sender][gauge];
++   uint128 _userGaugeBoost = gaugeState.userGaugeBoost;
+- 177:        if (boost >= gaugeState.userGaugeBoost) {
++ 177:        if (boost >= _userGaugeBoost ) {
+178:            _userGauges[msg.sender].remove(gauge);
+179:            delete getUserGaugeBoost[msg.sender][gauge];
+180:
+181:            emit Detach(msg.sender, gauge);
+182:        } else {
+- 183:            gaugeState.userGaugeBoost -= boost.toUint128();
++ 183:            gaugeState.userGaugeBoost = _userGaugeBoost - boost.toUint128();
+184:
+185:            emit DecrementUserGaugeBoost(msg.sender, gauge, gaugeState.userGaugeBoost);
 
 
+```
+### ``TalosBaseStrategy.sol``: `` liquidity`` should be cached with local ``uint128`` variable   : Saves ``200 GAS``,``2 SLOD``
+
+```diff
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+214: uint256 supply = totalSupply; // Saves an extra SLOAD if totalSupply is non-zero.
++  uint128 _liquidity = liquidity;
+- 215:        shares = supply == 0 ? liquidityDifference * MULTIPLIER : (liquidityDifference * supply) / liquidity;
++ 215:        shares = supply == 0 ? liquidityDifference * MULTIPLIER : (liquidityDifference * supply) / _liquidity;
+- 216:        liquidity += liquidityDifference;
++ 216:        liquidity =_liquidity + liquidityDifference;
+```
+
+```diff
+
+INonfungiblePositionManager _nonfungiblePositionManager = nonfungiblePositionManager; // Saves an extra SLOAD
+        {
++         uint _liquidity= liquidity ;
+-            uint128 liquidityToDecrease = uint128((_liquidity* shares) / totalSupply);
+
+            (amount0, amount1) = _nonfungiblePositionManager.decreaseLiquidity(
+                INonfungiblePositionManager.DecreaseLiquidityParams({
+                    tokenId: _tokenId,
+                    liquidity: liquidityToDecrease,
+                    amount0Min: amount0Min,
+                    amount1Min: amount1Min,
+                    deadline: block.timestamp
+                })
+            );
+
+            if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+
+            _burn(_owner, shares);
+
+-             liquidity -= liquidityToDecrease;
++             liquidity =_liquidity - liquidityToDecrease;
+        }
+
+```
+##
+
+## [G-] Avoid emit state variable when stack variable available
+
+The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
+
+### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L164-L167
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+164: emit ProposalCreated(
+- 165: newProposal.id, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
++ 165: newProposalID, msg.sender, targets, values, signatures, calldatas, startBlock, endBlock,description
+166:        );
+- 167:      return newProposal.id;
++ 167:      return newProposalID;
+
+```
+
+### ``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``, ``5 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L406
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+404: votingDelay = newVotingDelay;
+405:
+- 406:    emit VotingDelaySet(oldVotingDelay, votingDelay);
++ 406:    emit VotingDelaySet(oldVotingDelay, newVotingDelay);
+
+
+420: votingPeriod = newVotingPeriod;
+421:
+- 422: emit VotingPeriodSet(oldVotingPeriod, votingPeriod);
++ 422: emit VotingPeriodSet(oldVotingPeriod, newVotingPeriod);
+
+437:  proposalThreshold = newProposalThreshold;
+438:
+- 439:  emit ProposalThresholdSet(oldProposalThreshold, proposalThreshold);
++ 439:  emit ProposalThresholdSet(oldProposalThreshold, newProposalThreshold);
+
+464: whitelistGuardian = account;
+465:
+- 466: emit WhitelistGuardianSet(oldGuardian, whitelistGuardian);
++ 466: emit WhitelistGuardianSet(oldGuardian, account);
+
+```
+### ``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L48-L50
+
+```diff
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegator.sol
+
+48:  implementation = implementation_;
+49:
+- 50:    emit NewImplementation(oldImplementation, implementation);
++ 50:    emit NewImplementation(oldImplementation, implementation_);
+
+```
+
+###  ``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``
+
+
+```diff
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+155:   tokenId = _tokenId;
+156:
+157:        _mint(receiver, shares);
+158:        if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
+159:
+- 160:`        emit Initialize(tokenId, msg.sender, receiver, amount0, amount1, shares);
++ 160:`        emit Initialize(_tokenId, msg.sender, receiver, amount0, amount1, shares);
+```
 
 ##
 
@@ -890,6 +1011,20 @@ FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 
 ```
 
+### ``BranchPort.sol``: `` currBalance - minReserves``,`` minReserves - currBalance`` should be ``unchecked`` since not possible to overflow because of this condition check ``currBalance > minReserves``,``currBalance < minReserves `` : Saves ``260 GAS``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L129
+
+```diff
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/BranchPort.sol
+
+- 129: return currBalance > minReserves ? currBalance - minReserves : 0;
++ 129: unchecked {return currBalance > minReserves ? currBalance - minReserves : 0;}
+
+- 141: return currBalance < minReserves ? minReserves - currBalance : 0;
++ 129: unchecked {return currBalance < minReserves ? minReserves - currBalance : 0;}
+
+```
 
 
 
@@ -897,24 +1032,6 @@ FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
 
 ## [G-] Unnecessary memory operations with an immutable variable
 
-## [G-] Superfluous event fields
-
-For event we don't want declare the variable to BLOCK.NUMBER AND BLOCK.TIMESTAP. 
-block.timestamp and block.number are added to event information by default so adding them manually wastes gas
-
-
-## [G-] Cache external calls outside of loop to avoid re-calling function on each iteration
-
-##
-
-## [G-] Cache state variables outside of loop to avoid reading/writing storage on every iteration
-
-Caching ``state variables`` outside the loop can be a good way to ``optimize`` your Solidity code. This is because it can prevent the ``contract`` from having to ``load the state variables from storage multiple times``. 
-
-
-[G-13]	Use calldata instead of memory for function parameters	22
-
-[G-12]	Using storage instead of memory for structs/arrays saves gas	8
 
 [G-13] External function calls should be avoided inside the loops 
 
@@ -930,6 +1047,33 @@ Caching ``state variables`` outside the loop can be a good way to ``optimize`` y
 When you override a state variable, the Solidity compiler has to recompute the entire expression that defines the state variable. This can be expensive, especially if the expression is complex. The gas cost to override a state variable depends on the type of the state variable and the value being overridden.
 
 In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
+
+##
+
+## [G-] Unused internal state variable and lock modifier can be removed to save overall contract deployment cost 
+
+``Unused internal state variable'' take up space in the contract's storage, which can increase the gas cost of deploying and calling the contract. If a state variable is never used, then it can be safely removed from the contract.
+``Lock modifier`` can also increase the gas cost of calling a contract. Lock modifiers are used to prevent a contract from being called by an unauthorized address. However, if the contract is only ever called by a trusted address, then the lock modifier can be safely removed.
+
+
+### ``CoreRootRouter.sol``: After Removed unused code the deployment cost saved : ``25,487 GAS``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/CoreRootRouter.sol#L435-L443
+
+```Solidity
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/CoreRootRouter.sol
+
+435: uint256 internal _unlocked = 1;
+436:
+437:    /// @notice Modifier for a simple re-entrancy check.
+438:    modifier lock() {
+439:        require(_unlocked == 1);
+440:        _unlocked = 2;
+441:        _;
+442:        _unlocked = 1;
+443:    }
+
+```
 
 
 
