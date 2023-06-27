@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kutugu",
+  "risk": "2",
+  "title": "restakeToken uses an incorrect parameter isNotRestake",
+  "issueId": 320,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/320"
+}
