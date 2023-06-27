@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "austinekrash",
+  "risk": "3",
+  "title": "Bug in updatePeriod() Function Prevents Weekly Emissions and Rewards Distribution",
+  "issueId": 321,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/321"
+}
