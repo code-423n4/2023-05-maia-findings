@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "KingNFT",
+  "risk": "2",
+  "title": "The ````ERC20MultiVotes```` contract might break down on certain chains such as Arbitrum",
+  "issueId": 316,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/316"
+}
