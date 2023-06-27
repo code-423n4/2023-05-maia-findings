@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "3",
+  "title": "`UniswapV3Staker` staking logic can be abused to block users from withdrawing",
+  "issueId": 326,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/326"
+}
