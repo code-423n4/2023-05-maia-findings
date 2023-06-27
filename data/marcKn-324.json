@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "2",
+  "title": "UniswapV3Gauge is casted as ERC20 token in FlyweelCore contract and other places",
+  "issueId": 324,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/324"
+}
