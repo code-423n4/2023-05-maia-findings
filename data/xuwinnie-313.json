@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "Incorrect accounting logic for fallback gas will lead to insolvency",
+  "issueId": 313,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/313"
+}
