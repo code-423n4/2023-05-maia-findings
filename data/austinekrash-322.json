@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "austinekrash",
+  "risk": "2",
+  "title": "lack of slippage tolerance on swap() function",
+  "issueId": 322,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/322"
+}
