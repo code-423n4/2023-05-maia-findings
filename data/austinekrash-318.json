@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "austinekrash",
+  "risk": "3",
+  "title": "owner will fail to removePartner() and removeVault()",
+  "issueId": 318,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/318"
+}
