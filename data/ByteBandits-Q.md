@@ -73,3 +73,7 @@ In https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923
 L-22 Same NatSpec and implementation for "maxDeposit" and "maxMint" functions in ERC4626PartnerManager
 https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626PartnerManager.sol#L159-L160
 https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626PartnerManager.sol#L159-L160
+
+L-23 Inconsistent ways used to increase settlementNonce in DeployRootBridgeAgent.sol and depositNonce BranchBridgeAgent.sol
+In both files nonces are either increased by in place calling ++ or via a dedicated "_getAndIncrement*" function.
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L278 vs. https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L633, https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol vs. https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol.
