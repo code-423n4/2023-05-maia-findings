@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "2",
+  "title": "\"forceRevert()\" should be performed if swap in \"_gasSwapOut\" fails",
+  "issueId": 319,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/319"
+}
