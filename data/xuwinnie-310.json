@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "3",
+  "title": "Attacker can \"retrieveDeposit\" then \"redeemDeposit\" with a future nonce to freeze the assets of subsequent depositers",
+  "issueId": 310,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/310"
+}
