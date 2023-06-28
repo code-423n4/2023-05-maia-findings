@@ -77,3 +77,7 @@ https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626Part
 L-23 Inconsistent ways used to increase settlementNonce in DeployRootBridgeAgent.sol and depositNonce in BranchBridgeAgent.sol
 In both files nonces are either increased by in place calling ++ or via a dedicated "_getAndIncrement*" function.
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L278 vs. https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L633, https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol vs. https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchBridgeAgent.sol.
+
+L-24 UlyssesPoolDeployer.sol should use post-increment instead of pre-increment for poolId and tokenId
+These state variabless are commented as "next poolId" and "next tokenId". Due to the pre-increment, they are not used as such. It is also the only occurrence in the protocol where increments are used like this.
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/factories/UlyssesFactory.sol#L85, https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/factories/UlyssesFactory.sol#L141
