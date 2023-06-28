@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": "_decrementWeightUntilFree(...) could turn into an infinite loop",
+  "issueId": 353,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/353"
+}
