@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "negin",
+  "risk": "2",
+  "title": "Owner can accidentally burn the Gauge boosts and protocol fees in Talos BoostAggregator contract",
+  "issueId": 350,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/350"
+}
