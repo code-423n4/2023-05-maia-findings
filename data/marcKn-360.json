@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "3",
+  "title": "All calls to decrementGauge in ERC20Gauge revert after setFlywheelRewards is set again",
+  "issueId": 360,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/360"
+}
