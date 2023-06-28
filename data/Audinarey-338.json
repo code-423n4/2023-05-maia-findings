@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": " Incorrect Accounting  in  ```decrementAllGaugesAllBoost(...)  ``` leading to unclaimed boost",
+  "issueId": 338,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/338"
+}
