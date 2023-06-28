@@ -1,0 +1,3 @@
+Judgement
+
+All contracts in project is derived from interface which has functionality of contract. In smart contract development it is not efficient writing in style like of traditional programming principles. In smart contract case when you will derive from interface which has the same functionality as contract it will cost additional bytecode and gas and it will be more expensive for deployment. In blockchain development the purpose of interfaces is a making external calls to specific contract.
