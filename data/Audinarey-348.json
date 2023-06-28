@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "2",
+  "title": "_writeGaugeWeight may revert when _decrementGaugeWeight(...) 4 arguments version is called",
+  "issueId": 348,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/348"
+}
