@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "2",
+  "title": "FlyweelCore setBooster cannot be called for FlywheelCore created through BribeFactory",
+  "issueId": 340,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/340"
+}
