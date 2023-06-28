@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": "```decrementGaugeBoost(..., ...) ``` implementation can lead to loss of funds",
+  "issueId": 335,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/335"
+}
