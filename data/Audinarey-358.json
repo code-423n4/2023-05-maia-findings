@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": "users can be front run by delegatees in _decrementVotesUntilFree(...)",
+  "issueId": 358,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/358"
+}
