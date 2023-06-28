@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "3",
+  "title": "`BribesFactory::createBribeFlywheel` can be completely blocked from creating any Flywheel by a malicious actor",
+  "issueId": 362,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/362"
+}
