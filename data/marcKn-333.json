@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "3",
+  "title": "DecrementGauge one gauge in ERC20Gauges will revert if a flywheelCore has a FlywheelBooster of address(0)",
+  "issueId": 333,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/333"
+}
