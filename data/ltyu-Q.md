@@ -26,6 +26,10 @@ In line [375](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999
 ## [Q-5] ERC4626MultiToken constructor does not check for duplicates assets
 In [constructor](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626MultiToken.sol#L50-L62) of ERC4626MultiToken.sol, new assets are added upon construction, but are not checked for duplicates. Similar to the [child contract](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesToken.sol#L45), `UlyssesToken.addAsset()`, consider adding duplicate checks for more consistency.
 
+## [Q-6] Burning bHEREMES does not change with inflation
+According to the [documentation](https://v2-docs.maiadao.io/protocols/Hermes/overview/tokenomics/bhermes#burning), burning HEREMES for bHERMES should "increases with inflation, protecting voters from dilution." However, this is not implemented and users always receive 1:1 ratio of HERMES to bHERMES. Consider implementing this feature, or update the documentation.
+
+
 ## [G-1] unnecessary SLOAD in bridgeToRoot()
 In `bridgeToRoot()` of [RootPort.sol](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootPort.sol#L280), `_hToken` is checked to see if it `isGlobalAddress`. This is unnecessary because `mint()` does this already. Consider removing this to reduce SLOAD.
 
