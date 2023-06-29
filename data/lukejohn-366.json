@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lukejohn",
+  "risk": "3",
+  "title": "An attacker can steal any ERC20 tokens from the nonFungiglePositionManager contract via function sweekToken().",
+  "issueId": 366,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/366"
+}
