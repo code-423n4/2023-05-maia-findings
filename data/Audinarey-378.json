@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": "one gaugeFactory can have two Ids and two states",
+  "issueId": 378,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/378"
+}
