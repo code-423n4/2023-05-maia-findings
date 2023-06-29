@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "xuwinnie",
+  "risk": "2",
+  "title": "`targetBandwidth` is not updated when liquidity is being completely removed",
+  "issueId": 369,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/369"
+}
