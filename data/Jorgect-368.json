@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Jorgect",
+  "risk": "2",
+  "title": "The init function can be frontrun in TalosBaseStrategy contract",
+  "issueId": 368,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/368"
+}
