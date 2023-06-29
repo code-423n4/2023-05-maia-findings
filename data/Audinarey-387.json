@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "3",
+  "title": "getAccruedRewards() in FlywheelGaugeRewards.sol will not return accrued rewards from previous cycles.",
+  "issueId": 387,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/387"
+}
