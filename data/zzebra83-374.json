@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzebra83",
+  "risk": "3",
+  "title": "All Core talos functionality can be bricked, including withdrawals, depositing, rebalancing, and reranging, via the the checkDeviation modifier",
+  "issueId": 374,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/374"
+}
