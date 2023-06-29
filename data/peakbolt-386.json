@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "No gas refund for RootBridgeAgent.anyFallback() and BranchBridgeAgent.anyFallback()",
+  "issueId": 386,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/386"
+}
