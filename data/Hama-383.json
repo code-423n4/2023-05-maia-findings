@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Hama",
+  "risk": "3",
+  "title": "Underflow Vulnerability in accrueUser()   that leads to  imbalanced reward distribution and financial loss in claimRewards()",
+  "issueId": 383,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/383"
+}
