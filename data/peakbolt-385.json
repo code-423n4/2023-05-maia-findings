@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "Missing unwrapping of native token in RootBridgeAgent.sweep() causes fees to be stuck",
+  "issueId": 385,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/385"
+}
