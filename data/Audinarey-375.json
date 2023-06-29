@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Audinarey",
+  "risk": "2",
+  "title": "Bribes can neither be added to nor removed from gauge in the BaseV2GaugeFactory",
+  "issueId": 375,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/375"
+}
