@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "Incorrect implementation of maxWithdraw in ERC4626PartnerManager",
+  "issueId": 409,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/409"
+}
