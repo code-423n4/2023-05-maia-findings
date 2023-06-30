@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "3",
+  "title": "Removing partners and vaults will always revert",
+  "issueId": 420,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/420"
+}
