@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xSmartContract",
+  "risk": "3",
+  "title": "Route[] array size in `swap()` function is underflow due to no 0 check",
+  "issueId": 395,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/395"
+}
