@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "3",
+  "title": "Wrong consideration of blockformation period causes incorrect votingPeriod and votingDelay calculations",
+  "issueId": 417,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/417"
+}
