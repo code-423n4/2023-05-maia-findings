@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "maxMint, maxDeposit, maxRedeem, maxWithdraw are not EIP-4626 compliant when deposits/withdrawals/mints/redemptions are disabled/paused",
+  "issueId": 408,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/408"
+}
