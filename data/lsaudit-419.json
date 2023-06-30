@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "3",
+  "title": "removeAsset() will always revert, blocking user from removing a specific asset",
+  "issueId": 419,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/419"
+}
