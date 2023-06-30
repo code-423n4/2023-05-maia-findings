@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzebra83",
+  "risk": "3",
+  "title": "Ulysses Omnichain - inconsitency in error handling between gasswapin and gasswapout for remote calls",
+  "issueId": 428,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/428"
+}
