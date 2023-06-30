@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "3",
+  "title": "ERC4626PartnerManager is non-compliant with EIP-4626 due to missing functions",
+  "issueId": 422,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/422"
+}
