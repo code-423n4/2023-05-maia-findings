@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzebra83",
+  "risk": "3",
+  "title": "Ulysses omnichain - Excess gas from failed transaction is kept locked in local branch port",
+  "issueId": 397,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/397"
+}
