@@ -1236,7 +1236,6 @@ FILE: hardhat.config.js
 
 ## [G-] Unnecessary memory operations with an immutable variable
 
-
 [G-13] External function calls should be avoided inside the loops 
 
 [G-10]	State variables only set in the constructor should be declared immutable	18
