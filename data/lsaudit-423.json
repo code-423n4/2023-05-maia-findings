@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "3",
+  "title": "First depositor can manipulate the price per share",
+  "issueId": 423,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/423"
+}
