@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "Incorrect function call in minting in UlyssesERC4626.sol",
+  "issueId": 416,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/416"
+}
