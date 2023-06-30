@@ -279,6 +279,8 @@ Create/create2 used . So related bugs should be investigated
 
 bHermes.sol possible to mint zero address if to is address(0)
 
+Initialize functions could be front run 
+
 
 
 
