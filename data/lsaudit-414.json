@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "Possible DoS via gas limit error in UlyssesToken",
+  "issueId": 414,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/414"
+}
