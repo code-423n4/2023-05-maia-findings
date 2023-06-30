@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "The owner is a single point of failure and a centralization risk in BaseV2GaugeManager.sol",
+  "issueId": 410,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/410"
+}
