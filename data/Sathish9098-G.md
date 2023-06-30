@@ -1,8 +1,11 @@
 # GAS OPTIMIZATIONS
 
+### Table Of Contents
+
+
 ##
 
-## [G-] Pack structs by putting variables that can fit together next to each other
+## [G-1] Pack structs by putting variables that can fit together next to each other
 
 As the solidity EVM works with 32 bytes, variables less than 32 bytes should be packed inside a struct so that they can be stored in the same slot, this saves gas when writing to storage ~20000 gas
 
@@ -134,7 +137,7 @@ FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoInterfaces.sol
 ```
 ##
 
-## [G-] State variables can be packed to use fewer storage slots
+## [G-2] State variables can be packed to use fewer storage slots
 
 The EVM works with 32 byte words. Variables less than 32 bytes can be declared next to each other in storage and this will pack the values together into a single 32 byte storage slot (if the values combined are <= 32 bytes). If the variables packed together are retrieved together in functions we will effectively save ``~2000 gas`` with every subsequent SLOAD for that storage slot. This is due to us incurring a ``Gwarmaccess (100 gas)`` versus a ``Gcoldsload (2100 gas)``
 
@@ -294,11 +297,9 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 
 ##
 
-
-
 ##
 
-## [G-] State variables should be cached in stack variables rather than re-reading them from storage
+## [G-3] State variables should be cached in stack variables rather than re-reading them from storage
 
 The instances below point to the second+ access of a state variable within a function. Caching of a state variable replaces each ``Gwarmaccess (100 gas)`` with a much cheaper stack read. Other less obvious fixes/optimizations include having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
 
@@ -548,7 +549,7 @@ INonfungiblePositionManager _nonfungiblePositionManager = nonfungiblePositionMan
 ```
 ##
 
-## [G-] Avoid emit state variable when stack variable available
+## [G-4] Avoid emit state variable when stack variable available
 
 The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
 
@@ -628,7 +629,7 @@ FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
 
 ##
 
-## [G-]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
+## [G-5]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
 
 ``Fail early and cheaply``
 
@@ -711,7 +712,7 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 
 ##
 
-## [G-] Multiple accesses of a mapping/array should use a local variable cache
+## [G-6] Multiple accesses of a mapping/array should use a local variable cache
 
 Caching a mapping’s value in a local storage or calldata variable when the value is accessed multiple times saves ~42 gas per access due to not having to perform the same offset calculation every time.
 Help the Optimizer by saving a storage variable’s reference instead of repeatedly fetching it
@@ -915,7 +916,7 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
 
 ##
 
-## [G-] Store external call values in immutable variables to improve performance and reduce gas costs 
+## [G-7] Store external call values in immutable variables to improve performance and reduce gas costs 
 
 You can save a Gcoldsload (2100 gas) in the address provider, plus the 100 gas overhead of the external call, for every _replenishGas(), by creating an immutable CONFIG variable which will store the ``IAnycallProxy(localAnyCallAddress).config()`` address. ``localAnyCallAddress`` is immutable variable so not changed any where in the contract. When ever we call ``IAnycallProxy(localAnyCallAddress).config()`` always return the same address. So its ``waste of external call `` instead we can store the ``IAnycallProxy(localAnyCallAddress).config()`` address with ``CONFIG`` immutable variable during constructor initialization time.
 
@@ -957,7 +958,7 @@ Inside the constructor
 
 ##
 
-## [G-] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
+## [G-8] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
 
 require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a }
 
@@ -1030,27 +1031,9 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/BranchPort.sol
 
 
 
-## [G-] Unnecessary memory operations with an immutable variable
-
-
-[G-13] External function calls should be avoided inside the loops 
-
-[G-10]	State variables only set in the constructor should be declared immutable	18
-
-## [G-] Use memory instead of calldata inside the loops if the values not changed 
-
-
 ##
 
-## [G-] To save gas, Should avoid overriding state variables with the same value
-
-When you override a state variable, the Solidity compiler has to recompute the entire expression that defines the state variable. This can be expensive, especially if the expression is complex. The gas cost to override a state variable depends on the type of the state variable and the value being overridden.
-
-In the current EVM version, the gas cost to override a state variable is 800 gas. This is because the compiler has to recompute the entire expression that defines the state variable, and this can be expensive.
-
-##
-
-## [G-] Unused internal state variable and lock modifier can be removed to save overall contract deployment cost 
+## [G-9] Unused internal state variable and lock modifier can be removed to save overall contract deployment cost 
 
 ``Unused internal state variable'' take up space in the contract's storage, which can increase the gas cost of deploying and calling the contract. If a state variable is never used, then it can be safely removed from the contract.
 ``Lock modifier`` can also increase the gas cost of calling a contract. Lock modifiers are used to prevent a contract from being called by an unauthorized address. However, if the contract is only ever called by a trusted address, then the lock modifier can be safely removed.
@@ -1075,11 +1058,9 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/CoreRootRouter.sol
 
 ```
 
-
-
 ##
 
-## [G-13] Use constants instead of type(uintx).max
+## [G-10] Use constants instead of type(uintx).max
 
 Using constants instead of type(uint256).max can save gas. This is because the compiler can embed constants directly into the bytecode of your contract, which saves on gas costs.
 
@@ -1171,7 +1152,9 @@ FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
 
 ```
 
-[G-27] Upgrade Solidity’s optimizer
+##
+
+## [G-11] Upgrade Solidity’s optimizer
 
 Make sure Solidity’s optimizer is enabled. It reduces gas costs. If you want to gas optimize for contract deployment (costs less to deploy a contract) then set the Solidity optimizer at a low number. If you want to optimize for run-time gas costs (when functions are called on a contract) then set the optimizer to a high number.
 
@@ -1250,6 +1233,15 @@ FILE: hardhat.config.js
   },
 
 ```
+
+## [G-] Unnecessary memory operations with an immutable variable
+
+
+[G-13] External function calls should be avoided inside the loops 
+
+[G-10]	State variables only set in the constructor should be declared immutable	18
+
+## [G-] Use memory instead of calldata inside the loops if the values not changed 
 
 Use assembly to perform efficient back-to-back calls
 
