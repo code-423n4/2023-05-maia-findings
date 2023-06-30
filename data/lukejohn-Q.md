@@ -318,8 +318,21 @@ function testGaugeBoost() public{
 }
 ```
 
+QA3. BaseV2Minter.getRewards() does not calculate ``totalQueuedForCycle`` correctly. 
 
+This is because the ``BaseV2Minter`` contract might not have sufficient coverage for the ``weekly`` amount. In this case, ``totalQueuedForCycle`` should be the balance of underlying in the  ``BaseV2Minter`` contract. Correction: 
 
+```diff
+function getRewards() external returns (uint256 totalQueuedForCycle) {
+        if (address(flywheelGaugeRewards) != msg.sender) revert NotFlywheelGaugeRewards();
+        totalQueuedForCycle = weekly;
++       uint256 bal = underlying.balanceOf(address(this));
++       if(bal < totalQueuedForCycle) totalQueuedForCycle = bal;
+-        weekly = 0;
++       weekly -= totalQueuedForCycle;
+        underlying.safeTransfer(msg.sender, totalQueuedForCycle);
+    }
+```
 
 
 
