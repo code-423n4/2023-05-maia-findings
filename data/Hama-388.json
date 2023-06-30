@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Hama",
+  "risk": "2",
+  "title": "Overflow Vulnerability leads to broken access control in checkPartnerGovernance Modifier",
+  "issueId": 388,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/388"
+}
