@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "Whitelisted guardian can create whitelisted accounts",
+  "issueId": 415,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/415"
+}
