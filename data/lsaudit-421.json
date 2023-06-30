@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lsaudit",
+  "risk": "3",
+  "title": "Too many BribeFlywheels may cause DoS by reaching block gas limit",
+  "issueId": 421,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/421"
+}
