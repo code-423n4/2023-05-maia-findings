@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "votingDelay Is Calculated Using Approximations From L1",
+  "issueId": 442,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/442"
+}
