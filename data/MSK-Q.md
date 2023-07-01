@@ -37,5 +37,16 @@ Variable ```ERC20MultiVotes._delegate(address,address).newDelegatee``` is too si
 [ERC20MultiVotes.sol#L222](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L222)
 ##### Recommended Mitigation Steps 
 Prevent variables from having similar names.
-
-
+## [N-02] ```ERC20Gauges._bur```n is never used and should be removed
+##### Code 
+``` solidity
+function _burn(address from, uint256 amount) internal virtual override {
+        _decrementWeightUntilFree(from, amount);
+        super._burn(from, amount);
+    }
+```
+dead_code is not used in the contract, and make the code's review more difficult.
+##### Code Link
+[ERC20Gauges.sol#L485](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L485)
+##### Recommended Mitigation Step
+Remove unused functions.
