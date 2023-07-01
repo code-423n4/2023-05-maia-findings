@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "2",
+  "title": "Delegatecall does not check the contract existence . Since delegatecall returns true even if the contracts which are not not existing.",
+  "issueId": 436,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/436"
+}
