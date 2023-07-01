@@ -14,3 +14,14 @@ This may cause issues for offchain components that rely on the values of events 
 ##### Recommended Pattern 
 Apply the ```check-effects-interactions``` pattern.
 
+## [L-02] Avoid Using ```block.timestamp``` 
+function ```delegateBySig``` using ```block.timestamp``` which can be manipulated by miners to exlpoit contracts
+##### Vulnerable Code Snippet 
+``` solidity
+require(block.timestamp <= expiry, "ERC20MultiVotes: signature expired");
+```
+##### Vulnerable Code Link
+[ERC20MultiVotes.sol#L364](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L364)
+##### Recommended Mitigation Steps
+Avoid relying on block.timestamp.
+
