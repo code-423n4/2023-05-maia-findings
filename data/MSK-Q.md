@@ -74,4 +74,14 @@ dead_code is not used in the contract, and make the code's review more difficult
 ##### Code Link
 [ERC20Gauges.sol#L485](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20Gauges.sol#L485)
 ##### Recommended Mitigation Step
-Remove unused functions.
+Remove unused code.
+## [N-03] ```RootBridgeAgentExecutor.PARAMS_AMT_OFFSET```  is never used in ```RootBridgeAgentExecutor```
+Unused state variable.
+##### Code
+``` solidity
+uint8 internal constant PARAMS_AMT_OFFSET = 64;
+```
+##### Code Link
+[RootBridgeAgentExecutor.sol#L57](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgentExecutor.sol#L57)
+##### Recommended Mitigation Steps
+Remove unused state variables.
