@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xSmartContract",
+  "risk": "2",
+  "title": "Anyone can create a Pool by directly calling the factory and may cause lost money to users",
+  "issueId": 456,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/456"
+}
