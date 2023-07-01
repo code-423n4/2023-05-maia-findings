@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lukejohn",
+  "risk": "2",
+  "title": "All strategies share the same ``endCycle`` in FlywheelAcummulatedRewards.getAccruedRewards(), as a result, different strategies will interfere each other in accuring rewards. ",
+  "issueId": 457,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/457"
+}
