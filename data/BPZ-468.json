@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "3",
+  "title": "_callOut function encodes the wrong flag placing user funds at risk",
+  "issueId": 468,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/468"
+}
