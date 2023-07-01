@@ -24,6 +24,30 @@ require(block.timestamp <= expiry, "ERC20MultiVotes: signature expired");
 [ERC20MultiVotes.sol#L364](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L364)
 ##### Recommended Mitigation Steps
 Avoid relying on block.timestamp.
+## [L-03] Reentrancy in ```RootBridgeAgent.callOutAndBridgeMultiple```
+##### Code Snippet 
+``` solidity
+//External Calls sending Eth
+bytes memory data = abi.encodePacked(
+            bytes1(0x02),
+            _recipient,
+            uint8(hTokens.length),
+            settlementNonce,
+            hTokens,
+            tokens,
+            _amounts,
+            _deposits,
+            _data,
+            _manageGasOut(_toChain)
+        );
+// State variables written after the call(s)
+ _createMultipleSettlement(_owner, _recipient, hTokens, tokens, _amounts, _deposits, data, _toChain);
+```
+The reentrancy is benign because it's exploitation would have the same effect as two consecutive calls.
+##### Code Link 
+[RootBridgeAgent.sol#L359-L370](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L359-L370)
+##### Recommended Mitigation Steps
+Apply the ```check-effects-interactions``` pattern.
 ## [N-01] Variables Have Similar Names
 Variable ```ERC20MultiVotes._delegate(address,address).newDelegatee``` is too similar to ``` ERC20MultiVotes._undelegate(address,address,uint256).newDelegates```
 ##### Vulnerable Code 
@@ -32,6 +56,7 @@ Variable ```ERC20MultiVotes._delegate(address,address).newDelegatee``` is too si
 
     uint256 newDelegates = _delegatesVotesCount[delegator][delegatee] - amount;
 ```
+
 ##### Link
 [ERC20MultiVotes.sol#L161](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L161)
 [ERC20MultiVotes.sol#L222](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L222)
