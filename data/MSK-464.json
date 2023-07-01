@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MSK",
+  "risk": "2",
+  "title": "Function queueRewardsForCycle() ignores return value by minter.updatePeriod()",
+  "issueId": 464,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/464"
+}
