@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "EndIncentive Can Be Bricked Due To Flawed EndIncentive Implementation",
+  "issueId": 441,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/441"
+}
