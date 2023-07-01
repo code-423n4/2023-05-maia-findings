@@ -24,4 +24,18 @@ require(block.timestamp <= expiry, "ERC20MultiVotes: signature expired");
 [ERC20MultiVotes.sol#L364](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L364)
 ##### Recommended Mitigation Steps
 Avoid relying on block.timestamp.
+## [N-01] Variables Have Similar Names
+Variable ```ERC20MultiVotes._delegate(address,address).newDelegatee``` is too similar to ``` ERC20MultiVotes._undelegate(address,address,uint256).newDelegates```
+##### Vulnerable Code 
+``` solidity 
+    function _delegate(address delegator, address newDelegatee) internal virtual {
+
+    uint256 newDelegates = _delegatesVotesCount[delegator][delegatee] - amount;
+```
+##### Link
+[ERC20MultiVotes.sol#L161](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L161)
+[ERC20MultiVotes.sol#L222](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-20/ERC20MultiVotes.sol#L222)
+##### Recommended Mitigation Steps 
+Prevent variables from having similar names.
+
 
