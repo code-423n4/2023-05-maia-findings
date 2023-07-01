@@ -2,6 +2,134 @@
 
 ### Table Of Contents
 
+- [FINDINGS](#findings)
+- [Pack structs by putting variables that can fit together next to each other- Saves ``10000 gas, 5 SLOT``](#g-1-pack-structs-by-putting-variables-that-can-fit-together-next-to-each-other)
+
+  - [``IBranchBridgeAgent.sol``: hToken and toChain can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#ibranchbridgeagentsol-htoken-and-tochain-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+  - [``IBranchBridgeAgent.sol``: numberOfAssets,depositNonce,toChain,depositedGas can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#ibranchbridgeagentsol-numberofassetsdepositnoncetochaindepositedgas-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+  - [``IRootBridgeAgent.sol``: depositNonce,hToken,toChain can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#irootbridgeagentsol-depositnoncehtokentochain-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+  - [``IRootBridgeAgent.sol``: depositNonce,hToken,toChain can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#irootbridgeagentsol-numberofassetsdepositnoncetochain-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+  - [``GovernorBravoInterfaces.sol#L105-L136``: proposer,canceled,executed can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#governorbravointerfacessoll105-l136-proposercanceledexecuted-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+  
+- [State variables can be packed to use fewer storage slots- Saves ``16000 gas``,``8 SLOTS``](#g-2-state-variables-can-be-packed-to-use-fewer-storage-slots)
+
+
+    - [``RootBridgeAgent.sol``: settlementNonce,accumulatedFees state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#rootbridgeagentsol-settlementnonceaccumulatedfees-state-variables-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+   - [``RootBridgeAgent.sol``: coreRootBridgeAgentAddress,bridgeAgentFactoriesLenght,_setup state variables can be packed together: ``Gas saved: 2 * 2k = 4k , 2 SLOT``](#rootbridgeagentsol-corerootbridgeagentaddressbridgeagentfactorieslenght_setup-state-variables-can-be-packed-together-gas-saved-2--2k--4k--2-slot)
+
+
+   - [``BaseV2Minter.sol``: daoShare,dao and tailEmission,initializer  state variables can be packed together: ``Gas saved: 2 * 2k = 4k , 2 SLOT``](#basev2mintersol-daosharedao-and-tailemissioninitializer--state-variables-can-be-packed-together-gas-saved-2--2k--4k--2-slot)
+
+
+   - [``ERC20hTokenRoot.sol``: localChainId,rootPortAddress  state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#erc20htokenrootsol-localchainidrootportaddress--state-variables-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+   - [``ERC20hTokenRootFactory.sol``: coreRootRouterAddress,hTokensLenght state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#erc20htokenrootfactorysol-corerootrouteraddresshtokenslenght-state-variables-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+  - [``vMaia.sol``: currentMonth,unstakePeriodEnd state variables can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#vmaiasol-currentmonthunstakeperiodend-state-variables-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
+
+
+- [ State variables should be cached in stack variables rather than re-reading them from storage- Saves ``1700 gas``, ``17 SLOD``](#g-3-state-variables-should-be-cached-in-stack-variables-rather-than-re-reading-them-from-storage)
+
+
+  - [``BaseV2Minter.sol``: ``dao `` should be cached with local ``address`` stack variable : Saves ``100 GAS``,``1 SLOD``](#basev2mintersol-dao--should-be-cached-with-local-address-stack-variable--saves-100-gas1-slod)
+
+
+  - [``ERC20Boost.sol``: ``gaugeState.userGaugeBoost `` should be cached with local ``uint256`` stack variable : Saves ``400 GAS``,``4 SLOD``](#erc20boostsol-gaugestateusergaugeboost--should-be-cached-with-local-uint256-stack-variable--saves-400-gas4-slod)
+
+
+  - [``RootBridgeAgent.sol``: ``settlement.hTokens[i] ``,``settlement.toChain`` should be cached with local ``address`` and ``uint24`` stack variable : Saves ``200 GAS``,``2 SLOD`` per iterations ](#rootbridgeagentsol-settlementhtokensi-settlementtochain-should-be-cached-with-local-address-and-uint24-stack-variable--saves-200-gas2-slod-per-iterations)
+
+
+  - [``RootBridgeAgent.sol``: ``userFeeInfo.gasToBridgeOut `` should be cached with local uint128 stack variable : Saves ``200 GAS``,``2 SLOD``](#rootbridgeagentsol-userfeeinfogastobridgeout--should-be-cached-with-local-uint128-stack-variable--saves-200-gas2-slod)
+
+
+  - [``UlyssesPool.sol``: `` newTotalWeights `` should be used instead of ``totalWeights``   : Saves ``100 GAS``,``1 SLOD``](#ulyssespoolsol-newtotalweights-should-be-used-instead-of-totalweights----saves-100-gas1-slod)
+
+
+  - [``GovernorBravoDelegateMaia.sol``: `` proposal.proposer `` should be cached with local ``address`` variable   : Saves ``200 GAS``,``2 SLOD``](#governorbravodelegatemaiasol-proposalproposer-should-be-cached-with-local-address-variable----saves-200-gas2-slod)
+
+
+  - [``GovernorBravoDelegateMaia.sol``: `` pendingAdmin `` should be cached with local ``address`` variable   : Saves ``400 GAS``,``4 SLOD``](#governorbravodelegatemaiasol-pendingadmin-should-be-cached-with-local-address-variable----saves-400-gas4-slod)
+
+
+  - [``ERC20Boost.sol``: `` gaugeState.userGaugeBoost`` should be cached with local ``uint128`` variable   : Saves ``100 GAS``,``1 SLOD``](#erc20boostsol--gaugestateusergaugeboost-should-be-cached-with-local-uint128-variable----saves-100-gas1-slod)
+
+
+  - [``TalosBaseStrategy.sol``: `` liquidity`` should be cached with local ``uint128`` variable   : Saves ``200 GAS``,``2 SLOD``](#talosbasestrategysol--liquidity-should-be-cached-with-local-uint128-variable----saves-200-gas2-slod)
+   
+- [Avoid emit state variable when stack variable available- Saves ``900 gas``, ``9 SLOT``](#g-4-avoid-emit-state-variable-when-stack-variable-available)
+
+
+  - [``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` ](#governorbravodelegatemaiasol-emit-and-return-stack-variable-newproposalid-instead-of-state-variable-newproposalid--saves-200-gas-2-slod)
+
+
+  - [``GovernorBravoDelegateMaia.sol``: Emit stack variables ``newVotingDelay,newVotingPeriod,newProposalThreshold,account`` instead of ``votingDelay,votingPeriod,proposalThreshold , whitelistGuardian`` state variables  : Saves ``500 GAS``,
+   ``5 SLOD``](#governorbravodelegatemaiasol-emit-stack-variables-newvotingdelaynewvotingperiodnewproposalthresholdaccount-instead-of-votingdelayvotingperiodproposalthreshold--whitelistguardian-state-variables---saves-500-gas-5-slod)
+   
+   - [``GovernorBravoDelegator.sol``: Emit stack variable ``implementation_`` instead of ``implementation `` state variable  : Saves ``100 GAS``, ``1 SLOD`` ](#governorbravodelegatorsol-emit-stack-variable-implementation_-instead-of-implementation--state-variable---saves-100-gas-1-slod)
+
+
+    - [``TalosBaseStrategy.sol``: Emit stack variable ``_tokenId`` instead of ``tokenId `` state variable  : Saves ``100 GAS``, ``1 SLOD``](#talosbasestrategysol-emit-stack-variable-_tokenid-instead-of-tokenid--state-variable---saves-100-gas-1-slod)
+    
+    
+- [``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s) - Saves ``4265 gas``](#g-5--require-or-revert-statements-that-check-input-arguments-should-be-at-the-top-of-the-function-also-restructured-some-ifs)
+
+  - [``GovernorBravoDelegateMaia.sol``: Cheaper to check the function parameters,constants before checking ``govToken.getPriorVotes(msg.sender, sub256(block.number, 1))`` external calls. Saves  ``2100 gas`` ](#governorbravodelegatemaiasol-cheaper-to-check-the-function-parametersconstants-before-checking-govtokengetpriorvotesmsgsender-sub256blocknumber-1-external-calls-saves--2100-gas)
+
+
+  - [``UlyssesPool.sol``: Cheaper to check the function parameters, constants before checking ``factory.owner()`` external calls. Saves  ``2100 gas`` ](#ulyssespoolsol-cheaper-to-check-the-function-parameters-constants-before-checking-factoryowner-external-calls-saves--2100-gas)
+
+
+  - [ ``RootPort.sol``: Cheaper to check the ``_bridgeAgentFactory,_coreRootRouter`` function parameters before checking  ``_setup``  state variable. ``Saves around 60-75 gas ``](#rootportsol-cheaper-to-check-the-_bridgeagentfactory_corerootrouter-function-parameters-before-checking--_setup--state-variable-saves-around-60-75-gas-)
+  
+- [Multiple accesses of a mapping/array should use a local variable cache- Saves ``1800 gas``, `` `18 SLOD`` ](#g-6-multiple-accesses-of-a-mappingarray-should-use-a-local-variable-cache)
+
+   - [``MultiRewardsDepot.sol``:  _assets[rewardsContract] mapping should be cached : Saves ``100 GAS``, ``1 SLOD``](#multirewardsdepotsol--_assetsrewardscontract-mapping-should-be-cached--saves-100-gas-1-slod)
+
+
+   - [``MultiRewardsDepot.sol``:  _assets[rewardsContract] mapping should be cached : Saves ``100 GAS``, ``1 SLOD``](#multirewardsdepotsol--_assetsrewardscontract-mapping-should-be-cached--saves-100-gas-1-slod-1)
+
+
+   - [``BranchBridgeAgent.sol``:  ``uint8(getDeposit[_depositNonce].hTokens.length)``,``getDeposit[_depositNonce].tokens[0]``,``getDeposit[_depositNonce].hTokens[0]``,``getDeposit[_depositNonce].amounts[0]``,``getDeposit[_depositNonce].deposits[0]``,``getDeposit[nonce].hTokens``,``getDeposit[nonce].tokens``, ``getDeposit[nonce].amounts``, ``getDeposit[nonce].deposits``,``getDeposit[_depositNonce].depositedGas``  mappings should be cached : Saves ``1500 GAS``, ``15 SLOD``](#branchbridgeagentsol--uint8getdeposit_depositnoncehtokenslengthgetdeposit_depositnoncetokens0getdeposit_depositnoncehtokens0getdeposit_depositnonceamounts0getdeposit_depositnoncedeposits0getdepositnoncehtokensgetdepositnoncetokens-getdepositnonceamounts-getdepositnoncedepositsgetdeposit_depositnoncedepositedgas--mappings-should-be-cached--saves-1500-gas-15-slod)
+
+
+   - [``RootBridgeAgent.sol``:  ``getSettlement[_settlementNonce].gasToBridgeOut`` mapping should be cached : Saves ``100 GAS``, ``1 SLOD``](#rootbridgeagentsol--getsettlement_settlementnoncegastobridgeout-mapping-should-be-cached--saves-100-gas-1-slod)
+   
+- [Store external call values in immutable variables to improve performance and reduce gas costs. Saves ``4200 gas`` ](#g-7-store-external-call-values-in-immutable-variables-to-improve-performance-and-reduce-gas-costs)
+
+- [Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement. Saves ``780 gas``](#g-8-add-unchecked--for-subtractions-where-the-operands-cannot-underflow-because-of-a-previous-require-or-if-statement)
+ 
+  - [``bHermes.sol``: The ``subtractions`` should be ``unchecked ``. `` /// @dev Never overflows since balandeOf >= userClaimed`` As per comment the values not going to overflow : Saves ``390 GAS``](#bhermessol-the-subtractions-should-be-unchecked----dev-never-overflows-since-balandeof--userclaimed-as-per-comment-the-values-not-going-to-overflow--saves-390-gas)
+
+
+  - [``UlyssesPool.sol``: ``balance - assets`` should be ``unchecked`` since not possible to overflow because of this condition check ``if (balance > assets)`` : Saves ``130 GAS``](#ulyssespoolsol-balance---assets-should-be-unchecked-since-not-possible-to-overflow-because-of-this-condition-check-if-balance--assets--saves-130-gas)
+
+
+  - [``UlyssesPool.sol``: `` newRebalancingFee - oldRebalancingFee`` should be ``unchecked`` since not possible to overflow because of this condition check ``if (oldRebalancingFee < newRebalancingFee)`` : Saves ``260 GAS``](#ulyssespoolsol--newrebalancingfee---oldrebalancingfee-should-be-unchecked-since-not-possible-to-overflow-because-of-this-condition-check-if-oldrebalancingfee--newrebalancingfee--saves-260-gas)
+
+
+  - [``BranchPort.sol``: `` currBalance - minReserves``,`` minReserves - currBalance`` should be ``unchecked`` since not possible to overflow because of this condition check ``currBalance > minReserves``,``currBalance < minReserves `` : Saves ``260 GAS``](#branchportsol--currbalance---minreserves-minreserves---currbalance-should-be-unchecked-since-not-possible-to-overflow-because-of-this-condition-check-currbalance--minreservescurrbalance--minreserves---saves-260-gas)
+
+- [Unused internal state variable and lock modifier can be removed to save overall contract deployment cost- Saves ``25487 GAS``](#g-9-unused-internal-state-variable-and-lock-modifier-can-be-removed-to-save-overall-contract-deployment-cost)
+
+- [Use constants instead of type(uintx).max- Saves ``80 gas``](#g-10-use-constants-instead-of-typeuintxmax)
+
+- [Upgrade Solidity’s optimizer](#g-11-upgrade-soliditys-optimizer)
+
+
+
+## FINDINGS
+NOTE: Some functions have been truncated where necessary to just show affected parts of the code Through out the report some places might be denoted with audit tags to show the actual place affected.
 
 ##
 
