@@ -281,6 +281,10 @@ bHermes.sol possible to mint zero address if to is address(0)
 
 Initialize functions could be front run 
 
+Timelocks not implemented as per documentation 
+
+``Does it use a timelock function?:  true``
+
 
 
 
