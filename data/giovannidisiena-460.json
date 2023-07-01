@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "giovannidisiena",
+  "risk": "3",
+  "title": "Lack of slippage and deadline protections in `PoolActions::rerange` could lead to sandwich attacks on Talos strategies",
+  "issueId": 460,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/460"
+}
