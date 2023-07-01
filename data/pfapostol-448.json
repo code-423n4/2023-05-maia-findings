@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "pfapostol",
+  "risk": "3",
+  "title": "Comparison is used where assignment should be",
+  "issueId": 448,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/448"
+}
