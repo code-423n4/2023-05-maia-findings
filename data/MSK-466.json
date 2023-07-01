@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MSK",
+  "risk": "2",
+  "title": " ```oldDelegatee``` is a local variable never initialized",
+  "issueId": 466,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/466"
+}
