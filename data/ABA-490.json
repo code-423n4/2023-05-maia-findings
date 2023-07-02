@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ABA",
+  "risk": "2",
+  "title": "`ERC4626PartnerManager` is not `ERC4626` compliant",
+  "issueId": 490,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/490"
+}
