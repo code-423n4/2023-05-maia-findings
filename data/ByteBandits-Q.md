@@ -87,3 +87,6 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 
 ## L-26 Missing comments in GovernorBravoDelegate* contracts on a subtlety which is actually the only protection against flash loans
 A proposal pending state is judged by "block.number <= proposal.startBlock" which on the first look may be incorrect since the "active" state is also inclusive of the endBlock. See: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L304. But the startBlock is excluded intentionally so the proposal starts 1 block later than the block when the user balance is passed. See: https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L367. This should be documented.
+
+## L-27 Unused MIN_RESERVE_RATION constant in BranchPort.sol
+In https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L92 MIN_RESERVE_RATION is defined but it is never used in that contract. It may have been missed to be used for a second check in the "addStrategyToken" function: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L331.
