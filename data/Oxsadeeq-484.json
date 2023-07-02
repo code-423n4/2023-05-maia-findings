@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Oxsadeeq",
+  "risk": "3",
+  "title": "Calculation errors due to precision loss in major functions",
+  "issueId": 484,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/484"
+}
