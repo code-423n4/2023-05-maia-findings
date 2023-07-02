@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "emmac002",
+  "risk": "2",
+  "title": "Solmate transfer and transferfrom does not check address which may cause fund loss",
+  "issueId": 496,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/496"
+}
