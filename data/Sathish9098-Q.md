@@ -2,6 +2,60 @@
 
 ##
 
+## [L-1]  ``addPartner(), addVault()`` functions does not check if the ``newPartnerManager, newVault`` address already exists in the ``partners,vaults`` arrays
+
+```
+In Solidity, arrays can accept duplicate values. There are no inherent restrictions or limitations on storing duplicate values in arrays.
+
+```
+
+### Impact
+
+Create confusion and uncertainty about which ``PartnerManager, IBaseVault`` accounts is the legitimate one.This could make it difficult for users to interact with the contract or for partners to coordinate their activities
+
+Increase the risk of errors and inconsistencies. If multiple ``PartnerManager,IBaseVault`` accounts are able to approve or deny transactions, it could be difficult to track which account has approved or denied a particular transaction. This could lead to errors and ``inconsistencies`` in the ``contract's state``.
+
+### POC
+
+```solidity
+FILE: 2023-05-maia/src/maia/factories/PartnerManagerFactory.sol
+
+function addPartner(PartnerManager newPartnerManager) external onlyOwner {
+        uint256 id = partners.length;
+        partners.push(newPartnerManager);
+        partnerIds[newPartnerManager] == id;
+
+        emit AddedPartner(newPartnerManager, id);
+    }
+
+function addVault(IBaseVault newVault) external onlyOwner {
+        uint256 id = vaults.length;
+        vaults.push(newVault);
+        vaultIds[newVault] == id;
+
+        emit AddedVault(newVault, id);
+    }
+
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/factories/PartnerManagerFactory.sol#L58-L64
+
+### Recommended Mitigation
+This code first checks if the ``newPartnerManager,newVault`` addresses already exists in the ``partners, vaults`` arrays 
+
+```
+```solidity
+
+   if (partners[partnerIds[partnerManager]] == newPartnerManager) revert InvalidPartnerManager();
+   if (vaults[vaultIds[vault]] == newVault) revert InvalidVault();
+
+```
+
+
+
+
+
+
 ## [L-1] ``getUserGaugeBoost[user][msg.sender]`` can be invalid if ``totalSupply`` is zero
 
 ### Impact
@@ -115,6 +169,7 @@ FILE: 2023-05-maia/src/erc-4626/ERC4626MultiToken.sol
 ### Recommended Mitigation
 
 Add the length check 
+
 ```solidity
 
 require(assets.length==assetsAmounts.length, "The length mismatched");
@@ -268,12 +323,182 @@ Implement deleteBribeFlywheel() function to remove flywheel is no longer needed 
 
 ##
 
-## [L-9] 
+## [L-9] Tautology when checking  ``msg.sender``
+
+### Impact
+While taking into account the address(0) output of ``msg.sender`` is something that must always be done: in this particular case the check is a [tautology](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L508)
+
+Indeed:
+
+- if ``msg.sender == pendingAdmin`` is true, then ``msg.sender != address(0)`` will always be `` true``
+- if  ``msg.sender  == pendingAdmin``  is false, then msg.sender  != address(0) will never be evaluated
+
+### POC
+
+```solidity
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+507: require(
+508:            msg.sender == pendingAdmin && msg.sender != address(0), "GovernorBravo:_acceptAdmin: pending admin only"
+509:        );
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L507-L509
+
+##
+
+## [L-10]  ``callee`` address should be checked to avoid expected revert in the ``constructor ``
+
+### Impact
+``delegateTo`` function is called in the ``constructor``, it means that it is being invoked during the contract ``deployment process``. In that case, it is important to ensure that the ``callee`` address passed to the function is indeed a valid contract address.
+
+### POC
+
+```solidity
+FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoDelegator.sol
+
+
+ constructor(
+        address timelock_,
+        address govToken_,
+        address admin_,
+        address implementation_,
+        uint256 votingPeriod_,
+        uint256 votingDelay_,
+        uint256 proposalThreshold_
+    ) public {
+        // Admin set to msg.sender for initialization
+        admin = msg.sender;
+
+        delegateTo(
+            implementation_,
+            abi.encodeWithSignature(
+                "initialize(address,address,uint256,uint256,uint256)",
+                timelock_,
+                govToken_,
+                votingPeriod_,
+                votingDelay_,
+                proposalThreshold_
+            )
+        );
+
+        _setImplementation(implementation_);
+
+        admin = admin_;
+    }
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegator.sol#L20
+
+### Recommended Mitigation
+Include the ``validation`` before calling the ``delegateTo``
+
+```solidity
+require(Address.isContract(callee), "callee is not a contract"); // Check if callee is a contract
+
+```
+##
+
+## [L-11] ``Timelocks`` not implemented as per ``documentation``
+
+```
+``Does it use a timelock function?:  true``
+
+```
+### Impact
+
+ The ``set`` function does not implement ``timelocks``. This means that the function could be called at any time.
+
+Critical ``setDao,setDaoShare`` not implemented the ``timelocks`` for critical ``setter`` functions 
+
+### POC
+
+```solidity
+FILE: 2023-05-maia/src/hermes/minters/BaseV2Minter.sol
+
+86: function setDao(address _dao) external onlyOwner {
+87:        /// @dev DAO can be set to address(0) to disable DAO rewards.
+88:        dao = _dao;
+89:    }
+
+92:  function setDaoShare(uint256 _daoShare) external onlyOwner {
+93:        if (_daoShare > max_dao_share) revert DaoShareTooHigh();
+94:        daoShare = _daoShare;
+95:    }
+
+```
+
+### Recommended Mitigation
+Add the ``timelocks`` for critical setter functions as per documentation 
+
+
+Example Time lock function:
+
+```solidity
+
+function setDao(address _dao) external onlyOwner {
+    /// @dev DAO can be set to address(0) to disable DAO rewards.
+    require(block.timestamp >= 1656978800, "DAO can only be set after 12/19/2022");
+    require(_dao != address(0), "DAO cannot be set to zero");
+
+    if (block.timestamp < 1656978800) {
+      revert("DAO can only be set after 12/19/2022");
+    }
+
+    dao = _dao;
+}
+
+```
+
+
+# NON CRITICAL FINDINGS
+
+##
+
+## [NC-1] Add an event for critical parameter changes
+
+Adding events for critical parameter changes will facilitate offchain monitoring and indexing.
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L86-L89
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L92-L95
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L98-L101
+
+##
+
+## [NC-2] Function does not followed the standard solidity naming 
+
+The ``external`` function names not start with ``_``
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L397
+
+##
+
+## [NC-3] No same value input control 
+
+The setter functions does not have any checks to prevent the same value from being passed. This means that an ``onlyOwner`` could call the function with the same address, which would effectively do nothing
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L86-L89
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L92-L95
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/hermes/minters/BaseV2Minter.sol#L98-L101
 
 
 
 
 
+
+
+
+Use Ownable2stepupgradable if the contract is upgradable 
+
+Low level calls with 0.8.14 cause optimizer bug 
+
+Use latest openzheplin versions 
+
+Use call Instead of transfer
 
 Create/create2 used . So related bugs should be investigated 
 
@@ -283,7 +508,10 @@ Initialize functions could be front run
 
 Timelocks not implemented as per documentation 
 
-``Does it use a timelock function?:  true``
+Return values of transfer()/transferFrom() not checked
+
+Some tokens may revert when zero value transfers are made
+
 
 
 
