@@ -90,3 +90,30 @@ A proposal pending state is judged by "block.number <= proposal.startBlock" whic
 
 ## L-27 Unused MIN_RESERVE_RATION constant in BranchPort.sol
 In https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L92 MIN_RESERVE_RATION is defined but it is never used in that contract. It may have been missed to be used for a second check in the "addStrategyToken" function: https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/BranchPort.sol#L331.
+
+## L-28 Use Existing Modifiers Instead
+Here the checks https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/bHermes.sol#L144 are already done inside the modifiers at
+L69 , L77, L85 . Use that insetad for better code consistency.
+
+## L-29 Have a check for forfeightMultiple that none of the calls would revrt
+We should have a check in this function https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/PartnerUtilityManager.sol#L52
+that none of the forfeit calls would revert (ensure userClaimedX >= amount) , this can save gas too as if the first two forfeit calls succeeded
+but the last one reverted that would waste gas.
+
+## L-30 better to have a check amount > userClaimedWeight
+better to have a check amount > userClaimedWeight at https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/PartnerUtilityManager.sol#L71
+with an error string so the user knows the call reverted due to insufficient claimed weight.
+Same for L78 and L87
+
+## L-31 reward Variable can't be negative
+The check here https://github.com/code-423n4/2023-05-maia/blob/main/src/uni-v3-staker/UniswapV3Staker.sol#L138 is useless since reward is a uint256
+which can't be negative , a check for zero value should be enough.
+
+## L-32 Unnecessary check at MultiRewardsDepot contract
+The check at https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/depots/MultiRewardsDepot.sol#L48 can be done without the OR operator too
+i.e if (_isAsset[asset] ) should be enough.
+
+## L-33 Inconsitencies between function implementations
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosStrategyVanilla.sol#L104 This function checks the 0 liquidity case with == while this function
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosStrategyVanilla.sol#L129 checks the 0 liquidity at L139 with >
+
