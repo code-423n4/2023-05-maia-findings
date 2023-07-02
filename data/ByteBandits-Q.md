@@ -117,3 +117,7 @@ i.e if (_isAsset[asset] ) should be enough.
 https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosStrategyVanilla.sol#L104 This function checks the 0 liquidity case with == while this function
 https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosStrategyVanilla.sol#L129 checks the 0 liquidity at L139 with >
 
+## L-34 Misleading comment on PartnerFactory creating vMaia contracts
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/vMaia.sol#L39-L50
+the factory does not actually create vMaia contracts, it adds them to the registry 
+
