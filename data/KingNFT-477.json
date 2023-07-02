@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "KingNFT",
+  "risk": "2",
+  "title": "Removing more gauge weight than it should be while transfering ````ERC20Gauges```` token",
+  "issueId": 477,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/477"
+}
