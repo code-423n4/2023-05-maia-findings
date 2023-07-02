@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "No check on Mint function could result in silent revert ",
+  "issueId": 474,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/474"
+}
