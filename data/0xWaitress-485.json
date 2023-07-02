@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xWaitress",
+  "risk": "3",
+  "title": "The assignment of id for partner on PartnerManagerFactory is wrongly done as a comparison, leading to failure to removePartner ",
+  "issueId": 485,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/485"
+}
