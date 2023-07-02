@@ -335,4 +335,11 @@ function getRewards() external returns (uint256 totalQueuedForCycle) {
 ```
 
 
+QA3. Much confusion is introduced due to renaming in import:
+1) FlywheelCore is renamed as core:  
 
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/rewards/FlywheelCoreInstant.sol#L10C1-L10C62
+
+2) FlyWheelStrategy is renamed as FlyWheelCore sometimes. 
+
+To avoid this confusion, we eliminate all renamings. 
