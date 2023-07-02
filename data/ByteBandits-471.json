@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ByteBandits",
+  "risk": "2",
+  "title": "Share Value Can Be Rounded To 0 For Certain Cases",
+  "issueId": 471,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/471"
+}
