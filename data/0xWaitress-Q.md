@@ -15,3 +15,20 @@ Secondly, the variable isNotRestake does not affect the execution context, so it
 ## Recommendation
 remove isNotRestake or refactor it to implement the logic that `block.timestamp < endTime` is ensured before even calling `_unstakeToken`
 
+
+[QA-2] flywheelGaugeRewards cannot be updated after being initialised on BaseV2Minter, thus should be verified that it's not a zero address.
+
+```solidity
+    function initialize(FlywheelGaugeRewards _flywheelGaugeRewards) external {
+        if (initializer != msg.sender) revert NotInitializer();
+        flywheelGaugeRewards = _flywheelGaugeRewards;
+        initializer = address(0);
+        activePeriod = (block.timestamp / week) * week;
+    }
+```
+
+
+## Recommendation
+```solidity
++++ require(_flywheelGaugeRewards != address(0));
+```
