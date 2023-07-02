@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "erebus",
+  "risk": "2",
+  "title": "safeApprove could revert for non-standard token like USDT",
+  "issueId": 478,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/478"
+}
