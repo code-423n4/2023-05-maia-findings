@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Oxsadeeq",
+  "risk": "2",
+  "title": "Use of wrong methods would increment the duration for an incentive by 2x",
+  "issueId": 486,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/486"
+}
