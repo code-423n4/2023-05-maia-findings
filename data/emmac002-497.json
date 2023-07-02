@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "emmac002",
+  "risk": "2",
+  "title": "Users may unintentionally transfer tokens to an attacker under a phishing attack",
+  "issueId": 497,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/497"
+}
