@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Sathish9098",
+  "risk": "2",
+  "title": "Potential Issue with Removing Addresses from Arrays Without Assigned ``id`` to ``partnerIds[newPartnerManager],vaultIds[newVault]``",
+  "issueId": 489,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/489"
+}
