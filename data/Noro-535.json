@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Noro",
+  "risk": "2",
+  "title": "`BranchBridgeAgent.anyFallback()` does not catch the flag `0x08`",
+  "issueId": 535,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/535"
+}
