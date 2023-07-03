@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "2",
+  "title": "Expose just one keeper function for Hermes emissions to depositors and create a keeper function to distribute emissions for just one gauge",
+  "issueId": 508,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/508"
+}
