@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "minhquanym",
+  "risk": "3",
+  "title": "Second per liquidity inside could overflow `uint256` causing the LP position to be locked in UniswapV3Staker",
+  "issueId": 505,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/505"
+}
