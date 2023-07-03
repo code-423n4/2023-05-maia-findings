@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IllIllI",
+  "risk": "2",
+  "title": "Use of transferFrom() rather than safeTransferFrom() for NFTs in will lead to the loss of NFTs",
+  "issueId": 517,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/517"
+}
