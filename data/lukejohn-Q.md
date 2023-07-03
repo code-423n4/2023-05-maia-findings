@@ -386,3 +386,9 @@ function getRerange(ITalosBaseStrategy position) private view returns (bool) {
 + return false;
 }
 
+QA6. ``BoostAggregator.unstakeAndWithdraw()`` fails to update ``tokenIdRewards[tokenId]``. After unstaking and withdrawing a token, ``tokenIdRewards[tokenId]`` is supposed to be synced to ``uniswapV3Staker.tokenIdRewards(tokenId)``, but the function ``BoostAggregator.unstakeAndWithdraw()`` fails to do so. 
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L109-L136](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L109-L136)
+
+The correction would be to sync ``tokenIdRewards[tokenId]`` to ``uniswapV3Staker.tokenIdRewards(tokenId)`` in the function 
+
