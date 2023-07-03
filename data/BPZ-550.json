@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "3",
+  "title": "Malicious users can drain Arbitrum Branch contracts of liquidity for tokens with less than 18 decimals",
+  "issueId": 550,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/550"
+}
