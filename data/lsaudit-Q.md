@@ -118,24 +118,7 @@ token1.balanceOf(address(this)) >= protocolFees1;
 ```
 
 
-# [N-01] Misleading function naming in /rewards/depots/SingleRewardsDepot.sol
-
-https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/depots/SingleRewardsDepot.sol#L32-L33
-
-```
-File: rewards/depots/SingleRewardsDepot.sol
-
-32:      function getRewards() external override onlyFlywheelRewards returns (uint256 balance) {  
-33:          return transferRewards(asset, rewardsContract);
-```
-
-The naming of function `getRewards` suggests, that it is a function responsible for displaying current rewards. Instead, this function is responsible for transfering rewards (as `transferRewards` suggests).
-Since this is a external function (available for `onlyFlywheelRewards`) - its name may be misleading for `onlyFlywheelRewards` callers. They might call them just to see how much rewards they have, while this function will transfer those rewards. 
-
-Recommendation: Avoid naming functions as `get*` - when its implementation does more than just getting a result.
-
-
-## [N-02] Lack of consistency in mint() implementation for ERC20hTokenBranch.sol
+## [N-01] Lack of consistency in mint() implementation for ERC20hTokenBranch.sol
 
 https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/token/ERC20hTokenBranch.sol#L23
 
