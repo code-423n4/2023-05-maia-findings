@@ -365,3 +365,23 @@ function getRebalance(ITalosBaseStrategy position) private view returns (bool) {
 + return false;
     }
 ```
+
+QA5. When currentTick is too high or too low, TalosManager.getRerange() will underflow instead of returning true. 
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L78-L84](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L78-L84)
+
+Correction: check to make sure underflow will not occur:
+function getRerange(ITalosBaseStrategy position) private view returns (bool) {
+        //Calculate base ticks.
+        (, int24 currentTick,,,,,) = position.pool().slot0();
+
+-        return currentTick - position.tickLower() >= ticksFromLowerRerange
+-            || position.tickUpper() - currentTick >= ticksFromUpperRerange;
+
++        if(currentTick > position.tickLower() && currentTick - position.tickLower() >= ticksFromLowerRerange) return true;
+
++        if(position.tickUpper() > currentTick && position.tickUpper() - currentTick >= ticksFromUpperRerange) return true;
+
++ return false;
+}
+
