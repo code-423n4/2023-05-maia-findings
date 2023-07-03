@@ -403,3 +403,29 @@ The funtion calls  uniswapV3Staker.claimReward() to claim rewards, but when the 
 
 The correction would be to check the return value uniswapV3Staker.claimReward() so that we know how much actual reward is claimed and then update ``tokenIdRewards[tokenId]``. Another function to claim the remaining rewards need to be introduced as well.
 
+QA8: UniswapV3Staker.updateGauges() fails to delete gaugePool[gauges[uniswapV3Pool]]. As a result, both the old gauge and the new gauge will point to the same uniswapV3Pool.
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L526-L540](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L526-L540)
+
+Consider pool1 and suppose gauges[pool1] = gauge1, and gauge2 = address(uniswapV3GaugeFactory.strategyGauges(address(pool1))). In other words, we need to update the gauge from gauge1 to gauge2. However, since UniswapV3Staker.updateGauges() fails to delete gaugePool[gauge1], 
+we will have gaugePool[gauge1] = pool1, and gaugePool[guauge2] = pool1. 
+
+The correction would be to delete gaugePool[gauge1] as follows:
+
+```diff
+function updateGauges(IUniswapV3Pool uniswapV3Pool) external {
+        address uniswapV3Gauge = address(uniswapV3GaugeFactory.strategyGauges(address(uniswapV3Pool)));
+
+        if (uniswapV3Gauge == address(0)) revert InvalidGauge();
+ 
+        if (address(gauges[uniswapV3Pool]) != uniswapV3Gauge) {
+            emit GaugeUpdated(uniswapV3Pool, uniswapV3Gauge);
++           delete gaugePool[address(gauges[uniswapV3Pool])];         // delete gaugePool[gauge1]
+            gauges[uniswapV3Pool] = UniswapV3Gauge(uniswapV3Gauge);
+            gaugePool[uniswapV3Gauge] = uniswapV3Pool;
+        }
+
+        updateBribeDepot(uniswapV3Pool);
+        updatePoolMinimumWidth(uniswapV3Pool);
+    }
+```
