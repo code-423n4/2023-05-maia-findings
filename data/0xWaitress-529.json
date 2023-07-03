@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xWaitress",
+  "risk": "3",
+  "title": "getRerange at TalosManager would suffer underflows when currentTick becomes smaller than the tickLower() of the position",
+  "issueId": 529,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/529"
+}
