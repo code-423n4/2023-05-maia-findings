@@ -34,14 +34,19 @@ remove isNotRestake or refactor it to implement the logic that `block.timestamp 
 ```
 
 
-[QA-3] createPools at UlyssesFactory can bundle calldata to remove length checks and improve readability.
+[QA-3] createPools and createToken at UlyssesFactory can bundle calldata to remove length checks and improve readability.
 
 
 ```solidity
 function createPools(ERC20[] calldata assets, uint8[][] calldata weights, address owner)
 ```
 
+```solidity
+function createToken(uint256[] calldata poolIds, uint256[] calldata weights, address owner)
+```
+
 ## Recommendation 
+taking createPools as an example, same logic applies to createToken.
 ```
 struct poolInput {
    ERC20 asset;
