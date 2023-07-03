@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "2",
+  "title": "## amount0Min and amount1Min are hardcoded to zero. Front running & sandwich opportunities. ",
+  "issueId": 503,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/503"
+}
