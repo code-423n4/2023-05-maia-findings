@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "3",
+  "title": "Transferring of tokens with less than 18 decimals through the BranchBridgeAgent will cause a substantial loss of user funds",
+  "issueId": 559,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/559"
+}
