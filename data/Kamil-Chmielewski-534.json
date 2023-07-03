@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kamil-Chmielewski",
+  "risk": "2",
+  "title": "RestakeToken function is not permissionless",
+  "issueId": 534,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/534"
+}
