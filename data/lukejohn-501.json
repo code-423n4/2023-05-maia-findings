@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lukejohn",
+  "risk": "2",
+  "title": "Malicous users can launch DOS attack to TalosBaseStrategy.FactorygetStrategies().",
+  "issueId": 501,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/501"
+}
