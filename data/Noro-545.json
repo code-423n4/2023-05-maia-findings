@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Noro",
+  "risk": "2",
+  "title": "`ERC4626PartnerManager` is not completly EIP-4626 compliant",
+  "issueId": 545,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/545"
+}
