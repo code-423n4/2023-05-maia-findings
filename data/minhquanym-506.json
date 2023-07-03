@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "minhquanym",
+  "risk": "2",
+  "title": "Removing any asset in UlyssesToken will break `assetId` mapping and lock asset permanently",
+  "issueId": 506,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/506"
+}
