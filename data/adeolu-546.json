@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "adeolu",
+  "risk": "2",
+  "title": "epoch can change every second and epoch Calc in BaseV2Gauge.sol is division before multiplication",
+  "issueId": 546,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/546"
+}
