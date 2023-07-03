@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "minhquanym",
+  "risk": "2",
+  "title": "Users Might Deposit More Than Needed When Using `ERC4626MultiToken.deposit()`",
+  "issueId": 507,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/507"
+}
