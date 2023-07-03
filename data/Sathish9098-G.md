@@ -126,6 +126,8 @@
 
 - [Upgrade Solidity’s optimizer](#g-11-upgrade-soliditys-optimizer)
 
+- [Invalid Comparison Between ``uint64`` and ``uint256`` in Fee Check can be removed to save gas - Saves ``10060 GAS``]()
+
 
 
 ## FINDINGS
@@ -1359,6 +1361,27 @@ FILE: hardhat.config.js
       },
     },
   },
+
+```
+
+##
+
+## [G-12] Invalid Comparison Between ``uint64`` and ``uint256`` in Fee Check can be removed to save gas 
+
+The check ``if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();`` is always false. This is because ``_fees.lambda1`` is a uint64, which can only store values up to ``2^64 - 1``. On the other hand, ``MAX_LAMBDA1`` is a constant, which means that its value cannot change. The value of ``MAX_LAMBDA1`` is ``1e17``, which is greater than the maximum value that ``_fees.lambda1`` can store.
+
+Therefore, the check if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee(); will not revert, because it is impossible for ``_fees.lambda1`` to be greater than ``MAX_LAMBDA1``.
+
+The check will still be executed, and it will waste gas. The gas cost of a revert statement is typically around ``10,000 gas``. Therefore, if the check is executed, it will cost ``10,000 gas``, even though it will not actually revert the transaction.
+
+So ``if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee()`` check can be removed to save gas 
+
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L310
+
+```solidity
+FILE: 2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+310: if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();
 
 ```
 
