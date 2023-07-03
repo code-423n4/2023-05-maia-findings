@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Sathish9098",
+  "risk": "2",
+  "title": "The lack of control in the ``claimProtocolFees()`` function could potentially allow an attacker to intentionally transfer ``claimProtocolFees`` ",
+  "issueId": 540,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/540"
+}
