@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "UniswapV3Staker.withdrawToken can Dosed by UniswapV3Staker.restakeToken",
+  "issueId": 538,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/538"
+}
