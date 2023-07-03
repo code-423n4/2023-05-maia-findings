@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "sbaudh6",
+  "risk": "3",
+  "title": "Precision Loss issue in Smart Contract Due to Divide Before Multiply",
+  "issueId": 509,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/509"
+}
