@@ -32,3 +32,21 @@ remove isNotRestake or refactor it to implement the logic that `block.timestamp 
 ```solidity
 +++ require(_flywheelGaugeRewards != address(0));
 ```
+
+
+[QA-3] createPools at UlyssesFactory can bundle calldata to remove length checks and improve readability.
+
+
+```solidity
+function createPools(ERC20[] calldata assets, uint8[][] calldata weights, address owner)
+```
+
+## Recommendation 
+```
+struct poolInput {
+   ERC20 asset;
+   uint8[] memory weights;
+}
+
+function createPools(poolInput[] calldata inputs, address owner) 
+```
