@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xnev",
+  "risk": "3",
+  "title": "[H-01] `PoolVariables`: Use of `slot0` to retrieve prices instead of TWAP price",
+  "issueId": 561,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/561"
+}
