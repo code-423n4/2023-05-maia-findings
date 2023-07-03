@@ -29,6 +29,9 @@ In [constructor](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85
 ## [Q-6] Burning bHEREMES does not change with inflation
 According to the [documentation](https://v2-docs.maiadao.io/protocols/Hermes/overview/tokenomics/bhermes#burning), burning HEREMES for bHERMES should "increases with inflation, protecting voters from dilution." However, this is not implemented and users always receive 1:1 ratio of HERMES to bHERMES. Consider implementing this feature, or update the documentation.
 
+## [Q-7] getProtocolFees access bandwidthStateList multiple times
+In `getProtocolFees()` of UlyssesPool.sol, the store `bandwidthStateList` is access multiple times. Consider storing into memory to save SSLOADs.
+
 
 ## [G-1] unnecessary SLOAD in bridgeToRoot()
 In `bridgeToRoot()` of [RootPort.sol](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootPort.sol#L280), `_hToken` is checked to see if it `isGlobalAddress`. This is unnecessary because `mint()` does this already. Consider removing this to reduce SLOAD.
