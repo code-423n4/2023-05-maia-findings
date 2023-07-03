@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "lukejohn",
+  "risk": "2",
+  "title": "FlywheelCoreInstant._getAccruedRewards() ignores the use of the strategy argument, as a result, different strategies have conflict with each other when accruing rewareds. ",
+  "issueId": 499,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/499"
+}
