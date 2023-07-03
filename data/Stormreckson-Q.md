@@ -43,3 +43,13 @@ it challenging for external entities to track rate changes
 the `increaseConversionRate` function should emit the `ConversionRateIncreased` event with the appropriate old and new rates as parameters. 
 
 emit ConversionRateIncreased(oldRate, newRate);
+
+9- https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L476-L519
+
+Token owner verification 
+
+there is no check for the token owner and a user stakes a token that does not belong to them, it can result in unauthorized access to the staking system and token manipulation. This can cause a security vulnerability and can lead to potential financial losses for the users.
+
+For example, if a user stakes a token that does not belong to them, they can manipulate the staking system by staking tokens that they do not own and receive rewards that they are not entitled to. This can lead to a loss of rewards for other users who have legitimately staked their tokens.
+
+By adding the check `deposits[params.tokenId].owner == msg.sender`, the function ensures that only the owner of the token can stake it, preventing unauthorized access and potential security vulnerabilities.
