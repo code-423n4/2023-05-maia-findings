@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IllIllI",
+  "risk": "2",
+  "title": "Unchecked return value of low level call()/delegatecall()",
+  "issueId": 515,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/515"
+}
