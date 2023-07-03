@@ -121,3 +121,8 @@ https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosStrategyVani
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/maia/vMaia.sol#L39-L50
 the factory does not actually create vMaia contracts, it adds them to the registry 
 
+## L-35 Large number of interface functions do not exist in the target contract 
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/interfaces/ITalosBaseStrategy.sol#L37-L98
+Most of the highlighted functions in the interface are variables that do not exist in the main contract 
+
+
