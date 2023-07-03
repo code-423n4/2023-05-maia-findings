@@ -50,13 +50,9 @@ This code first checks if the ``newPartnerManager,newVault`` addresses already e
    if (vaults[vaultIds[vault]] == newVault) revert InvalidVault();
 
 ```
+##
 
-
-
-
-
-
-## [L-1] ``getUserGaugeBoost[user][msg.sender]`` can be invalid if ``totalSupply`` is zero
+## [L-2] ``getUserGaugeBoost[user][msg.sender]`` can be invalid if ``totalSupply`` is zero
 
 ### Impact
 
@@ -87,7 +83,38 @@ if (totalSupply > 0) {
 
 ##
 
-## [L-2] Unchecked subtraction of ``uint32`` from ``uint`` can lead to unexpected results in ``incrementFreezeWindow`` function
+## [L-3] ``uniswapV3SwapCallback()`` not Implemented right way. ``uniswapV3SwapCallback()`` may lacks when handling negative values 
+
+### Impact
+The function uniswapV3SwapCallback() does not handle negative values in the amount0 and amount1 parameters in the right way.
+
+The function checks if the value of ``amount0 or amount1`` is equal to zero, and if it is, it reverts. However, this does not prevent the function from being called with ``negative values``.
+
+As per [docs](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/callback/IUniswapV3SwapCallback) the function should check if the value of ``amount0 or amount1`` is ``less than zero``, and if it is, it should send the tokens to the ``pool``. If the value is ``greater than zero``, it should receive the ``tokens from the pool``
+
+## POC
+```solidity
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+function uniswapV3SwapCallback(int256 amount0, int256 amount1, bytes calldata _data) external {
+        if (msg.sender != address(pool)) revert CallerIsNotPool();
+        if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+        SwapCallbackData memory data = abi.decode(_data, (SwapCallbackData));
+        bool zeroForOne = data.zeroForOne;
+
+        if (zeroForOne) address(token0).safeTransfer(msg.sender, uint256(amount0));
+        else address(token1).safeTransfer(msg.sender, uint256(amount1));
+    }
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/base/TalosBaseStrategy.sol#L333-L341
+
+### Recommended Mititgation
+Need to implement controls to handle negative values also 
+
+##
+
+## [L-4] Unchecked subtraction of ``uint32`` from ``uint`` can lead to unexpected results in ``incrementFreezeWindow`` function
 
 ### Impact
 The function unchecked { if (cycle - block.timestamp <= incrementFreezeWindow) revert IncrementFreezeError(); } in that ``unchecked`` keyword tells the compiler to not check for overflows. This means that if the subtraction of cycle and block.timestamp overflows, the function will not revert.
@@ -110,7 +137,7 @@ Remove ``unchecked`` from ``cycle - block.timestamp`` subtraction operation. If 
 
 ##
 
-## [L-3] ``decimals()`` not part of ERC20 standard
+## [L-5] ``decimals()`` not part of ERC20 standard
 
 ### Impact
 decimals() is not part of the official ERC20 standard and might fail for tokens that do not implement it. While in practice it is very unlikely, as usually most of the tokens implement it, this should still be considered as a potential issue.
@@ -143,7 +170,7 @@ This code will revert if the token does not support the IERC20Decimals interface
 
 ##
 
-## [L-4] ``assets``,``assetsAmounts`` array lengths not checked
+## [L-6] Lack of check in ``assets``,``assetsAmounts`` array lengths then an ``array index out of bound exception`` may occur
 
 ### Impact
 The issue is that the ``assets[i]`` variable is a ``state variable``, while the ``assetsAmounts`` variable is a ``user-defined array``. This means that there is a chance that the two variables could be ``mismatched``. If the ``two variables`` are ``mismatched``, then the ``safeTransferFrom`` function could ``revert``.
@@ -178,7 +205,7 @@ require(assets.length==assetsAmounts.length, "The length mismatched");
 
 ##
 
-## [L-5] The function ``deposit`` does not have a limit on the amount of tokens that can be deposited
+## [L-7] The function ``deposit`` does not have a limit on the amount of tokens that can be deposited
 
 ### Impact
 The ``deposit()`` function does not check to see if the total amount of tokens that the user is trying to deposit is greater than the total supply of tokens in the contract.
@@ -224,7 +251,7 @@ require(shares <= maxSharesAllowed, "INSUFFICIENT_BALANCE");
 
 ##
 
-## [L-6] The ``distribute()`` function does not specify the ``gauge`` that the incentive will be ``created from``
+## [L-8] The ``distribute()`` function does not specify the ``gauge`` that the incentive will be ``created from``
 
 ### Impact
 The function distribute is not safe. The attacker could call the function and create an incentive from a gauge that they control. This could allow the attacker to steal the incentive funds.
@@ -256,7 +283,7 @@ function distribute(uint256 amount, address gauge) internal override {
 
 ##
 
-## [L-7] Adding ``addStrategyForRewards()`` default strategy to the flywheel could be a problem if the default strategy is not appropriate for the gauge.
+## [L-9] Adding ``addStrategyForRewards()`` default strategy to the flywheel could be a problem if the default strategy is not appropriate for the gauge.
 
 ### Impact
 Using a default strategy that is not appropriate for the gauge could be significant. For example, if the default strategy is designed for a different type of gauge, it could result in the incentive funds being distributed in an incorrect manner. This could lead to a number of problems,
@@ -284,7 +311,7 @@ You could modify the function to allow the ``caller`` to specify the ``strategy`
 
 ##
 
-## [L-8]  ``createBribeFlywheel`` does not allow the caller to remove the flywheel once it has been added
+## [L-10]  ``createBribeFlywheel`` does not allow the caller to remove the flywheel once it has been added
 
 ### Impact
 This could be a problem if the flywheel is no longer needed or if it is no longer being used.
@@ -323,7 +350,7 @@ Implement deleteBribeFlywheel() function to remove flywheel is no longer needed 
 
 ##
 
-## [L-9] Tautology when checking  ``msg.sender``
+## [L-11] Tautology when checking  ``msg.sender``
 
 ### Impact
 While taking into account the address(0) output of ``msg.sender`` is something that must always be done: in this particular case the check is a [tautology](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L508)
@@ -347,7 +374,7 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 
 ##
 
-## [L-10]  ``callee`` address should be checked to avoid expected revert in the ``constructor ``
+## [L-12]  ``callee`` address should be checked to avoid expected revert in the ``constructor ``
 
 ### Impact
 ``delegateTo`` function is called in the ``constructor``, it means that it is being invoked during the contract ``deployment process``. In that case, it is important to ensure that the ``callee`` address passed to the function is indeed a valid contract address.
@@ -399,7 +426,7 @@ require(Address.isContract(callee), "callee is not a contract"); // Check if cal
 ```
 ##
 
-## [L-11] ``Timelocks`` not implemented as per ``documentation``
+## [L-13] ``Timelocks`` not implemented as per ``documentation``
 
 ```
 ``Does it use a timelock function?:  true``
@@ -407,48 +434,69 @@ require(Address.isContract(callee), "callee is not a contract"); // Check if cal
 ```
 ### Impact
 
- The ``set`` function does not implement ``timelocks``. This means that the function could be called at any time.
+The documentation for the contract states that there are ``timelocks`` in place to prevent users from withdrawing their collateral asset immediately after depositing it. However, the code for the contract does not actually implement any ``timelocks``.
 
-Critical ``setDao,setDaoShare`` not implemented the ``timelocks`` for critical ``setter`` functions 
+This is a potential ``security vulnerability``, as it could allow a user to withdraw their collateral asset immediately after depositing it, even if the collateral asset has not yet reached the required level of liquidity.
 
-### POC
-
-```solidity
-FILE: 2023-05-maia/src/hermes/minters/BaseV2Minter.sol
-
-86: function setDao(address _dao) external onlyOwner {
-87:        /// @dev DAO can be set to address(0) to disable DAO rewards.
-88:        dao = _dao;
-89:    }
-
-92:  function setDaoShare(uint256 _daoShare) external onlyOwner {
-93:        if (_daoShare > max_dao_share) revert DaoShareTooHigh();
-94:        daoShare = _daoShare;
-95:    }
-
-```
 
 ### Recommended Mitigation
 Add the ``timelocks`` for critical setter functions as per documentation 
 
+##
 
-Example Time lock function:
+## [L-14] ``Negative values`` may return the ``unexpected`` values when using ``uint256(int256)``
+
+### Impact 
+When converting a negative int256 value to a uint256 using ``uint256(int256)``, the result will be unexpected. if you try to convert a negative ``int256`` value to a ``uint256``, the result will be ``interpreted`` as the two's complement representation of the negative value. This means that the resulting uint256 value will be a ``large positive number``.
+
+PROOF:
+We attempt to convert the negative value ``-10`` to a ``uint256``. However, the resulting value will not be the expected value of ``-10`` but rather a ``large positive number``.
+
+If you execute the function, the returned value will be ``115792089237316195423570985008687907853269984665640564039457584007913129639934``. This result corresponds to the two's complement representation of ``-10`` when ``interpreted`` as an ``unsigned uint256``.
+
+### POC
 
 ```solidity
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
 
-function setDao(address _dao) external onlyOwner {
-    /// @dev DAO can be set to address(0) to disable DAO rewards.
-    require(block.timestamp >= 1656978800, "DAO can only be set after 12/19/2022");
-    require(_dao != address(0), "DAO cannot be set to zero");
-
-    if (block.timestamp < 1656978800) {
-      revert("DAO can only be set after 12/19/2022");
-    }
-
-    dao = _dao;
-}
+339: if (zeroForOne) address(token0).safeTransfer(msg.sender, uint256(amount0));
+340: else address(token1).safeTransfer(msg.sender, uint256(amount1));
 
 ```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/base/TalosBaseStrategy.sol#L339-L340
+
+### Recommended Mitigation:
+Carefully handle ``conversions between signed and unsigned integer`` types and ensure that the values are within the ``valid ranges`` of the ``target type``.
+
+##
+
+## [L-15] Inadequate comparison Between ``uint64`` and ``uint256`` in ``setFees()`` function
+
+### Impact
+The check if ``(_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();`` is always false. This is because ``_fees.lambda1`` is a ``uint64``, which can only store values up to ``2^64 - 1``. On the other hand, ``MAX_LAMBDA1`` is a constant, which means that its value cannot change. The value of ``MAX_LAMBDA1 is 1e17``, which is greater than the maximum value that ``_fees.lambda1`` can store.
+
+Therefore, the check ``if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();`` will not revert, because it is impossible for`` _fees.lambda1 to be greater than MAX_LAMBDA1``. This check always false If an attacker can find a way to cause an invalid comparison to be performed, they can exploit the vulnerability to gain control of the contract or steal its funds. 
+
+### POC
+
+```solidity
+FILE: Breadcrumbs2023-05-maia/src/ulysses-amm/UlyssesPool.sol
+
+310: if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();
+
+```
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-amm/UlyssesPool.sol#L310
+
+### Recommended Mitigation
+Safely ``Remove`` the check from the contract. No effects in this check 
+
+
+
+
+### 
+
+
+
 
 
 # NON CRITICAL FINDINGS
@@ -511,6 +559,8 @@ Timelocks not implemented as per documentation
 Return values of transfer()/transferFrom() not checked
 
 Some tokens may revert when zero value transfers are made
+
+
 
 
 
