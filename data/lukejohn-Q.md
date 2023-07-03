@@ -342,4 +342,26 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 
 2) FlyWheelStrategy is renamed as FlyWheelCore sometimes. 
 
-To avoid this confusion, we eliminate all renamings. 
+To avoid this confusion, we eliminate all renamings.
+
+QA4: When currentTick is too high or too low, TalosManager.getRebalance() will underflow instead of returning true. 
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L66-L72](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L66-L72)
+
+Correction: check to make sure underflow will not occur:
+
+```diff
+function getRebalance(ITalosBaseStrategy position) private view returns (bool) {
+        //Calculate base ticks.
+        (, int24 currentTick,,,,,) = position.pool().slot0();
+
+-        return currentTick - position.tickLower() >= ticksFromLowerRebalance
+-            || position.tickUpper() - currentTick >= ticksFromUpperRebalance;
+
++ if(currentTick > position.tickLower() && currentTick - position.tickLower() >= ticksFromLowerRebalance) return true;
+
++ if(position.tickUpper() > currentTick && position.tickUpper() - currentTick >= ticksFromUpperRebalance) return true; 
+
++ return false;
+    }
+```
