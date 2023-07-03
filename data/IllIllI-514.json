@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IllIllI",
+  "risk": "2",
+  "title": "Uniswap V3 oracles do not work properly on Optimism/Base",
+  "issueId": 514,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/514"
+}
