@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "IllIllI",
+  "risk": "2",
+  "title": "Calls to calculateGrowth() will revert when totalSupply() returns zero",
+  "issueId": 519,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/519"
+}
