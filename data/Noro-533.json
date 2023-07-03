@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Noro",
+  "risk": "2",
+  "title": "`BranchBridgeAgent._sendRetrieveOrRetry()` not depositing native token causing `retrySettlement` and `retrieveDeposit` to revert",
+  "issueId": 533,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/533"
+}
