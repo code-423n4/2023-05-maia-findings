@@ -392,3 +392,14 @@ QA6. ``BoostAggregator.unstakeAndWithdraw()`` fails to update ``tokenIdRewards[t
 
 The correction would be to sync ``tokenIdRewards[tokenId]`` to ``uniswapV3Staker.tokenIdRewards(tokenId)`` in the function 
 
+
+QA7: BoostAggregator.unstakeAndWithdraw() fails to check the return value of uniswapV3Staker.claimReward() (at L127 and L130). As a result, the actual claimed reward might be less than ``pendingRewards``. The accouting for pending rewards is thus not accrurate and a user might receive less rewards than he deserves. There is no other function to claim the remaining rewards. 
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L109-L136](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L109-L136)
+
+The funtion calls  uniswapV3Staker.claimReward() to claim rewards, but when the uniswapV3Staker contract  has a reward balance less than ``pendingRewards`` for ``BoostAggregator`` , the actual claimed rewards will be less than ``pendingRewards``, see the implementatino of ``uniswapV3Staker.claimReward()``:
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L262-L274](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/uni-v3-staker/UniswapV3Staker.sol#L262-L274)
+
+The correction would be to check the return value uniswapV3Staker.claimReward() so that we know how much actual reward is claimed and then update ``tokenIdRewards[tokenId]``. Another function to claim the remaining rewards need to be introduced as well.
+
