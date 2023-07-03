@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "Implementations of `_normalizeDecimals()` and `_denormalizeDecimals()` are reversed",
+  "issueId": 554,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/554"
+}
