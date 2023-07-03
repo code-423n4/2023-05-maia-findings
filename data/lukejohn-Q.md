@@ -344,7 +344,7 @@ https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf
 
 To avoid this confusion, we eliminate all renamings.
 
-QA4: When currentTick is too high or too low, TalosManager.getRebalance() will underflow instead of returning true. 
+QA4: When currentTick is too high or too low, TalosManager.getRebalance() will underflow instead of returning true.  As a result, ``performUpkeep()`` might fail even in the case when it is supposed to call strategy.reBalance() successfully;
 
 [https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L66-L72](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L66-L72)
 
@@ -366,7 +366,8 @@ function getRebalance(ITalosBaseStrategy position) private view returns (bool) {
     }
 ```
 
-QA5. When currentTick is too high or too low, TalosManager.getRerange() will underflow instead of returning true. 
+QA5. When currentTick is too high or too low, TalosManager.getRerange() will underflow instead of returning true. As a result, ``performUpkeep()`` might fail even in the case when it is supposed to call strategy.re
+Range() successfully;
 
 [https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L78-L84](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/TalosManager.sol#L78-L84)
 
