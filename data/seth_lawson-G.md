@@ -61,3 +61,62 @@ src\ulysses-omnichain\BranchBridgeAgent.sol:
 src\ulysses-omnichain\VirtualAccount.sol:
   48:         for (uint256 i = 0; i < calls.length; i++) {
 
+
+
+# G 02 Use != 0 instead of > 0 for unsigned integer comparison
+
+35 results - 11 files
+
+src\erc-20\ERC20Gauges.sol:
+  417:         if (weight > 0) {
+  441:         if (weight > 0) {
+ 
+src\rewards\base\FlywheelCore.sol:
+  127:         if (oldRewardBalance > 0) {
+  162:         if (strategyRewardsAccrued > 0) {
+  
+
+src\talos\TalosStrategyVanilla.sol:
+  139:         if (_liquidity > 0) {
+
+src\ulysses-amm\UlyssesPool.sol: 
+   153:         if (claimed > 0) {
+   191:             if (oldBandwidth > 0) {
+   256:                     if (oldBandwidth > 0) {
+   272:             if (oldBandwidth > 0) {
+   282:                     } else if (leftOverBandwidth > 0) {
+   911:             if (updateAmount > 0) {
+  1048:             if (updateAmount > 0) {
+
+src\ulysses-omnichain\ArbitrumBranchBridgeAgent.sol:
+  160:         if (gasRemaining > 0) {
+
+src\ulysses-omnichain\ArbitrumBranchPort.sol:
+  118:         if (_deposit > 0) {
+  123:         if (_amount - _deposit > 0) {
+  137:             if (_deposits[i] > 0) {
+  144:             if (_amounts[i] - _deposits[i] > 0) {
+  
+
+src\ulysses-omnichain\BranchBridgeAgent.sol:
+  623:             if (_amounts[i] - _deposits[i] > 0) {  
+  627:             if (_deposits[i] > 0) { 
+  979:         if (_amount - _deposit > 0) { 
+  983:         if (_deposit > 0) {
+
+src\ulysses-omnichain\BranchPort.sol:
+  248:         if (_amount - _deposit > 0) { 
+  252:         if (_deposit > 0) {
+  268:             if (_deposits[i] > 0) {  
+  275:             if (_amounts[i] - _deposits[i] > 0) {
+ 
+src\ulysses-omnichain\RootBridgeAgent.sol:
+   451:         if (_amount - _deposit > 0) {  
+   457:         if (_deposit > 0) {
+   750:             if (_initialGas > 0) { 
+   757:         if (_initialGas > 0) {
+  1161:             if (initialGas > 0) {
+  1171:         if (initialGas > 0) {
+  
+src\uni-v3-staker\libraries\RewardMath.sol:
+  31:         if (boostTotalSupply > 0) {
