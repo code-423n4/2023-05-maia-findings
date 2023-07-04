@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Evo",
+  "risk": "2",
+  "title": "The protocol will not work as intended for priceImpactPercentage if it's equal to zero",
+  "issueId": 613,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/613"
+}
