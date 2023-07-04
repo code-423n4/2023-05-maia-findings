@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "2",
+  "title": "Non-specified pragma can lead to malfunctioning/ damaged contract when deployed on Arbitrum",
+  "issueId": 630,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/630"
+}
