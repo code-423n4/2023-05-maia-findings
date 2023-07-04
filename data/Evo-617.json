@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Evo",
+  "risk": "2",
+  "title": "A revert could be done if sqrtPriceX96 less than exactSqrtPriceImpact",
+  "issueId": 617,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/617"
+}
