@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BPZ",
+  "risk": "2",
+  "title": "## vMaia is an ERC-4626 compliant but maxWithdraw & maxRedeem functions are not fully up to EIP-4626's specification",
+  "issueId": 585,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/585"
+}
