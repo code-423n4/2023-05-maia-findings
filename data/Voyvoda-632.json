@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "3",
+  "title": "UniswapV3Staker.sol#restakeToken calls `unstakeToken` with wrong argument",
+  "issueId": 632,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/632"
+}
