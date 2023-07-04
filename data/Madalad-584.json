@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Madalad",
+  "risk": "2",
+  "title": "Solidity version 0.8.20 may not work on other chains due to `PUSH0`",
+  "issueId": 584,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/584"
+}
