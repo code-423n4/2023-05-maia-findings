@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "3",
+  "title": "Attacker can steal Accumulated Awards from RootBridgeAgent by abusing retrySettlement()",
+  "issueId": 645,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/645"
+}
