@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "2",
+  "title": "Sweep() doesn’t convert WETH to ETH",
+  "issueId": 648,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/648"
+}
