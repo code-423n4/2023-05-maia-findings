@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Koolex",
+  "risk": "2",
+  "title": "Migration logic doesn't check if the newPartnerVault was already used",
+  "issueId": 605,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/605"
+}
