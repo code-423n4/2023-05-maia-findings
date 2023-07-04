@@ -10,6 +10,10 @@
 | [G-06] | Expressions for constant values should use `immutable` | 3                  |
 | [G-07] | Use hardcoded address instead of `address(this)`        | 92                 |
 | [G-08] | Optimize names to save gas                             | -                  |
+| [G-09] | State variables can be cached instead of re-reading them from storage  | 4 |
+| [G-10] |  Using `abi.encodePacked()` is more gas efficient than `abi.encode()` | 19 |
+
+
 
 ### [G-01] Do not calculate constants
 
@@ -572,3 +576,104 @@ By prioritizing the most frequently called functions based on their Method ID, g
 
 Source:
 - https://medium.com/joyso/solidity-how-does-function-name-affect-gas-consumption-in-smart-contract-47d270d8ac92
+
+
+
+
+### [G-09] State variables can be cached instead of re-reading them from storage
+
+State variables used multiple times can be cached to save 100 gas by replacing `Gwarmaccess` with a much cheaper stack read.
+
+*There are 4 instances of this issue:*
+
+```solidity
+File: ERC20Gauges.sol
+74:     function _getGaugeCycleEnd() internal view returns (uint32) {
+75:         uint32 nowPlusOneCycle = block.timestamp.toUint32() + gaugeCycleLength; // @audit cache `gaugeCycleLength`
+76:         unchecked {
+77:             return (nowPlusOneCycle / gaugeCycleLength) * gaugeCycleLength; // @audit cache `gaugeCycleLength` // cannot divide by zero and always <= nowPlusOneCycle so no overflow
+78:         }
+79:     }
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20Gauges.sol#L74
+
+```solidity
+File: FlywheelGaugeRewards.sol
+79:         uint32 currentCycle = (block.timestamp.toUint32() / gaugeCycleLength) * gaugeCycleLength; // @audit
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol#L79
+
+```solidity
+File: FlywheelGaugeRewards.sol
+114:         uint32 currentCycle = (block.timestamp.toUint32() / gaugeCycleLength) * gaugeCycleLength; // @audit
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol#L114
+
+### [G-10] Using `abi.encodePacked()` is more gas efficient than `abi.encode()`
+
+*There are 19 instances of this issue:*
+
+```solidity
+File: GovernorBravoDelegateMaia.sol
+  198             !timelock.queuedTransactions(keccak256(abi.encode(target, value, signature, data, eta))),
+  346             keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainIdInternal(), address(this)));
+  347         bytes32 structHash = keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support));
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L198
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L346-L347
+
+```solidity
+File: PoolActions.sol
+  51             abi.encode(SwapCallbackData({zeroForOne: zeroForOne}))
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/libraries/PoolActions.sol#L51
+
+```solidity
+File: ERC20MultiVotes.sol
+  368                     "\x19\x01", DOMAIN_SEPARATOR(), keccak256(abi.encode(DELEGATION_TYPEHASH, delegatee, nonce, expiry))
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20MultiVotes.sol#L368
+
+```solidity
+File: ArbitrumCoreBranchRouter.sol
+  53         bytes memory data = abi.encode(_underlyingAddress, address(0), name, symbol);
+  98         bytes memory data = abi.encode(newBridgeAgent, _rootBridgeAgent);
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/ArbitrumCoreBranchRouter.sol#L53
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/ArbitrumCoreBranchRouter.sol#L98
+
+```solidity
+File: CoreBranchRouter.sol
+  48         bytes memory data = abi.encode(msg.sender, _globalAddress, _toChain, _rootExecutionGas);
+  72         bytes memory data = abi.encode(_underlyingAddress, newToken, name, symbol);
+  105         bytes memory data = abi.encode(_globalAddress, newToken);
+  148         bytes memory data = abi.encode(newBridgeAgent, _rootBridgeAgent);
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreBranchRouter.sol#L48
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreBranchRouter.sol#L72
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreBranchRouter.sol#L105
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreBranchRouter.sol#L148
+
+```solidity
+File: CoreRootRouter.sol
+  107         bytes memory data = abi.encode(
+  158         bytes memory data = abi.encode(
+  238         bytes memory data = abi.encode(_branchBridgeAgentFactory);
+  259         bytes memory data = abi.encode(_branchBridgeAgent);
+  282         bytes memory data = abi.encode(_underlyingToken, _minimumReservesRatio);
+  309         bytes memory data = abi.encode(_portStrategy, _underlyingToken, _dailyManagementLimit, _isUpdateDailyLimit);
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L107
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L158
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L238
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L259
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L282
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L309
+
+```solidity
+File: RootBridgeAgent.sol
+  689             abi.encode(SwapCallbackData({tokenIn: gasTokenGlobalAddress}))
+  733             abi.encode(SwapCallbackData({tokenIn: address(wrappedNativeToken)}))
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/RootBridgeAgent.sol#L689
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/RootBridgeAgent.sol#L733
