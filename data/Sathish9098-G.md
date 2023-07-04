@@ -126,9 +126,11 @@
 
 - [Upgrade Solidity’s optimizer](#g-11-upgrade-soliditys-optimizer)
 
+- [Combine events to save Glogtopic (375 gas)](#g-12-combine-events-to-save-glogtopic-375-gas)
 
 
-### Total approximate Gas Saved as per report - ``60927 GAS``
+
+### Total approximate Gas Saved as per report - ``63000 GAS``
 
 
 ## FINDINGS
@@ -137,6 +139,8 @@ NOTE: Some functions have been truncated where necessary to just show affected p
 ##
 
 ## [G-1] Pack structs by putting variables that can fit together next to each other
+
+### Saves ``10000 GAS, 5 SLOT``
 
 As the solidity EVM works with 32 bytes, variables less than 32 bytes should be packed inside a struct so that they can be stored in the same slot, this saves gas when writing to storage ~20000 gas
 
@@ -269,6 +273,8 @@ FILE: Breadcrumbs2023-05-maia/src/governance/GovernorBravoInterfaces.sol
 ##
 
 ## [G-2] State variables can be packed to use fewer storage slots
+
+### Saves ``16000 GAS, 8 SLOT``
 
 The EVM works with 32 byte words. Variables less than 32 bytes can be declared next to each other in storage and this will pack the values together into a single 32 byte storage slot (if the values combined are <= 32 bytes). If the variables packed together are retrieved together in functions we will effectively save ``~2000 gas`` with every subsequent SLOAD for that storage slot. This is due to us incurring a ``Gwarmaccess (100 gas)`` versus a ``Gcoldsload (2100 gas)``
 
@@ -431,6 +437,8 @@ FILE: 2023-05-maia/src/maia/vMaia.sol
 ##
 
 ## [G-3] State variables should be cached in stack variables rather than re-reading them from storage
+
+### Saves ``1900 GAS, 19 SLOD``
 
 The instances below point to the second+ access of a state variable within a function. Caching of a state variable replaces each ``Gwarmaccess (100 gas)`` with a much cheaper stack read. Other less obvious fixes/optimizations include having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
 
@@ -682,6 +690,8 @@ INonfungiblePositionManager _nonfungiblePositionManager = nonfungiblePositionMan
 
 ## [G-4] Avoid emit state variable when stack variable available
 
+### Saves ``900 GAS, 9 SLOD``
+
 The gas cost for emitting a state variable is ``100 gas``, while the gas cost for emitting a stack variable is 8 gas. This means that emitting a stack variable instead of a state variable can save ``92 gas``
 
 ### ``GovernorBravoDelegateMaia.sol``: Emit and return stack variable ``newProposalID`` instead of state variable ``newProposal.id`` : Saves ``200 GAS``, ``2 SLOD`` 
@@ -760,7 +770,9 @@ FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
 
 ##
 
-## [G-5]  ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
+## [G-5] ``require() or revert()`` statements that check input arguments should be at the ``top`` of the ``function`` (Also restructured some if’s)
+
+### Saves ``4300 GAS``
 
 ``Fail early and cheaply``
 
@@ -844,6 +856,8 @@ FILE: 2023-05-maia/src/ulysses-omnichain/RootPort.sol
 ##
 
 ## [G-6] Multiple accesses of a mapping/array should use a local variable cache
+
+### Saves ``1800 GAS, 18 SLOD``
 
 Caching a mapping’s value in a local storage or calldata variable when the value is accessed multiple times saves ~42 gas per access due to not having to perform the same offset calculation every time.
 Help the Optimizer by saving a storage variable’s reference instead of repeatedly fetching it
@@ -1049,6 +1063,8 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
 
 ## [G-7] Store external call values in immutable variables to improve performance and reduce gas costs 
 
+### Saves ``4600 GAS``
+
 You can save a Gcoldsload (2100 gas) in the address provider, plus the 100 gas overhead of the external call, for every _replenishGas(), by creating an immutable CONFIG variable which will store the ``IAnycallProxy(localAnyCallAddress).config()`` address. ``localAnyCallAddress`` is immutable variable so not changed any where in the contract. When ever we call ``IAnycallProxy(localAnyCallAddress).config()`` always return the same address. So its ``waste of external call `` instead we can store the ``IAnycallProxy(localAnyCallAddress).config()`` address with ``CONFIG`` immutable variable during constructor initialization time.
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/RootBridgeAgent.sol#L851
@@ -1090,6 +1106,8 @@ Inside the constructor
 ##
 
 ## [G-8] Add unchecked {} for subtractions where the operands cannot underflow because of a previous require() or if-statement
+
+### Saves ``1040 GAS, 8 Instances``
 
 require(a <= b); x = b - a => require(a <= b); unchecked { x = b - a }
 
@@ -1158,19 +1176,17 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/BranchPort.sol
 
 ```
 
-
-
-
-
 ##
 
 ## [G-9] Unused internal state variable and lock modifier can be removed to save overall contract deployment cost 
 
+### Saves ``25487 GAS``
+
 ``Unused internal state variable'' take up space in the contract's storage, which can increase the gas cost of deploying and calling the contract. If a state variable is never used, then it can be safely removed from the contract.
-``Lock modifier`` can also increase the gas cost of calling a contract. Lock modifiers are used to prevent a contract from being called by an unauthorized address. However, if the contract is only ever called by a trusted address, then the lock modifier can be safely removed.
+``Lock modifier`` can also increase the gas cost of calling a contract. Lock modifiers are used to prevent a contract from being called by an unauthorized address. However, if the contract is only ever called by a trusted address, then the lock modifier can be safely removed. The ``lock`` modifier not used through out the contract can be safely removed.
 
 
-### ``CoreRootRouter.sol``: After Removed unused code the deployment cost saved : ``25,487 GAS``
+### ``CoreRootRouter.sol``: After Removed unused code the deployment cost saved : ``25487 GAS``
 
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/ulysses-omnichain/CoreRootRouter.sol#L435-L443
 
@@ -1192,6 +1208,8 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/CoreRootRouter.sol
 ##
 
 ## [G-10] Use constants instead of type(uintx).max
+
+### Saves ``81 GAS``
 
 Using constants instead of type(uint256).max can save gas. This is because the compiler can embed constants directly into the bytecode of your contract, which saves on gas costs.
 
@@ -1287,6 +1305,8 @@ FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
 
 ## [G-11] Upgrade Solidity’s optimizer
 
+### Saves ``1000 GAS``
+
 Make sure Solidity’s optimizer is enabled. It reduces gas costs. If you want to gas optimize for contract deployment (costs less to deploy a contract) then set the Solidity optimizer at a low number. If you want to optimize for run-time gas costs (when functions are called on a contract) then set the optimizer to a high number.
 
 Set the optimization value higher than 800 in your hardhat.config.ts file.
@@ -1364,16 +1384,21 @@ FILE: hardhat.config.js
   },
 
 ```
+##
 
-## [] Using storage instead of memory for structs/arrays saves gas
+## [G-12] Combine events to save Glogtopic (375 gas)
 
-When fetching data from a storage location, assigning the data to a memory variable causes all fields of the struct/array to be read from storage, which incurs a Gcoldsload (2100 gas) for each field of the struct/array. If the fields are read from the new memory variable, they incur an additional MLOAD rather than a cheap stack read. Instead of declearing the variable with the memory keyword, declaring the variable with the storage keyword and caching any fields that need to be re-read in stack variables, will be much cheaper, only incuring the Gcoldsload for the fields actually read. The only time it makes sense to read the whole struct/array into a memory variable, is if the full struct/array is being returned by the function, is being passed to a function that requires memory, or if the array/struct is being read from another memory array/struct
+We can combine the events into one singular event to save Glogtopic (375 gas) that would otherwise be paid for the additional one event.
 
-## [] Use calldata instead of memory for function parameters
+https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/governance/GovernorBravoDelegateMaia.sol#L521-L522
 
-If you are not modifying the function parameters, consider using calldata instead of memory. This will save gas.
+```solidity
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
 
+521: emit NewAdmin(oldAdmin, admin);
+523: emit NewPendingAdmin(oldPendingAdmin, pendingAdmin);
 
+```
 
 ## [G-] Unnecessary memory operations with an immutable variable
 
@@ -1396,22 +1421,7 @@ File: contracts/Pool/PoolRegistry.sol
 244:        // Start transferring ownership to msg.sender
 245:        comptrollerProxy.transferOwnership(msg.sender);
 
-Combine events to save 2 Glogtopic (375 gas)
 
-The events below are only emitted once in the handleRewards function. We can combine the events into one singular event to save two Glogtopic (375 gas) that would otherwise be paid for the additional two events.
-
-https://github.com/code-423n4/2023-06-stader/blob/main/contracts/SocializingPool.sol#L96-L104
-
-File: contracts/SocializingPool.sol
-96:        emit OperatorRewardsUpdated(
-97:            _rewardsData.operatorETHRewards,
-98:            totalOperatorETHRewardsRemaining,
-99:            _rewardsData.operatorSDRewards,
-100:            totalOperatorSDRewardsRemaining
-101:        );
-102:
-103:        emit UserETHRewardsTransferred(_rewardsData.userETHRewards);
-104:        emit ProtocolETHRewardsTransferred(_rewardsData.protocolETHRewards);
 
 ## 0 amount transfers should be avoided call empty transfers to avoid gas 
 
