@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "AlexCzm",
+  "risk": "2",
+  "title": "Hardcoded slippage leads to temporary lock of funds",
+  "issueId": 659,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/659"
+}
