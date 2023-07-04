@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Koolex",
+  "risk": "2",
+  "title": "Withdrawal from vMaia position is possible on one of any Tuesday of the month in some cases (e.g. second or third Tuesday) which goes against how the protocol should work",
+  "issueId": 604,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/604"
+}
