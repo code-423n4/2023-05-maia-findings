@@ -129,6 +129,8 @@
 - [Invalid Comparison Between ``uint64`` and ``uint256`` in Fee Check can be removed to save gas - Saves ``10060 GAS``]()
 
 
+### Total approximate Gas Saved as per report - ``70927 GAS``
+
 
 ## FINDINGS
 NOTE: Some functions have been truncated where necessary to just show affected parts of the code Through out the report some places might be denoted with audit tags to show the actual place affected.
