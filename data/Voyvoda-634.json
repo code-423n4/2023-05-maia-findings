@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "3",
+  "title": "BoostAggregator owner can set fees to 100% and steal all of the users' rewards",
+  "issueId": 634,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/634"
+}
