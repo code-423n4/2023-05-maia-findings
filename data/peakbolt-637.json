@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "`_gasSwapIn()` and `_gasSwapOut()` could end up with partial swaps due to insufficient slippage protection",
+  "issueId": 637,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/637"
+}
