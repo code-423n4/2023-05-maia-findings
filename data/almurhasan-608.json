@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "almurhasan",
+  "risk": "3",
+  "title": "Rewards will not be updated for every gauges as the function queueRewardsForCycle()/queueRewardsForCyclePaginated(uint256 numRewards) will revert every time.",
+  "issueId": 608,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/608"
+}
