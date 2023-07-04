@@ -1365,7 +1365,13 @@ FILE: hardhat.config.js
 
 ```
 
-##
+## [] Using storage instead of memory for structs/arrays saves gas
+
+When fetching data from a storage location, assigning the data to a memory variable causes all fields of the struct/array to be read from storage, which incurs a Gcoldsload (2100 gas) for each field of the struct/array. If the fields are read from the new memory variable, they incur an additional MLOAD rather than a cheap stack read. Instead of declearing the variable with the memory keyword, declaring the variable with the storage keyword and caching any fields that need to be re-read in stack variables, will be much cheaper, only incuring the Gcoldsload for the fields actually read. The only time it makes sense to read the whole struct/array into a memory variable, is if the full struct/array is being returned by the function, is being passed to a function that requires memory, or if the array/struct is being read from another memory array/struct
+
+## [] Use calldata instead of memory for function parameters
+
+If you are not modifying the function parameters, consider using calldata instead of memory. This will save gas.
 
 
 
@@ -1389,6 +1395,23 @@ File: contracts/Pool/PoolRegistry.sol
 243:
 244:        // Start transferring ownership to msg.sender
 245:        comptrollerProxy.transferOwnership(msg.sender);
+
+Combine events to save 2 Glogtopic (375 gas)
+
+The events below are only emitted once in the handleRewards function. We can combine the events into one singular event to save two Glogtopic (375 gas) that would otherwise be paid for the additional two events.
+
+https://github.com/code-423n4/2023-06-stader/blob/main/contracts/SocializingPool.sol#L96-L104
+
+File: contracts/SocializingPool.sol
+96:        emit OperatorRewardsUpdated(
+97:            _rewardsData.operatorETHRewards,
+98:            totalOperatorETHRewardsRemaining,
+99:            _rewardsData.operatorSDRewards,
+100:            totalOperatorSDRewardsRemaining
+101:        );
+102:
+103:        emit UserETHRewardsTransferred(_rewardsData.userETHRewards);
+104:        emit ProtocolETHRewardsTransferred(_rewardsData.protocolETHRewards);
 
 
 
