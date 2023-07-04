@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "3",
+  "title": "Attacker can mint arbitrary amount of hToken on RootChain",
+  "issueId": 643,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/643"
+}
