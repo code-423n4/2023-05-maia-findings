@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Madalad",
+  "risk": "3",
+  "title": "Underlying tokens of first depositor can be stolen",
+  "issueId": 576,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/576"
+}
