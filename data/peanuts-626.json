@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "There is no deadline when interacting with Uniswap V3 functions in Talos Contracts.",
+  "issueId": 626,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/626"
+}
