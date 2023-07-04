@@ -1413,7 +1413,7 @@ File: contracts/SocializingPool.sol
 103:        emit UserETHRewardsTransferred(_rewardsData.userETHRewards);
 104:        emit ProtocolETHRewardsTransferred(_rewardsData.protocolETHRewards);
 
-
+## 0 amount transfers should be avoided call empty transfers to avoid gas 
 
 
 
