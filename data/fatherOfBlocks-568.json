@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "fatherOfBlocks",
+  "risk": "2",
+  "title": "Possible DoS of the owner, due to the value of the fee",
+  "issueId": 568,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/568"
+}
