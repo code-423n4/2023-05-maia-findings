@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "There is no slippage protection when interacting with Uniswap in the Talos Contracts",
+  "issueId": 624,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/624"
+}
