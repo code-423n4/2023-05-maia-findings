@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "AlexCzm",
+  "risk": "2",
+  "title": "`ERC20Boost.sol` An user can be `attach`ed to a gauge and have no boost balance.",
+  "issueId": 656,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/656"
+}
