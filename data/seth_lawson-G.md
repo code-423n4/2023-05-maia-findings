@@ -120,3 +120,8 @@ src\ulysses-omnichain\RootBridgeAgent.sol:
   
 src\uni-v3-staker\libraries\RewardMath.sol:
   31:         if (boostTotalSupply > 0) {
+
+# G 03 Use v4.9.0 OpenZeppelin contracts
+v4.9.0 version of OpenZeppelin provides many small gas optimizations.
+https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v4.9.0
+
