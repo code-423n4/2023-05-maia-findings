@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "incentive.totalRewardUnclaimed in the UniswapV3Staker.sol._unstakeToken() should not be unchecked ",
+  "issueId": 595,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/595"
+}
