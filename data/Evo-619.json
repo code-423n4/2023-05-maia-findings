@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Evo",
+  "risk": "2",
+  "title": "Max safeApprove for partnerGovernance doesn't protect from potential governance attack",
+  "issueId": 619,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/619"
+}
