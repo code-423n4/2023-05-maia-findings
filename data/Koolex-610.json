@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Koolex",
+  "risk": "3",
+  "title": "The difference between gasLeft and gasAfterTransfer is greater than TRANSFER_OVERHEAD causing `anyExecute` to fail always",
+  "issueId": 610,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/610"
+}
