@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "3",
+  "title": "Re-adding a deprecated gauge in a new epoch before calling updatePeriod()  / queueRewardsForCycle() will leave some gauges without rewards.",
+  "issueId": 639,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/639"
+}
