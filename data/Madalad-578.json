@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Madalad",
+  "risk": "3",
+  "title": "`TalosStrategyStaked` vault can be gamed by malicious users to steal fee proceeds from other users",
+  "issueId": 578,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/578"
+}
