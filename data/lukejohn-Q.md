@@ -429,3 +429,16 @@ function updateGauges(IUniswapV3Pool uniswapV3Pool) external {
         updatePoolMinimumWidth(uniswapV3Pool);
     }
 ```
+
+QA9. ``BoostAggregator.decrementGaugesBoostIndexed()`` fails to call ``hermesGaugeBoost.updateUserBoost(address(this))``. As a result, ``getUserBoost[address(this)]`` is not updated and thus not accurate after the call of ``BoostAggregator.decrementGaugesBoostIndexed()``. 
+
+[https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L180-L182](https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/boost-aggregator/BoostAggregator.sol#L180-L182)
+
+Correction: we need to call ``hermesGaugeBoost.updateUserBoost(address(this))`` in ``BoostAggregator.decrementGaugesBoostIndexed()``:
+
+```diff
+  function decrementGaugesBoostIndexed(uint256 boost, uint256 offset, uint256 num) external onlyOwner {
+        hermesGaugeBoost.decrementGaugesBoostIndexed(boost, offset, num);
++       hermesGaugeBoost.updateUserBoost(address(this));
+    }
+```
