@@ -55,3 +55,24 @@ struct poolInput {
 
 function createPools(poolInput[] calldata inputs, address owner) 
 ```
+
+
+[QA-4] ecrecover in GovernorBravoDelegateMaia would have signature malleability issue
+
+```solidity
+    function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) external {
+        bytes32 domainSeparator =
+            keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainIdInternal(), address(this)));
+        bytes32 structHash = keccak256(abi.encode(BALLOT_TYPEHASH, proposalId, support));
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        address signatory = ecrecover(digest, v, r, s);
+        require(signatory != address(0), "GovernorBravo::castVoteBySig: invalid signature");
+        emit VoteCast(signatory, proposalId, support, castVoteInternal(signatory, proposalId, support), "");
+    }
+```
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L349
+
+## Recommendation
+using ECDSA from Openzeppelin which mitigate the signature malleability issue
+
+https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
