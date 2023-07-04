@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "AlexCzm",
+  "risk": "2",
+  "title": "Incorrect accounting of free weight in `_decrementWeightUntilFree`",
+  "issueId": 657,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/657"
+}
