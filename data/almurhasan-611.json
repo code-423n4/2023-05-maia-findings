@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "almurhasan",
+  "risk": "3",
+  "title": "Every gauge can’t withdraw their reward as the function getAccruedRewards() will revert every time.",
+  "issueId": 611,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/611"
+}
