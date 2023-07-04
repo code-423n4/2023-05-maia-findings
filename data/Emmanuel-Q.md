@@ -59,3 +59,32 @@ Manual Review
 
 Remove the `params` parameter from each of the functions in BranchBridgeAgent since it would always only cause a revert.
 
+
+# Low 003
+
+### Title
+
+`_addGlobalToken` for a global token can be called many times before initial anyExecuteResponse is triggered, which would cause many unused hTokens to be created by ERC20hTokenFactory
+
+## Link
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L143-L167
+
+## Impact
+
+Many useless htokens will be created on branch chain.
+
+## Proof of Concept
+
+In CoreRootRouter#\_addGlobalToken, `if (IPort(rootPortAddress).isGlobalToken(_globalAddress, _toChain)){revert TokenAlreadyAdded()}`.
+But `_isGlobalToken` struct is not updated in the same function. Instead, a call out is made to Branch chain which would create the token on branch chain via Erc20hTokenBranchFactory#createToken, then perform another call out back to root chain, and downstream call `CoreRootRouter#anyExecuteResponse`, which would then update `_isGlobalToken`.
+The problem is that \_addGlobalToken for a particular global token can be called multiple times before initial anyExecuteResponse is triggered, which would cause Erc20hTokenBranchFactory to create many useless tokens on branch chain.
+
+## Tools Used
+
+Manual Review
+
+## Recommended Mitigation Steps
+
+Update \_isGlobalToken in \_addGlobalToken, and if creating token on branch chain fails, anyFallback should be triggered on root chain which should update `_isGlobalToken[globalToken][chain]` to false
+
