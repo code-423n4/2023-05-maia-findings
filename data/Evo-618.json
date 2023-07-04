@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Evo",
+  "risk": "2",
+  "title": "No max allowance made as a safeApprove for IBaseVault",
+  "issueId": 618,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/618"
+}
