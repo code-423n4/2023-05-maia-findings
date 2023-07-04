@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Koolex",
+  "risk": "3",
+  "title": "Incorrect gas unit calculation in RootBridgeAgent which could possibly lead to a slow draining of execution budget or failure of anyExecute call",
+  "issueId": 601,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/601"
+}
