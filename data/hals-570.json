@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "hals",
+  "risk": "2",
+  "title": "The first depositor in ERC4626 vaults can manipulate the share price & steal the the underlyingAsset (inflation attack)",
+  "issueId": 570,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/570"
+}
