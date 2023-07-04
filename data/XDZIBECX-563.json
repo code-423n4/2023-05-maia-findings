@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "XDZIBECX",
+  "risk": "2",
+  "title": "SingleRewardsDepot contract users cannot claim rewards if asset address is set to zero",
+  "issueId": 563,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/563"
+}
