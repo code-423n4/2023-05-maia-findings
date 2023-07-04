@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "BranchPort._denormalizeDecimals  might not working as expect",
+  "issueId": 596,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/596"
+}
