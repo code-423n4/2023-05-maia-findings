@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "AlexCzm",
+  "risk": "2",
+  "title": "TalosBaseStrategy#init() lacks slippage protection",
+  "issueId": 658,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/658"
+}
