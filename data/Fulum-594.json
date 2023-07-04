@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Fulum",
+  "risk": "2",
+  "title": "Possibility to make RootPort unusable because addBridgeAgentFactory is broken.",
+  "issueId": 594,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/594"
+}
