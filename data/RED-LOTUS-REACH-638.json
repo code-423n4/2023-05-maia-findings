@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "RED-LOTUS-REACH",
+  "risk": "3",
+  "title": "Ulysses Omnichain - Critical Business Logic Error regarding anyCall Pay Fees on Destination Chain Implementation",
+  "issueId": 638,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/638"
+}
