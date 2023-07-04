@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "adeolu",
+  "risk": "3",
+  "title": "bad math for conversion to other token decimals in _normalizeDecimals() of BranchBridgeAgent.sol",
+  "issueId": 599,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/599"
+}
