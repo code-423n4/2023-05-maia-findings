@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Voyvoda",
+  "risk": "2",
+  "title": "retrySettlement(...) should revert on a Settlement that has been redeemed or is non existing, crediting back ETH to user",
+  "issueId": 649,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/649"
+}
