@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "Division before multiplication incurs unnecessary precision loss in function RewardMath.computeBoostedSecondsInsideX128",
+  "issueId": 588,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/588"
+}
