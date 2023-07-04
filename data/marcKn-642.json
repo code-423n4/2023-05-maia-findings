@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "2",
+  "title": "queueRewardsForCycle() function of FlywheelGaugeRewards will revert if queueRewardsForCyclePaginated(x) is called before in the same epoch",
+  "issueId": 642,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/642"
+}
