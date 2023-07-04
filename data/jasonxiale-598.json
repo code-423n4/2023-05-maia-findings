@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "3",
+  "title": "BranchBridgeAgent._normalizeDecimalsMultiple will always revert because of lacking of allocating memory",
+  "issueId": 598,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/598"
+}
