@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "hals",
+  "risk": "3",
+  "title": "`UniswapV3Staker.sol` : Setter functions for pool variables are missing access control modifiers",
+  "issueId": 569,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/569"
+}
