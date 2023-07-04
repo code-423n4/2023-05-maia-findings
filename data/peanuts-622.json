@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "Unused token amounts is not refunded when calling rerange or rebalance",
+  "issueId": 622,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/622"
+}
