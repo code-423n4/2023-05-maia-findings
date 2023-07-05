@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Sathish9098",
+  "risk": "2",
+  "title": "The swap implementation is wrong .  As per current implementations only transfer amount only one time ",
+  "issueId": 725,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/725"
+}
