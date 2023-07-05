@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "3",
+  "title": "Due to inadequate checks, Adversary can call `BranchBridgeAgent#retrieveDeposit` with an invalid `_depositNonce`, which would lead to loss of other users' deposit.",
+  "issueId": 688,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/688"
+}
