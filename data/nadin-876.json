@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "nadin",
+  "risk": "2",
+  "title": "When `totalSupply` is low `getProposalThresholdAmount()` and `getQuorumVotesAmount()` can return zero",
+  "issueId": 876,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/876"
+}
