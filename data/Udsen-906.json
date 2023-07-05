@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "MALICIOUS USER CAN CALL THE `FlywheelBribeRewards.setRewardsDepot()` FUNCTION INDEFINITELY TO PUSH `ethereum` INTO `STATE BLOAT`",
+  "issueId": 906,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/906"
+}
