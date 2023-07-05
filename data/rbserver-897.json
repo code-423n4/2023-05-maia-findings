@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Functionalities for burning bHermesVotes, bHermesGauges, and bHermesBoost tokens are unavailable even though related functions, which are inaccessible externally, for burning these tokens do exist to indicate needs for such functionalities",
+  "issueId": 897,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/897"
+}
