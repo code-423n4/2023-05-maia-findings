@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzebra83",
+  "risk": "2",
+  "title": "Iniswap V3 Staker - No one can call restakeToken if the block time is after the end time of the incentive",
+  "issueId": 729,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/729"
+}
