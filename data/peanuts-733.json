@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "Maliciosu LP creator can sell their position NFT minted through Talos and rug the buyer by redeeming the available shares",
+  "issueId": 733,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/733"
+}
