@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Although `ERC20Boost.transfer` and `ERC20Boost.transferFrom` functions try to prevent sender from transferring her or his gauge boost amount that is not free to receiver, such sender can still call `UtilityManager.forfeitBoost` and `bHermes.transfer` or `bHermes.transferFrom` functions to bypass such prevention",
+  "issueId": 910,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/910"
+}
