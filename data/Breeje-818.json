@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Breeje",
+  "risk": "3",
+  "title": "`doRebalance` in Talos is vulnerable to Flash loan Attacks resulting loss of funds",
+  "issueId": 818,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/818"
+}
