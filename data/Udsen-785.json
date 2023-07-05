@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "TRANSACTIONS CAN REVERT DUE TO OVERFLOW OF `uint32`",
+  "issueId": 785,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/785"
+}
