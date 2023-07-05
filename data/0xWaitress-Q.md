@@ -57,7 +57,7 @@ function createPools(poolInput[] calldata inputs, address owner)
 ```
 
 
-[QA-4] ecrecover in GovernorBravoDelegateMaia would have signature malleability issue
+[L-1] ecrecover in GovernorBravoDelegateMaia would have signature malleability issue
 
 ```solidity
     function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) external {
@@ -76,3 +76,23 @@ https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBrav
 using ECDSA from Openzeppelin which mitigate the signature malleability issue
 
 https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
+
+[L-2]  UpdatePeriod should be called before in setDaoShare and setTailEmission in BaseV2Minter, to ensure _period/epoch is fully insync before these two parameters get updated. Otherwise the system would behave differently, since updatePeriod would mint tokenAmount according to the emission figure as well as the daoShare percentage.
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/minters/BaseV2Minter.sol#L92-L95
+https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/minters/BaseV2Minter.sol#L86-L89
+## Recommendation
+```solidity
+
+    function setDaoShare(uint256 _daoShare) external onlyOwner {
++++     updatePeriod();
+        if (_daoShare > max_dao_share) revert DaoShareTooHigh();
+        daoShare = _daoShare;
+    }
+
+    function setTailEmission(uint256 _tail_emission) external onlyOwner {
++++     updatePeriod();
+        if (_tail_emission > max_tail_emission) revert TailEmissionTooHigh();
+        tailEmission = _tail_emission;
+    }
+```
