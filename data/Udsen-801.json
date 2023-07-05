@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "ONLY THE `owner` OF THE `tokenId` WILL BE ABLE TO RESTAKE THE LIQUIDITY NFT, EVEN AFTER THE INCENTIVE END TIME HAS PASSED ",
+  "issueId": 801,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/801"
+}
