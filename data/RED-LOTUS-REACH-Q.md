@@ -68,7 +68,7 @@ function transferOwnership(address newOwner) public override onlyOwner {
 }
 ```
 
-## [L-02] Potential Misuse of `transferOwnership`
+## [L-02] Potential Price Manipulation via Flash Loans
 
 ### Impact
 
@@ -174,7 +174,9 @@ Use `lastManaged[msg.sender][_token] = block.timestamp;` within the `if` stateme
 
 ### Impact
 
-The currently designed smart contract events do not emit the previous values of the state changes, which could lead to a lack of visibility and traceability when changes are made. This can make it difficult for other developers or auditors to follow the contract’s history and could potentially hinder troubleshooting or understanding of the contract’s behavior over time. Proof of Concept
+The currently designed smart contract events do not emit the previous values of the state changes, which could lead to a lack of visibility and traceability when changes are made. This can make it difficult for other developers or auditors to follow the contract’s history and could potentially hinder troubleshooting or understanding of the contract’s behavior over time. 
+
+### Proof of Concept
 
 Below are examples of events that do not emit the previous values of the state changes:
 
