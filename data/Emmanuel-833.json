@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "2",
+  "title": " It is risky to allow anyone to create a `RootBridgeAgent` because they will directly interact with RootPort, even though the `RootBridgeAgent` may be using an invalid Router address.",
+  "issueId": 833,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/833"
+}
