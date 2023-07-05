@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Pragma non-specification can lead to non-functional / corrupted contract when deployed on Arbitrum",
+  "issueId": 846,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/846"
+}
