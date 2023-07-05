@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "The `state()` function will not work properly on Optimism",
+  "issueId": 777,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/777"
+}
