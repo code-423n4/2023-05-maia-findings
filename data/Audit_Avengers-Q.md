@@ -1,4 +1,4 @@
-A.
+Team member A:
 
 This report evaluates the tick range and minimum width considerations in the MaiaDAO Uniswap V3 staking protocol.
 
@@ -39,7 +39,7 @@ To ensure the effectiveness of this check, have evaluated its behavior across di
 
 =====================================================
 
-B.
+Team Member B.
 
 # Issues
 - _bHermes address provided to the constructor is missing a zero address check. This could result in unexpected behavior when attempting to use the contract.
@@ -100,4 +100,88 @@ _initializeOwner(_owner);
 bHermes = _bHermes;
 partners.push(PartnerManager(address(0)));
 ```
+
+=================================================================
+
+Team Member C:
+
+Team member C, QA issue #1:  Unused modifier inside of ERC20hTokenBranchFactory.sol:
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/factories/ERC20hTokenBranchFactory.sol#L81-L84
+
+There is an unused requiresPort() modifier inside of ERC20hTokenBranchFactory.sol.  The modifier appears to be useless, as the only external function (createToken) is never called within BranchPort.sol.  Thus, the modifier can be removed.
+
+    modifier requiresPort() {
+        if (msg.sender != localPortAddress) revert UnrecognizedPort();
+        _;
+    }
+
+
+Team member C, QA issue #2: Unused modifier inside of CoreRootRouter.sol:
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/CoreRootRouter.sol#L438-L443
+
+There is an unused lock() modifier inside of CoreRootRouter, and although functions within the contracts appear to be safe from reentrancy, it won’t hurt to use that modifier within all public/external functions in the contract that make external calls (addBranchToBridgeAgent(), toggleBranchBridgeAgentFactory(), removeBranchBridgeAgent(), manageStrategyToken(), managePortStrategy()).
+
+    modifier lock() {
+        require(_unlocked == 1);
+        _unlocked = 2;
+        _;
+        _unlocked = 1;
+    }
+
+
+Team member C, QA issue #3: Setting variables to immutable:
+
+3 variables that are used within modifiers never get changed after being set in the constructor, yet they are not marked as immutable (see list below).  Consider making them immutable to make the security/gas efficiency of modifiers more robust.
+
+
+
+rootPortAddress within ERC20hTokenRoot is not marked as immutable. 
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/token/ERC20hTokenRoot.sol#L19
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/token/ERC20hTokenRoot.sol#L57-L60
+
+    address public rootPortAddress;
+ 
+Likewise, the bridgeAgentExecutorAddress variable inside BranchBridgeAgent.sol is not naked immutable.
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/BranchBridgeAgent.sol#L112
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/BranchBridgeAgent.sol#L1374-L1377
+
+    address public bridgeAgentExecutorAddress;
+ 
+ 
+Strategy inside of BaseV2Gauge is not marked as immutable.
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/gauges/BaseV2Gauge.sol#L41
+https://github.com/code-423n4/2023-05-maia/blob/main/src/gauges/BaseV2Gauge.sol#L155-L158
+
+    address public override strategy;
+ 
+ 
+
+
+Team member C, QA issue #4: The function ClaimRewards() inside of FlywheelCore.sol does not check that the msg.sender is equal to the inputted user address.  
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/base/FlywheelCore.sol#L94-L104
+
+
+This means that the user address can be arbitrarily inputted, and rewards can be claimed on behalf of anyone, even if the inputted user doesn’t wish for their rewards to be claimed.  This would not result in lost funds (due to the fact that accrued rewards would still make their way to the rightful owner), but it is an issue of timing.  Giving anybody the right to claim rewards on behalf of others seems unnecessary within the ecosystem because there are no other contracts that call claimRewards().  
+
+
+
+Overall, it might be worth considering an additional check that requires msg.sender equals the inputted user address.  This would ensure that msg.sender would only have the right to claim their own rewards, rather than the rewards of others.
+
+    function claimRewards(address user) external {
+        uint256 accrued = rewardsAccrued[user];
+
+        if (accrued != 0) {
+            rewardsAccrued[user] = 0;
+
+            rewardToken.safeTransferFrom(address(flywheelRewards), user, accrued);
+
+            emit ClaimRewards(user, accrued);
+        }
+    }
 
