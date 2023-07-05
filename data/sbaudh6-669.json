@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "sbaudh6",
+  "risk": "3",
+  "title": "Arithmetic Underflow issue in smart contract [ Path.sol ]",
+  "issueId": 669,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/669"
+}
