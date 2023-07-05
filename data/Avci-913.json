@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Avci",
+  "risk": "3",
+  "title": "the mint function in erc4626 will mint incorrect amount  ",
+  "issueId": 913,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/913"
+}
