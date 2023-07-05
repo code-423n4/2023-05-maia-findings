@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Qeew",
+  "risk": "2",
+  "title": "Potential Loss of Funds Due to Zero Slippage Hardcoding in TalosBaseStrategy#deposit",
+  "issueId": 907,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/907"
+}
