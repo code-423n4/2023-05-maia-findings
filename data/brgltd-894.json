@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "Vulnerable to MEV exploitation due to lack of slippage protection",
+  "issueId": 894,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/894"
+}
