@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xnev",
+  "risk": "2",
+  "title": "## [M-02] `IncentiveTime.getEndAndDuration()`: User rewards not limited to just a week",
+  "issueId": 692,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/692"
+}
