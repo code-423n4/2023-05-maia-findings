@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "Division before multiplication could incur precision loss.",
+  "issueId": 820,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/820"
+}
