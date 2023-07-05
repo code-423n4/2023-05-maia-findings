@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Tokens with multiple addresses can be stolen due to reliance on balanceOf()",
+  "issueId": 854,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/854"
+}
