@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "rokinot",
+  "risk": "3",
+  "title": "First depositor is overpaid in vault shares, enabling them governance attacks.",
+  "issueId": 757,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/757"
+}
