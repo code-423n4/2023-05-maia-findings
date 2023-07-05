@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Sparkware",
+  "risk": "2",
+  "title": "A malicious early user can play with the underlying assets' unit share price to get an unfair share of future users' deposits",
+  "issueId": 852,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/852"
+}
