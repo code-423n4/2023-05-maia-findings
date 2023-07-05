@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "RED-LOTUS-REACH",
+  "risk": "2",
+  "title": "Missing Zero Address Check in Proposal Execution",
+  "issueId": 787,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/787"
+}
