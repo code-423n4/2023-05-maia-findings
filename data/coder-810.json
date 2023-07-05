@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "coder",
+  "risk": "2",
+  "title": "FlywheelCore.setBooster() can be used to steal unclaimed rewards",
+  "issueId": 810,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/810"
+}
