@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Downcasting result in loss of fees for protocol and user",
+  "issueId": 849,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/849"
+}
