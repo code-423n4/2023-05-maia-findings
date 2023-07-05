@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "In FlywheelCore.sol contract, setBooster() can be used to steal unclaimed rewards",
+  "issueId": 838,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/838"
+}
