@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jaraxxus",
+  "risk": "2",
+  "title": "First depositor can steal funds from subsequent depositors",
+  "issueId": 707,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/707"
+}
