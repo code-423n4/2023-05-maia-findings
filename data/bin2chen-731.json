@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "bin2chen",
+  "risk": "3",
+  "title": "withdrawProtocolFees() Possible malicious or accidental withdrawal of all rewards",
+  "issueId": 731,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/731"
+}
