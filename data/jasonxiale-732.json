@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "BranchBridgeAgent.anyExecute doesn't return remaing gas when early-return happens",
+  "issueId": 732,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/732"
+}
