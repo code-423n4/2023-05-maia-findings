@@ -22,6 +22,10 @@
 | [G-16] |  instead of calculating a state var with `keccak256()` every time the contract is made pre calculate them before and only give the result to a contract                                                                                |    3    |
 | [G-17] | Ternary operation is cheaper than `if-else` statement                             |    1    |
 | [G-18] | Use assembly to `hash` instead of solidity                                        |    6    |
+| [G-19] |  >= costs less gas than >                                        |    60   |
+| [G-20] |   Using delete statement can save gas                                        |    8  |
+| [G-21] |   String literals passed to abi.encode()/abi.encodePacked() should not be split by commas                                          |    1  |
+| [G-22] |  internal functions not called by the contract should be removed to save deployment gas                                          |    1  |
 
 
 ## [G-01] Avoid contract existence checks by using low level calls
@@ -2637,4 +2641,317 @@ File: governance/GovernorBravoDelegateMaia.sol
 348        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
 
 ```
+## [G-19]   >= costs less gas than >
 
+The compiler uses opcodes for solidity code that uses >, but only requires for >=, which saves 3 gas
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-4626/ERC4626MultiToken.sol
+```solidity
+file:  src/erc-4626/ERC4626MultiToken.sol
+
+52     require(_weights[i] > 0);
+
+252    if (share > shares) shares = share;
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20Gauges.sol
+
+```solidity
+file:  src/erc-20/ERC20Gauges.sol
+
+211 	if (added && _userGauges[user].length() > maxGauges && !canContractExceedMaxGauges[user]) 
+
+236   	if (newUserWeight > getVotes(user)) revert OverWeightError();
+
+417 	if (weight > 0)
+
+441 	if (weight > 0) 
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20MultiVotes.sol
+
+```solidity
+file:  src/erc-20/ERC20MultiVotes.sol   
+
+70     if (ckpts[mid].fromBlock > blockNumber)
+
+165    if (count > 1) revert DelegationError();
+
+194    if (newDelegate && delegateCount(delegator) > maxDelegates && !canContractExceedMaxDelegates[delegator])
+
+250    if (pos > 0 && ckpts[pos - 1].fromBlock == block.number)
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/gauges/factories/BaseV2GaugeFactory.sol#L91
+
+```solidity
+file:  src/gauges/factories/BaseV2GaugeFactory.sol
+
+91     if (end > length) end = length;
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol
+
+```solidity
+file:      src/governance/GovernorBravoDelegateMaia.sol
+
+114         require(
+            govToken.getPriorVotes(msg.sender, sub256(block.number, 1)) > getProposalThresholdAmount()
+298         require(
+            proposalCount >= proposalId && proposalId > initialProposalId, "GovernorBravo::state: invalid proposal id"
+        );    
+
+390         return (whitelistAccountExpirations[account] > block.timestamp);
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/boost-aggregator/BoostAggregator.sol#L93
+
+```solidity
+file:     src/talos/boost-aggregator/BoostAggregator.sol
+
+93       if (_daoShare > max_dao_share) revert DaoShareTooHigh();
+
+99       if (_tail_emission > max_tail_emission) revert TailEmissionTooHigh();
+```
+
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/tokens/ERC4626PartnerManager.sol
+
+```solidity
+file:   src/maia/tokens/ERC4626PartnerManager.sol
+
+219     if (newRate > (address(bHermesToken).balanceOf(address(this)) / totalSupply))
+
+241     if (amount > maxMint(to)) revert ExceedsMaxDeposit();
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/maia/PartnerUtilityManager.sol
+```solidity
+file:  src/maia/PartnerUtilityManager.sol
+
+75     if (partnerVault != address(0) && address(gaugeWeight).balanceOf(address(this)) > 0)
+
+85     if (partnerVault != address(0) && address(gaugeBoost).balanceOf(address(this)) > 0)
+
+95     if (partnerVault != address(0) && address(governance).balanceOf(address(this)) > 0)
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/base/FlywheelCore.sol
+```solidity
+file:  src/ulysses-omnichain/factories/BranchBridgeAgentFactory.sol
+
+127    if (oldRewardBalance > 0) 
+
+162    if (strategyRewardsAccrued > 0)
+
+```
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol
+```solidity
+file:    src/rewards/rewards/FlywheelGaugeRewards.sol
+
+120     if (currentCycle > nextCycle)
+
+234     if (accruedRewards > 0) rewardToken.safeTransfer(msg.sender, accruedRewards);
+```
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/base/TalosBaseStrategy.sol
+```solidity
+file: talos/base/TalosBaseStrategy.sol
+
+158    if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
+
+219    if (totalSupply > optimizer.maxTotalSupply()) revert ExceedingMaxTotalSupply();
+
+398    if (amount0 > _protocolFees0)
+
+401    if (amount1 > _protocolFees1)
+
+409    if (amount0 > 0) _token0.transfer(msg.sender, amount0);
+
+410    if (amount1 > 0) _token1.transfer(msg.sender, amount1);
+```
+
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/factories/TalosBaseStrategyFactory.sol
+```solidity
+file:   src/talos/factories/TalosBaseStrategyFactory.sol
+
+138     if (balance > assets)
+
+153     if (claimed > 0)
+
+171     if (index > MAX_DESTINATIONS) revert TooManyDestinations();
+
+185     if (newTotalWeights > MAX_TOTAL_WEIGHT) revert InvalidWeight();
+
+191     if (oldBandwidth > 0)
+
+243     if (totalWeights > MAX_TOTAL_WEIGHT || oldTotalWeights == newTotalWeights)
+
+252     if (oldTotalWeights > newTotalWeights)
+
+256     if (oldBandwidth > 0)
+
+272     if (oldBandwidth > 0)
+
+310     if (_fees.lambda1 > MAX_LAMBDA1) revert InvalidFee();
+
+315     if (_fees.sigma1 > DIVISIONER) revert InvalidFee();
+
+327     if (_protocolFee > MAX_PROTOCOL_FEE) revert InvalidFee();
+
+911     if (updateAmount > 0)
+
+1048    if (updateAmount > 0) 
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/TalosOptimizer.sol
+
+```solidity
+file: src/talos/TalosOptimizer.sol
+
+47    require(_weight > 0);
+
+115   if (assetBalance > newAssetBalance)
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-omnichain/BranchBridgeAgent.sol
+```solidity
+file:  ulysses-omnichain/BranchBridgeAgent.sol
+
+474     if (!isRemote && gasToBridgeOut > 0) wrappedNativeToken.deposit{value: msg.value}();
+
+499     if (!isRemote && gasToBridgeOut > 0) wrappedNativeToken.deposit{value: msg.value}();
+
+521     if (!isRemote && gasToBridgeOut > 0) wrappedNativeToken.deposit{value: msg.value}();
+
+543     if (!isRemote && gasToBridgeOut > 0) wrappedNativeToken.deposit{value: msg.value}(); 
+
+623     if (_amounts[i] - _deposits[i] > 0)
+
+627     if (_deposits[i] > 0)
+
+979     if (_amount - _deposit > 0)
+
+983     if (_deposit > 0) 
+
+1035    if (minExecCost > gasRemaining) 
+
+1050    if (gasLeft - gasAfterTransfer > TRANSFER_OVERHEAD) 
+
+1069    if (minExecCost > getDeposit[_depositNonce].depositedGas)
+
+1328    if (executionBudget > 0) try anycallConfig.withdraw(executionBudget)
+```
+
+
+## [G-08]  Using `delete` statement can save gas
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20Boost.sol#L249 
+
+```solidity
+file:  src/erc-20/ERC20Boost.sol
+
+249    getUserBoost[msg.sender] = 0;
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/erc-20/ERC20MultiVotes.sol#L340
+
+```solidity
+file:     src/erc-20/ERC20MultiVotes.sol
+
+340      _delegatesVotesCount[user][delegatee] = 0;
+
+```
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/minters/BaseV2Minter.sol#L165
+
+```solidity
+file:  src/hermes/minters/BaseV2Minter.sol
+
+165    weekly = 0;
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/base/FlywheelCore.sol#L98
+
+```solidity
+file:    src/rewards/base/FlywheelCore.sol
+
+98       rewardsAccrued[user] = 0;
+```
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelAcummulatedRewards.sol#L55
+
+```solidity
+file:  src/rewards/rewards/FlywheelAcummulatedRewards.sol
+
+55     amount = 0;
+```
+
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol#L225
+
+```solidity
+file:    src/rewards/rewards/FlywheelGaugeRewards.sol
+
+225      cycleRewardsNext = 0;
+
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/libraries/PoolVariables.sol#L211
+
+```solidity
+file:   src/talos/libraries/PoolVariables.sol
+
+211     secondsAgo[1] = 0;
+```
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/ulysses-amm/UlyssesToken.sol#L78
+
+```solidity
+file:    src/ulysses-amm/UlyssesToken.sol
+
+78       assetId[asset] = 0;
+```
+
+## [G-21]  String literals passed to abi.encode()/abi.encodePacked() should not be split by commas  
+
+String literals can be split into multiple parts and still be considered as a single string literal. Adding commas between each chunk makes it no longer a single string, and instead multiple strings. EACH new comma costs 21 gas due to stack operations and separate MSTOREs.
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L346
+
+```solidity
+file:     src/governance/GovernorBravoDelegateMaia.sol
+
+346       keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainIdInternal(), address(this)));
+```
+
+## [22]  internal functions not called by the contract should be removed to save deployment gas
+
+When deploying a smart contract, it is essential to optimize gas usage to minimize transaction costs and improve overall efficiency. One aspect to consider is removing unused internal functions that are not called by the contract. By eliminating these unused functions, you can significantly reduce the deployment gas cost.
+
+Internal functions in Solidity are only intended to be invoked within the contract or by other internal functions. If an internal function is not called anywhere within the contract, it serves no purpose and contributes unnecessary overhead during deployment. Removing such functions can lead to substantial gas savings.
+
+https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/depots/RewardsDepot.sol#L19
+
+```solidity
+file:   src/rewards/depots/RewardsDepot.sol
+
+19     function transferRewards(address _asset, address _rewardsContract) internal returns (uint256 balance)
+
+```
