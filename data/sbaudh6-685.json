@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "sbaudh6",
+  "risk": "3",
+  "title": "Protocol Manipulation issue in RootBridgeAgent.sol smart contract",
+  "issueId": 685,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/685"
+}
