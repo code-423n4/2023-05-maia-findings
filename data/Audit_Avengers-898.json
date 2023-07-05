@@ -1,0 +1,1 @@
+{"contest":242,"handle":"Audit_Avengers","risk":"2","title":"The function setBooster() within FlywheelCore.sol is unreachable from inside the owner contract under the current layout.","issueId":898,"issueUrl":"https://github.com/code-423n4/2023-05-maia-findings/issues/898"}
