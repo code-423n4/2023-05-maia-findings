@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "casinad",
+  "risk": "3",
+  "title": "Reentrancy Vulnerability: The contract inherits from the ReentrancyGuard contract, which smay be vulnerable to reentrancy attacks if not properly handled in the contract's logic. ",
+  "issueId": 825,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/825"
+}
