@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "zzzitron",
+  "risk": "3",
+  "title": "`UlyssesToken.removeAsset` might assign a wrong `assetId` to an asset, resulting in multiple severe issues",
+  "issueId": 703,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/703"
+}
