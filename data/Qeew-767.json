@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Qeew",
+  "risk": "3",
+  "title": "Incorrect usage of Comparison Operator(==) instead of Asignment Operator(=) in PartnerManagerFactory",
+  "issueId": 767,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/767"
+}
