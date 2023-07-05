@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "Despite the check if the constructor, weight can still be set to zero which would prevent user withdrawals",
+  "issueId": 887,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/887"
+}
