@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Breeje",
+  "risk": "2",
+  "title": "Many `create` methods are suspicious of the reorg attack",
+  "issueId": 861,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/861"
+}
