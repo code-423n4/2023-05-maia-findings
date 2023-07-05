@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "azhar",
+  "risk": "3",
+  "title": "First ERC4626 deposit and mint exploit can break share calculation",
+  "issueId": 800,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/800"
+}
