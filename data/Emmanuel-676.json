@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "2",
+  "title": "When an anyExecute call is made to `RootBridgeAgent` with a `depositNonce` that has been recorded in `executionHistory`, initialGas and userFeeInfo will not be updated, which would affect the next caller of `retrySettlement`.",
+  "issueId": 676,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/676"
+}
