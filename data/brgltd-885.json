@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "The `getUserBoost` state variable can get out-of-sync in `ERC20Boost` which can cause miscalculations and prevent transfers and burns",
+  "issueId": 885,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/885"
+}
