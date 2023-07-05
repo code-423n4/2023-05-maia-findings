@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "RED-LOTUS-REACH",
+  "risk": "3",
+  "title": "Front-Running Attack on Undelegate Function Allowing Delegatees to Control Votes in Hermes",
+  "issueId": 763,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/763"
+}
