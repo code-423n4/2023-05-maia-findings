@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Josiah",
+  "risk": "2",
+  "title": "Incorrect Use of Equality Operator in addPartner and addVault Functions",
+  "issueId": 873,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/873"
+}
