@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "0xTheC0der",
+  "risk": "3",
+  "title": "Payable method `RootBridgeAgent.retrySettlement` can lead to loss of funds for users",
+  "issueId": 811,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/811"
+}
