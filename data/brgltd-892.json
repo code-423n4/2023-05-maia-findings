@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "Calculation during rebalancing can overflow",
+  "issueId": 892,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/892"
+}
