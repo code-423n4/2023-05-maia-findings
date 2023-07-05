@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "PASCAL",
+  "risk": "2",
+  "title": "depositToPort is supposed to be marked payable and it is not ",
+  "issueId": 827,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/827"
+}
