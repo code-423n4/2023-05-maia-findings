@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "yellowBirdy",
+  "risk": "3",
+  "title": "If a STRATEGY TOKEN is \"Toggled off\" STRATEGIES will still be able to withdraw but returning of tokens with replenishReserves will be disabled.",
+  "issueId": 882,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/882"
+}
