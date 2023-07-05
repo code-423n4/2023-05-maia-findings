@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Koolex",
+  "risk": "2",
+  "title": "Replenishing gas is missing in `_payFallbackGas` of RootBridgeAgent",
+  "issueId": 786,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/786"
+}
