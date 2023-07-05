@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "BLOS",
+  "risk": "3",
+  "title": "AnycallFlags.FLAG_ALLOW_FALLBACK_DST should be used instead of AnycallFlags.FLAG_ALLOW_FALLBACK",
+  "issueId": 664,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/664"
+}
