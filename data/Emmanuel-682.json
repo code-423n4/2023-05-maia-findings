@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "3",
+  "title": " Whenever `ArbitrumBranchBridgeAgent` calls `RootBridgeAgent#anyExecute` directly, and deposit fails, `anyFallback` is not called on `ArbitrumBranchBridgeAgent` so as to clear deposits, and allow users to claim their tokens.",
+  "issueId": 682,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/682"
+}
