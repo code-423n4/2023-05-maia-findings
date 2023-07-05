@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "3",
+  "title": "Nonces is not used in signed data, causing replay attacks",
+  "issueId": 673,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/673"
+}
