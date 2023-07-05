@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "In case a token added to ERC4626MultiToken.sol/UlyssesToken.sol gets compromised, it will not be possible to add or remove any asset",
+  "issueId": 889,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/889"
+}
