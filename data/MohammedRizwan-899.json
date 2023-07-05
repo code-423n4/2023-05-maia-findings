@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "3",
+  "title": " Missing deadline checks allow pending transactions to be maliciously executed",
+  "issueId": 899,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/899"
+}
