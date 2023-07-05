@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "RED-LOTUS-REACH",
+  "risk": "2",
+  "title": "Ulyssess Omnichain - tx.gasprice can be manipulated by a malicious actor for gas griefing attacks or gain unfair advantage in order execution",
+  "issueId": 759,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/759"
+}
