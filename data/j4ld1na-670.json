@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "j4ld1na",
+  "risk": "2",
+  "title": "Always revert when stake not attached to gauge in `UniswapV3Staker` contract.",
+  "issueId": 670,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/670"
+}
