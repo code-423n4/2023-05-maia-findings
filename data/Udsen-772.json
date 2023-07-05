@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "3",
+  "title": "DENIAL OF SERVICE (`DoS`) WHEN DECREASING THE `weight` DUE TO UNDERFLOW IN THE `UlyssesPool.setWeight` FUNCTION",
+  "issueId": 772,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/772"
+}
