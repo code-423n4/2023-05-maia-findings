@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Evo",
+  "risk": "2",
+  "title": "_payFallbackGas is not being paid in case selector is 0x07 or 0x08",
+  "issueId": 769,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/769"
+}
