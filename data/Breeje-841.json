@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Breeje",
+  "risk": "2",
+  "title": "No Deadline check in `UlyssesRouter`, allowing outdated slippage and allow pending transaction to be unexpected executed",
+  "issueId": 841,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/841"
+}
