@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "setBooster() function may be used to steal unclaimed rewards in FlywheelCore contract",
+  "issueId": 856,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/856"
+}
