@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Calling `BaseV2Gauge.detachUser` function does not update user's `getUserBoost` when it should be updated",
+  "issueId": 900,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/900"
+}
