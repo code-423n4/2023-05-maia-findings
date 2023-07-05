@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "3",
+  "title": "CHANGING THE `REWARD MANAGER` IN THE `FlywheelCore` CONTRACT CAN BE `DOS`",
+  "issueId": 775,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/775"
+}
