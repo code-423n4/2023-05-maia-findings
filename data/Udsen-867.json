@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "NO CHECK TO VERIFY THE ELEMENTS OF `assetsAmounts[]` ARRAY IS IN THE SAME ORDER AS `assets[]` ARRAY, IF MISCONFIGURED COULD BREAK THE INTERNAL ACCOUNTING OF SHARE CALCULATION",
+  "issueId": 867,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/867"
+}
