@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Breeje",
+  "risk": "3",
+  "title": "Lack of valid Slippage control parameter in `increaseLiquidity` calls in Talos",
+  "issueId": 828,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/828"
+}
