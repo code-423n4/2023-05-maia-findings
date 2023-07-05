@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "# Multiple issues with decimal scaling will cause incorrect accounting of hTokens and underlying tokens",
+  "issueId": 758,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/758"
+}
