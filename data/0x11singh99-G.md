@@ -1,10 +1,11 @@
 ### Gas Optimizations List
-| Number | Optimization Details | Instances |
-|:--:|:-------| :-----:|
+
+| Number | Optimization Details                                                                                                                        | Instances |
+| :----: | :------------------------------------------------------------------------------------------------------------------------------------------ | :-------: |
 | [G-01] | State variables should be cached in stack variables rather than re-reading them from storage variables                                      |     7     |
 | [G-02] | Use assembly for address(0) comparison                                                                                                      |     4     |
 | [G-03] | <x> += <y> / <x> -= <y> costs more gas than <x> = <x> + <y> / <x> = <x> - <y> for state variables                                           |     4     |
-| [G-04] | Use separate if's for different checks instead of using  \|\|  to merge multiple checks into one     | 1   |                                                                              
+| [G-04] | Use separate if's for different checks instead of using \|\| to merge multiple checks into one                                              |     1     |
 | [G-05] | Use nested if and, avoid multiple check combinations                                                                                        |     3     |
 | [G-06] | Missing `zero-address` check in `constructor`                                                                                               |     4     |
 | [G-07] | Write for loops in more gas efficient way                                                                                                   |     1     |
@@ -599,7 +600,7 @@ File : /src/rewards/rewards/FlywheelGaugeRewards.sol
 207:        bool incompleteCycle = queuedRewards.storedCycle > cycle;
 
         // no rewards
-        //queuseRewards variables can be cached to stack from storage directly rather than re- reading from memory saves many MLOAD
+        //queuseRewards variables can be cached to stack from storage directly rather than re- reading from memory saves  MLOAD
  210:       if (queuedRewards.priorCycleRewards == 0 && (queuedRewards.cycleRewards == 0 || incompleteCycle)) {
             return 0;
         }
@@ -627,21 +628,21 @@ File : /src/rewards/rewards/FlywheelGaugeRewards.sol
 
 https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol#L204C6-L232C12
 
-Recommended Changes : queueRewards Data variables can be cached to stack rather than reading from memory will be much cheaper. It will save writing to memory MSTORE opcode for each struct data element and will save many MLOAD's by cachng into stack variables.
+Recommended Changes : queueRewards Data variables can be cached to stack rather than reading from memory will be much cheaper. It will save writing to memory MSTORE opcode and will save MLOAD by caching into stack variables.
 
 ```diff
 -       QueuedRewards memory queuedRewards = gaugeQueuedRewards[ERC20(msg.sender)];
 +       QueuedRewards storage queuedRewards = gaugeQueuedRewards[ERC20(msg.sender)];
 
 206:        uint32 cycle = gaugeCycle;
-+           uint112  _cycleRewards= queuedRewards.cycleRewards;//caching to save extra MLOAD
-+           uint112  _priorCycleRewards= queuedRewards.priorCycleRewards;//caching to save extra MLOAD
-+           uint32  _storedCycle= queuedRewards.storedCycle;//caching to save extra MLOAD
++           uint112  _cycleRewards= queuedRewards.cycleRewards;
++           uint112  _priorCycleRewards= queuedRewards.priorCycleRewards;
++           uint32  _storedCycle= queuedRewards.storedCycle;
 - 207:        bool incompleteCycle = queuedRewards.storedCycle > cycle;
 +            bool incompleteCycle = ._storedCycle > cycle;
 
         // no rewards
-        //@audit queuedRewards variables can be cached to stack from storage directly rather than re- reading from memory saves many MLOAD
+        //@audit queuedRewards variables can be cached to stack from storage directly rather than re- reading from memory saves  MLOAD
 - 210:       if (queuedRewards.priorCycleRewards == 0 && (queuedRewards.cycleRewards == 0 || incompleteCycle)) {
 +        if (_priorCycleRewards == 0 && (_cycleRewards == 0 || incompleteCycle)) {
             return 0;
@@ -711,9 +712,10 @@ Recommended Changes : This can also be updated like above instance#1 of G-10 to 
 ## [G-11] State variables can be updated once in final rather than re-writing same variable more than once in one function. Saves unnecessary SSTORE.
 
 Saves Gas for each SSTORE
+
 _2 instances - 1 file:_
 
-### Instance#1-2: Here `paginationOffset` and `nextCycleQueuedRewards` can be cached into stack variables , update into them multiple times(whenever necessary) and finally write those stack variables into these state variables. It can save 2 Unnecessary SSTORE opcodes and 1 SLOAD.
+### Instance#1-2: Here `paginationOffset` and `nextCycleQueuedRewards` can be cached into stack variables , update into them multiple times(whenever necessary) and finally write those stack variables into these state variables. It can save Unnecessary SSTORE and SLOAD opcodes .
 
 ```solidity
 File : src/rewards/rewards/FlywheelGaugeRewards.sol
@@ -755,7 +757,7 @@ File : src/rewards/rewards/FlywheelGaugeRewards.sol
 
 https://github.com/code-423n4/2023-05-maia/blob/main/src/rewards/rewards/FlywheelGaugeRewards.sol#L179C11-L193C16
 
-Recommended Changes: Cache `paginationOffset` and `nextCycleQueuedRewards` into stack variables and make a extra copy of one of those 1 to having initial value whenever read needed before updation and finally write them into state variables at last. It can save 2 Unnecessary SSTORE opcodes and 1 SLOAD.
+Recommended Changes: Cache `paginationOffset` and `nextCycleQueuedRewards` into stack variables and make a extra copy of one of those 1 to having initial value whenever read needed before updation and finally write them into state variables at last. It can save extra SSTORE and SLOAD opcodes.
 
 ```diff
 118:  if (currentCycle <= lastCycle) revert CycleError();
@@ -764,7 +766,7 @@ Recommended Changes: Cache `paginationOffset` and `nextCycleQueuedRewards` into 
 120:        if (currentCycle > nextCycle) {
             nextCycle = currentCycle;
 -           paginationOffset = 0;
-+            offsetState=0; // @audit Saving Extra 1st SSTORE
++            offsetState=0;
         }
 -        uint32 offset = paginationOffset;
 +        uint32 offset = offsetState;
@@ -777,10 +779,10 @@ Recommended Changes: Cache `paginationOffset` and `nextCycleQueuedRewards` into 
             require(rewardToken.balanceOf(address(this)) - balanceBefore >= newRewards);
             require(newRewards <= type(uint112).max); // safe cast
 -            nextCycleQueuedRewards += uint112(newRewards); // in case a previous incomplete cycle had rewards, add on
-+            nextCycleQueuedRewardsState += uint112(newRewards); //Saving 2nd Extra SSTORE
++            nextCycleQueuedRewardsState += uint112(newRewards);
         }
 -        uint112 queued = nextCycleQueuedRewards;
-+        uint112 queued = nextCycleQueuedRewardsState; //Saving extra 1 SLOAD
++        uint112 queued = nextCycleQueuedRewardsState;
 
         uint256 remaining = gaugeToken.numGauges() - offset;
 
