@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Time cycle can return wrong value due to downcasting",
+  "issueId": 850,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/850"
+}
