@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "los_chicos",
+  "risk": "3",
+  "title": "Bad accounting on ERC4626MultiToken.sol leads to user funds stuck in the contract",
+  "issueId": 779,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/779"
+}
