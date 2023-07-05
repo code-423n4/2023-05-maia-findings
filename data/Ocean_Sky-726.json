@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Ocean_Sky",
+  "risk": "3",
+  "title": "Initial depositor can manipulate the price per share value in ERC4626Multitoken.sol",
+  "issueId": 726,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/726"
+}
