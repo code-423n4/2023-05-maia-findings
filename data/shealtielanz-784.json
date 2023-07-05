@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "shealtielanz",
+  "risk": "2",
+  "title": "Deadline set block.timestamp can be problematic",
+  "issueId": 784,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/784"
+}
