@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "typo in PartnerManagerFactory.addPartner and PartnerManagerFactory.addVault ",
+  "issueId": 755,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/755"
+}
