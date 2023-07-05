@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kutugu",
+  "risk": "3",
+  "title": "The TalosBaseStrategy redeem implementation error caused the user to withdraw all LP interest",
+  "issueId": 672,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/672"
+}
