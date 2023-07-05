@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "azhar",
+  "risk": "2",
+  "title": "castVoteBySig can be front run without proper access control",
+  "issueId": 803,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/803"
+}
