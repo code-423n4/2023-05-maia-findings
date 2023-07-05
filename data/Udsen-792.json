@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": "BRIBE REWARD ACCRUAL COULD `DoS` IF `bribeFlywheels` ARRAY GROWS INDEFINITELY",
+  "issueId": 792,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/792"
+}
