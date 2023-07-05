@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Breeje",
+  "risk": "2",
+  "title": "FlywheelCore’s setFlywheelRewards can remove access to reward funds from current users introducing Rug Pull Attack Vector",
+  "issueId": 871,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/871"
+}
