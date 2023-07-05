@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kaiziron",
+  "risk": "2",
+  "title": "Not using slippage parameter when interacting with AMMs",
+  "issueId": 855,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/855"
+}
