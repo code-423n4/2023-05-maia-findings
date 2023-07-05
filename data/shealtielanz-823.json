@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "shealtielanz",
+  "risk": "3",
+  "title": "Use of slot0 to get sqrtPriceLimitX96 can lead to price manipulation.",
+  "issueId": 823,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/823"
+}
