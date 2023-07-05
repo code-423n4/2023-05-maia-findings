@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Although `ERC20Boost.decrementGaugesBoostIndexed` function would require user to remove all of her or his boost from a deprecated gauge at once, such user can instead call `ERC20Boost.decrementGaugeBoost` function for multiple times to utilize such deprecated gauge and decrement its `userGaugeBoost` for multiple times",
+  "issueId": 904,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/904"
+}
