@@ -42,3 +42,13 @@ ERC4626DepositOnly contract is supposed to be ERC4626-compliant but some functio
 ## Links
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626DepositOnly.sol#L98
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/erc-4626/ERC4626DepositOnly.sol#L103
+
+## Title
+Missing of pool validation
+
+## Details and Impact
+To create a new position wrapped in an NFT, the function mint (this is different from the core contract’s mint) is used. This function is to be called when the pool exists and is initialized. If the pool is created but not initialized, a method does not exist, which means the pool is assumed to be initialized.
+https://docs.uniswap.org/contracts/v3/reference/periphery/NonfungiblePositionManager#mint
+
+## Links
+Change the code to properly validate that the _pool is active and initialized.
