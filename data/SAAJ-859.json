@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Contracts are vulnerable to rebasing accounting-related issues",
+  "issueId": 859,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/859"
+}
