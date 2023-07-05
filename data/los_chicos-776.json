@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "los_chicos",
+  "risk": "3",
+  "title": "Liquidity providers may lose funds when initialising a strategy",
+  "issueId": 776,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/776"
+}
