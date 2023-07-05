@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "3",
+  "title": "If admin `toggleBridgeAgentFactory` on a non BridgeAgentFactory address, that address will be able to directly call `addBridgeAgent`.",
+  "issueId": 697,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/697"
+}
