@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "In MulticallRootRouter.sol, approve function can fail for non standard ERC20 tokens like USDT",
+  "issueId": 874,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/874"
+}
