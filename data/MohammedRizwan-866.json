@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": " In VirtualAccount.sol.withdrawERC20(), Transaction revert if the Token does not support 0 value transfer",
+  "issueId": 866,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/866"
+}
