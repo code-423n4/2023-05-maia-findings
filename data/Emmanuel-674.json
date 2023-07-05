@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "2",
+  "title": "BranchBridgeAgent#retrieveDeposit is unusable because `BranchBridgeAgent#anyFallback` has no checks for 0x08 flags.",
+  "issueId": 674,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/674"
+}
