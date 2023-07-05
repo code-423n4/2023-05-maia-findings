@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Josiah",
+  "risk": "2",
+  "title": "DateTimeLib.isTuesday can't guarantee the first Tuesday of the month",
+  "issueId": 853,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/853"
+}
