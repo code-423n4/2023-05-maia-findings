@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "3",
+  "title": "Nonces of failed settlements is set to true, which prevents reopening of failed settlements",
+  "issueId": 684,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/684"
+}
