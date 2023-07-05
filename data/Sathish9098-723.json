@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Sathish9098",
+  "risk": "3",
+  "title": "`` amount < minOutput``  Should be checked for all swaps instead of last swap. This will break the ``swap `` functionality and attacker can swap ``amount`` even less than ``minOutput``",
+  "issueId": 723,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/723"
+}
