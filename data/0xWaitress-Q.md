@@ -77,7 +77,7 @@ using ECDSA from Openzeppelin which mitigate the signature malleability issue
 
 https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol
 
-[L-2]  UpdatePeriod should be called before in setDaoShare and setTailEmission in BaseV2Minter, to ensure _period/epoch is fully insync before these two parameters get updated. Otherwise the system would behave differently, since updatePeriod would mint tokenAmount according to the emission figure as well as the daoShare percentage.
+[L-2]  UpdatePeriod should be called before in setDaoShare and setTailEmission in BaseV2Minter, to ensure _period/epoch is fully insync before these two parameters get updated. Otherwise the system would behave differently on a new epoch, since updatePeriod would mint tokenAmount according to the emission figure as well as the daoShare percentage.
 
 https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/minters/BaseV2Minter.sol#L92-L95
 https://github.com/code-423n4/2023-05-maia/blob/main/src/hermes/minters/BaseV2Minter.sol#L86-L89
