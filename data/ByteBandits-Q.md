@@ -125,4 +125,16 @@ the factory does not actually create vMaia contracts, it adds them to the regist
 https://github.com/code-423n4/2023-05-maia/blob/54a45beb1428d85999da3f721f923cbf36ee3d35/src/talos/interfaces/ITalosBaseStrategy.sol#L37-L98
 Most of the highlighted functions in the interface are variables that do not exist in the main contract 
 
+## L-36 No point in using castvotebySig over castvote
+https://github.com/code-423n4/2023-05-maia/blob/main/src/governance/GovernorBravoDelegateMaia.sol#L344
+
+## L-37 CEI pattern to prevent re-entrancy violated 
+https://github.com/code-423n4/2023-05-maia/blob/main/src/talos/base/TalosBaseStrategy.sol#L409-L414
+
+
+## L-38 Claim reward is buggy 
+https://github.com/code-423n4/2023-05-maia/blob/main/src/uni-v3-staker/UniswapV3Staker.sol#L262
+All rewards are transferred if 0 is passed
+
+
 
