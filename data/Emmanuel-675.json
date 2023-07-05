@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Emmanuel",
+  "risk": "2",
+  "title": "Double spending of tokens when `RootBridgeAgent#anyExecute` is called with 0 gas",
+  "issueId": 675,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/675"
+}
