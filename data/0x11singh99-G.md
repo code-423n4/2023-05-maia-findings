@@ -4,7 +4,7 @@
 | [G-01] | State variables should be cached in stack variables rather than re-reading them from storage variables                                      |     7     |
 | [G-02] | Use assembly for address(0) comparison                                                                                                      |     4     |
 | [G-03] | <x> += <y> / <x> -= <y> costs more gas than <x> = <x> + <y> / <x> = <x> - <y> for state variables                                           |     4     |
-| [G-04] | Use separate if's for different checks instead of using  \|\|  to merge in one    | 1   |                                                                              
+| [G-04] | Use separate if's for different checks instead of using  \|\|  to merge multiple checks into one     | 1   |                                                                              
 | [G-05] | Use nested if and, avoid multiple check combinations                                                                                        |     3     |
 | [G-06] | Missing `zero-address` check in `constructor`                                                                                               |     4     |
 | [G-07] | Write for loops in more gas efficient way                                                                                                   |     1     |
