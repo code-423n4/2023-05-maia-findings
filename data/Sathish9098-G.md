@@ -3,6 +3,7 @@
 ### Table Of Contents
 
 - [FINDINGS](#findings)
+
 - [Pack structs by putting variables that can fit together next to each other- Saves ``10000 gas, 5 SLOT``](#g-1-pack-structs-by-putting-variables-that-can-fit-together-next-to-each-other)
 
   - [``IBranchBridgeAgent.sol``: hToken and toChain can be packed together: ``Gas saved: 1 * 2k = 2k , 1 SLOT``](#ibranchbridgeagentsol-htoken-and-tochain-can-be-packed-together-gas-saved-1--2k--2k--1-slot)
@@ -128,9 +129,12 @@
 
 - [Combine events to save Glogtopic (375 gas)](#g-12-combine-events-to-save-glogtopic-375-gas)
 
+- [Optimize names to save gas](#g-13-optimize-names-to-save-gas-1)
+
+- [Use nested require and if and, avoid multiple check combinations- Saves ``360 GAS``](#g-14-use-nested-require-and-if-and-avoid-multiple-check-combinations)
 
 
-### Total approximate Gas Saved as per report - ``63000 GAS``
+### Total approximate Gas Saved as per report - ``65000 GAS``
 
 
 ## FINDINGS
@@ -1182,7 +1186,7 @@ FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/BranchPort.sol
 
 ### Saves ``25487 GAS``
 
-``Unused internal state variable'' take up space in the contract's storage, which can increase the gas cost of deploying and calling the contract. If a state variable is never used, then it can be safely removed from the contract.
+``Unused internal state variable`` take up space in the contract's storage, which can increase the gas cost of deploying and calling the contract. If a state variable is never used, then it can be safely removed from the contract.
 ``Lock modifier`` can also increase the gas cost of calling a contract. Lock modifiers are used to prevent a contract from being called by an unauthorized address. However, if the contract is only ever called by a trusted address, then the lock modifier can be safely removed. The ``lock`` modifier not used through out the contract can be safely removed.
 
 
@@ -1400,65 +1404,132 @@ FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
 
 ```
 
-## [G-] Unnecessary memory operations with an immutable variable
+## 
 
-[G-13] External function calls should be avoided inside the loops 
+## [G-13] Optimize names to save gas
 
-[G-10]	State variables only set in the constructor should be declared immutable	18
+public/external function names and public member variable names can be optimized to save gas. See this link for an example of how it works. Below are the interfaces/abstract contracts that can be optimized so that the most frequently-called functions use the least amount of gas possible during method lookup. Method IDs that have two leading zero bytes can save 128 gas each during deployment, and renaming functions to have lower method IDs will save 22 gas per call, per sorted position shifted
 
-## [G-] Use memory instead of calldata inside the loops if the values not changed 
+```solidity
 
-Use assembly to perform efficient back-to-back calls
-
-If a similar external call is performed back-to-back, we can use assembly to reuse any function signatures and function parameters that stay the same. In addition, we can also reuse the same memory space for each function call (scratch space + free memory pointer + zero slot), which can potentially allow us to avoid memory expansion costs.
-
-File: contracts/Pool/PoolRegistry.sol
-239:        comptrollerProxy.setCloseFactor(closeFactor);
-240:        comptrollerProxy.setLiquidationIncentive(liquidationIncentive);
-241:        comptrollerProxy.setMinLiquidatableCollateral(minLiquidatableCollateral);
-242:        comptrollerProxy.setPriceOracle(PriceOracle(priceOracle));
-243:
-244:        // Start transferring ownership to msg.sender
-245:        comptrollerProxy.transferOwnership(msg.sender);
+/// @audit getDepositEntry(),callOut(),callOutAndBridge(),callOutAndBridgeMultiple(),callOutSigned(),callOutSignedAndBridge(),callOutSignedAndBridgeMultiple(),retryDeposit(),retrySettlement(),retrieveDeposit(),redeemDeposit(),performSystemCallOut(),performCallOut(),performCallOutAndBridge(),performCallOutAndBridgeMultiple(),clearToken()
+FILE: Breadcrumbs2023-05-maia/src/ulysses-omnichain/BranchBridgeAgent.sol
 
 
+/// @audit getSettlementEntry(),retrySettlement(),redeemSettlement(),callOut(),callOutAndBridge(),callOutAndBridgeMultiple(),bridgeInMultiple(),
+FILE: 2023-05-maia/src/ulysses-omnichain/RootBridgeAgent.sol
 
-## 0 amount transfers should be avoided call empty transfers to avoid gas 
+```
+
+## [G-14] Use nested require and if and, avoid multiple check combinations
+
+### Saves ``360 GAS, 24 Instances ``
+
+Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports. Saves ``15 GAS, Per instance``
+
+```solidity
+FILE: Breadcrumbs2023-05-maia/src/talos/libraries/PoolVariables.sol
+
+98: if (tick < 0 && tick % tickSpacing != 0) compressed--;
+
+FILE: 2023-05-maia/src/talos/base/TalosBaseStrategy.sol
+
+151: if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+121: if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+273: if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+335: if (amount0 == 0 && amount1 == 0) revert AmountsAreZero();
+408: require(balance0 >= amount0 && balance1 >= amount1);
+
+FILE: 2023-05-maia/src/erc-20/ERC20Gauges.sol
+
+211: if (added && _userGauges[user].length() > maxGauges && !canContractExceedMaxGauges[user]) {
+464: if (canExceedMax && account.code.length == 0) revert Errors.NonContractError();
+
+FILE: 2023-05-maia/src/erc-20/ERC20MultiVotes.sol
+
+257: if (pos > 0 && ckpts[pos - 1].fromBlock == block.number) {
+112: if (canExceedMax && account.code.length == 0) revert Errors.NonContractError();
+201: if (newDelegate && delegateCount(delegator) > maxDelegates && !canContractExceedMaxDelegates[delegator]) {
+
+FILE: 2023-05-maia/src/governance/GovernorBravoDelegateMaia.sol
+
+67: require(
+            votingPeriod_ >= MIN_VOTING_PERIOD && votingPeriod_ <= MAX_VOTING_PERIOD,
+            "GovernorBravo::initialize: invalid voting period"
+        );
+71:         require(
+            votingDelay_ >= MIN_VOTING_DELAY && votingDelay_ <= MAX_VOTING_DELAY,
+            "GovernorBravo::initialize: invalid voting delay"
+        );
+75:        require(
+            proposalThreshold_ >= MIN_PROPOSAL_THRESHOLD && proposalThreshold_ <= MAX_PROPOSAL_THRESHOLD,
+            "GovernorBravo::initialize: invalid proposal threshold"
+        );
+
+119: require(
+            targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length,
+            "GovernorBravo::propose: proposal function information arity mismatch"
+        );
+
+234: if (msg.sender != proposal.proposer && msg.sender != admin) {
+
+237: require(
+                    (govToken.getPriorVotes(proposal.proposer, sub256(block.number, 1)) < getProposalThresholdAmount())
+                        && msg.sender == whitelistGuardian,
+                    "GovernorBravo::cancel: whitelisted proposer"
+                );
+
+298: require(
+            proposalCount >= proposalId && proposalId > initialProposalId, "GovernorBravo::state: invalid proposal id"
+        );
+
+399: require(
+            newVotingDelay >= MIN_VOTING_DELAY && newVotingDelay <= MAX_VOTING_DELAY,
+            "GovernorBravo::_setVotingDelay: invalid voting delay"
+        );
+
+416: require(
+            newVotingPeriod >= MIN_VOTING_PERIOD && newVotingPeriod <= MAX_VOTING_PERIOD,
+            "GovernorBravo::_setVotingPeriod: invalid voting period"
+        );
+
+433: require(
+            newProposalThreshold >= MIN_PROPOSAL_THRESHOLD && newProposalThreshold <= MAX_PROPOSAL_THRESHOLD,
+            "GovernorBravo::_setProposalThreshold: invalid proposal threshold"
+        );
+
+507: require(
+            msg.sender == pendingAdmin && msg.sender != address(0), "GovernorBravo:_acceptAdmin: pending admin only" //@audit-issue unreached check. dravee zksyn low
+        );
+
+
+```
 
 
 
 
 
 
-[G-1]	Pre-increments and pre-decrements are cheaper than post-increments and post-decrements	60
-[G-2]	Use assembly to check for address(0)	31
-[G-3]	Use custom errors instead of require	108
-[G-4]	Empty blocks should be removed or emit something	3
-[G-5]	Non efficient zero initialization	56
-[G-6]	Use assembly to write address storage values	209
-[G-7]	Duplicated require/if checks should be refactored to a modifier or function	2
-[G-8]	Functions guaranteed to revert when called by normal users can be marked payable	92
-[G-9]	State variable read in a loop	68
-[G-10]	State variables only set in the constructor should be declared immutable	18
-[G-11]	Don’t compare boolean expressions to boolean literals	1
-[G-12]	Using storage instead of memory for structs/arrays saves gas	8
-[G-13]	Use calldata instead of memory for function parameters	22
-[G-14]	Pre-increments and pre-decrements are cheaper than post-increments and post-decrements1	2
-[G-15]	Function calls should be cached	32
-[G-16]	Usage of uint/int smaller than 32 bytes (256 bits) incurs overhead	21
-[G-17]	Change public to external for functions that are not called internally	89
-[G-18]	<array>.length should not be looked up in every loop of a for-loop	29
-[G-19]	Multiplication by two should use bit shifting	3
-[G-20]	Reduce the size of error messages	65
-[G-21]	Internal functions only called once can be inlined to save gas	38
-[G-22]	Using bools for storage incurs overhead	71
-[G-23]	Multiple mappings can be replaced with a single struct mapping	56
-[G-24]	Setting the constructor to payable	57
-[G-25]	Use unchecked keyword for loop counter	16
-[G-26]	Do not reduce approval on transferFrom if current allowance is type(uint256).max	5
-[G-27]	Bytes constants are more efficient than string constants	1
-[G-28]	Pre-increments and pre-decrements are cheaper than post-increments and post-decrements1	2
-[G-29]	<x> += <y> costs more gas than <x> = <x> + <y> for state variables	6
-[G-30]	Use solidity version 0.8.20 to gain gas boost	142
-[G-31]	Variable names that consist of all capital letters should be reserved for constant/immutable variables	1
-[G-32]	Division by two should use bit shifting	9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
