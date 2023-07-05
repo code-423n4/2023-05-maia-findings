@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "marcKn",
+  "risk": "2",
+  "title": "BaseV2Minter cannot mint, if it is not the owner of the Hermes token",
+  "issueId": 751,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/751"
+}
