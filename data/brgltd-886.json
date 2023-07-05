@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "brgltd",
+  "risk": "2",
+  "title": "`FlywheelGaugeRewards.queueRewardsForCycle()` will not revert even if no tokens are received leaving the contract susceptible to data corruption",
+  "issueId": 886,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/886"
+}
