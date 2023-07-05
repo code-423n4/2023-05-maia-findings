@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "The ERC4626 is vulnerable to inflation attack and user funds stolen",
+  "issueId": 815,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/815"
+}
