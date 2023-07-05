@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "kutugu",
+  "risk": "2",
+  "title": "castVoteBySig has no expiration time protection and still vaild after singer revoke tx",
+  "issueId": 671,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/671"
+}
