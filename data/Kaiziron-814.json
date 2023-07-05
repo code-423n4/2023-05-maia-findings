@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Kaiziron",
+  "risk": "2",
+  "title": "Interactions with AMMs do not use deadlines for operations",
+  "issueId": 814,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/814"
+}
