@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "los_chicos",
+  "risk": "3",
+  "title": "Missing input validation in pool parameter can lead to protocol malicious behaviour",
+  "issueId": 819,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/819"
+}
