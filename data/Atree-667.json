@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "Atree",
+  "risk": "3",
+  "title": "_replenishGas should not withdraw wrappedNativeToken.",
+  "issueId": 667,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/667"
+}
