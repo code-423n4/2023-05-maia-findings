@@ -1,0 +1,8 @@
+{
+  "contest": 242,
+  "handle": "MohammedRizwan",
+  "risk": "3",
+  "title": "Not using slippage parameter in swap() while swapping causes loss of funds",
+  "issueId": 912,
+  "issueUrl": "https://github.com/code-423n4/2023-05-maia-findings/issues/912"
+}
